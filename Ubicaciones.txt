@@ -1,0 +1,5 @@
+Layout XML:
+	C:\Users\ximen\AndroidStudioProjects\NombreProyecto\app\src\main\res\layout
+
+Java Main:
+	C:\Users\ximen\AndroidStudioProjects\NombreProyecto\app\src\main\java\com\example\nombreproyecto

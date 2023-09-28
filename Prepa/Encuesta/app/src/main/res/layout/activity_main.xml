@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="13dp"
+        android:text="Encuesta Programación"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="46dp"
+        android:text="Lenguajes de programación más populares de 2021"
+        app:layout_constraintBottom_toTopOf="@+id/cbjava"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <CheckBox
+        android:id="@+id/cbjava"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginBottom="21dp"
+        android:text="Java"
+        app:layout_constraintBottom_toTopOf="@+id/cbcpp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <CheckBox
+        android:id="@+id/cbcpp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:text="C++"
+        app:layout_constraintBottom_toTopOf="@+id/cbpython"
+        app:layout_constraintStart_toStartOf="@+id/cbjava"
+        app:layout_constraintTop_toBottomOf="@+id/cbjava" />
+
+    <CheckBox
+        android:id="@+id/cbpython"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:text="Python"
+        app:layout_constraintBottom_toTopOf="@+id/cbexcel"
+        app:layout_constraintStart_toStartOf="@+id/cbcpp"
+        app:layout_constraintTop_toBottomOf="@+id/cbcpp" />
+
+    <CheckBox
+        android:id="@+id/cbexcel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="49dp"
+        android:text="Excel"
+        app:layout_constraintBottom_toTopOf="@+id/btnencuesta"
+        app:layout_constraintStart_toStartOf="@+id/cbpython"
+        app:layout_constraintTop_toBottomOf="@+id/cbpython" />
+
+    <Button
+        android:id="@+id/btnencuesta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="encuesta"
+        android:text="ENVIAR ENCUESTA"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/tvresultado"
+        app:layout_constraintStart_toEndOf="@+id/cbexcel"
+        app:layout_constraintTop_toBottomOf="@+id/cbexcel" />
+
+    <TextView
+        android:id="@+id/tvresultado"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="58dp"
+        android:text="No has enviado nada."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnencuesta" />
+</androidx.constraintlayout.widget.ConstraintLayout>

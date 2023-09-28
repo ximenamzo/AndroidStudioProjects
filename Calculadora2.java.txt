@@ -1,0 +1,80 @@
+package com.example.calculadora;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    EditText uno, dos;
+    Button suma, resta, multi, divi, pot, signo1, signo2, reiniciar;
+    TextView resultado;
+    String primero, segundo;
+    double n1, n2;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        uno = (EditText)findViewById(R.id.numero1);
+        dos = (EditText)findViewById(R.id.numero2);
+        resultado = (TextView) findViewById(R.id.txt_num);
+
+        suma = (Button) findViewById(R.id.btnsumar);
+        resta = (Button) findViewById(R.id.btnrestar);
+        multi = (Button) findViewById(R.id.btnmultiplicar);
+        divi = (Button) findViewById(R.id.btndividir);
+        pot = (Button) findViewById(R.id.btnpotencia);
+        signo1 = (Button) findViewById(R.id.btnsigno1);
+        signo2 = (Button) findViewById(R.id.btnsigno2);
+        reiniciar = (Button) findViewById(R.id.btnreiniciar);
+
+        suma.setOnClickListener(this);
+        resta.setOnClickListener(this);
+        multi.setOnClickListener(this);
+        divi.setOnClickListener(this);
+        pot.setOnClickListener(this);
+        signo1.setOnClickListener(this);
+        signo2.setOnClickListener(this);
+        reiniciar.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        primero = uno.getText().toString();
+        segundo = dos.getText().toString();
+        if (primero.isEmpty() || segundo.isEmpty()){
+            resultado.setText("Alerta: Ingrese valores antes.");
+            return;
+        }
+        n1 = Double.parseDouble(primero);
+        n2 = Double.parseDouble(segundo); // Float.parseFloat() Integer.parseInt()
+
+        if (view.getId() == R.id.btnsumar){
+            resultado.setText(primero + " + " + segundo + " = " + (n1+n2) + "");
+        } else if (view.getId() == R.id.btnrestar){
+            resultado.setText(primero + " - " + segundo + " = " + (n1-n2) + "");
+        } else if (view.getId() == R.id.btnmultiplicar){
+            resultado.setText(primero + " * " + segundo + " = " + (n1*n2) + "");
+        } else if (view.getId() == R.id.btndividir){
+            resultado.setText(primero + " / " + segundo + " = " + (n1/n2) + "");
+        }else if (view.getId() == R.id.btnpotencia){
+            resultado.setText(primero + " ^ " + segundo + " = " + (Math.pow(n1, n2)) + "");
+        }else if (view.getId() == R.id.btnsigno1){
+            n1 = -n1;
+            uno.setText(String.valueOf(n1));
+        }else if (view.getId() == R.id.btnsigno2){
+            n2 = -n2;
+            dos.setText(String.valueOf(n2));
+        }else if (view.getId() == R.id.btnreiniciar){
+            uno.setText("");
+            dos.setText("");
+            resultado.setText("0");
+        }
+    } // OnClick
+} // Main Activity

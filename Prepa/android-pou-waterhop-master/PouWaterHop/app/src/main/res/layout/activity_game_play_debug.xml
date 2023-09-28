@@ -1,0 +1,71 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/scrollView"
+    tools:context="com.ryszarddzegan.pouwaterhop.GamePlayActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_game_state_image"
+            android:contentDescription="@string/current_game_state"
+            android:scaleType="fitXY"
+            android:minHeight="100dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_game_state_image_recognition_prior_to_color_reduction"
+            android:contentDescription="@string/current_game_state_recognition"
+            android:scaleType="fitXY"
+            android:layout_below="@+id/current_game_state_image"
+            android:minHeight="100dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_game_state_image_recognition"
+            android:contentDescription="@string/current_game_state_recognition"
+            android:scaleType="fitXY"
+            android:layout_below="@+id/current_game_state_image_recognition_prior_to_color_reduction"
+            android:minHeight="100dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/required_game_action_text"
+            android:layout_below="@+id/current_game_state_image_recognition"
+            android:text="@string/action_text_sample" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/recognized_game_state_text"
+            android:layout_below="@+id/required_game_action_text"
+            android:text="@string/game_state_sample" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ready_button"
+            android:id="@+id/ready_button"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/current_game_state_image_recognition"
+            android:clickable="false"
+            android:drawableLeft="@android:drawable/ic_media_play"/>
+
+    </RelativeLayout>
+</ScrollView>

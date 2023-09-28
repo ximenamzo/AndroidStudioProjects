@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/numero1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        android:hint="Número A"
+        android:inputType="numberDecimal|numberSigned"
+        android:textSize="20sp"
+        android:minHeight="48dp"/>
+
+    <EditText
+        android:id="@+id/numero2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/numero1"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        android:hint="Número B"
+        android:inputType="numberDecimal|numberSigned"
+        android:textSize="20sp"
+        android:minHeight="48dp"/>
+
+    <LinearLayout
+        android:id="@+id/lybtn"
+        android:layout_below="@id/numero2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="30dp"
+        android:paddingHorizontal="18dp">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ly1"
+        android:gravity="center"
+        android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnsigno1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="+/- A"
+                android:layout_marginHorizontal="6dp"/>
+
+            <Button
+                android:id="@+id/btnsigno2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="+/- B"/>
+
+            <Button
+                android:id="@+id/btnreiniciar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="CE"
+                android:layout_marginHorizontal="6dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ly2"
+        android:layout_below="@id/ly1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+            <Button
+                android:id="@+id/btnsumar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="+"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="3dp"/>
+            <Button
+                android:id="@+id/btnrestar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="-"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="6dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ly3"
+        android:layout_below="@id/ly2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+            <Button
+                android:id="@+id/btnmultiplicar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:text="*"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="3dp"/>
+            <Button
+                android:id="@+id/btndividir"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:text="/"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="6dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ly4"
+        android:layout_below="@id/ly3"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+            <Button
+                android:id="@+id/btndiv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="DIV"
+                android:layout_marginHorizontal="6dp"/>
+            <Button
+                android:id="@+id/btnmod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="MOD"/>
+            <Button
+                android:id="@+id/btnpotencia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="^"
+                android:layout_marginHorizontal="6dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly5"
+        android:layout_below="@id/lybtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/txt_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="30sp"/>
+    </LinearLayout>
+
+</RelativeLayout>

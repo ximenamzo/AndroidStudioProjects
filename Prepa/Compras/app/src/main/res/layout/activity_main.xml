@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="58dp"
+        android:text="Productos."
+        android:textColor="#BCB9B9"
+        app:layout_constraintBottom_toTopOf="@+id/cbLeoSen"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <CheckBox
+        android:id="@+id/cbManLar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
+        android:text="Leotardo Manga Larga $446"
+        app:layout_constraintBottom_toTopOf="@+id/cbFalda"
+        app:layout_constraintEnd_toEndOf="@+id/cbCalCor"
+        app:layout_constraintStart_toStartOf="@+id/cbLeoSen"
+        app:layout_constraintTop_toBottomOf="@+id/cbLeoDet" />
+
+    <CheckBox
+        android:id="@+id/cbFalda"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="1dp"
+        android:text="Falda de Ballet $153"
+        app:layout_constraintBottom_toTopOf="@+id/cbMallas"
+        app:layout_constraintEnd_toEndOf="@+id/cbPunBlo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbManLar" />
+
+    <CheckBox
+        android:id="@+id/cbPunGay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:text="Puntas Marca Gaynor $3,495"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/cbPunBlo" />
+
+    <CheckBox
+        android:id="@+id/cbCalCor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="1dp"
+        android:text="Calentadores Cortos $199"
+        app:layout_constraintBottom_toTopOf="@+id/cbCalLar"
+        app:layout_constraintEnd_toEndOf="@+id/cbPunBlo"
+        app:layout_constraintStart_toStartOf="@+id/cbCalLar"
+        app:layout_constraintTop_toBottomOf="@+id/cbMallas" />
+
+    <CheckBox
+        android:id="@+id/cbPunBlo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="15dp"
+        android:text="Puntas Marca Bloch $2,199"
+        app:layout_constraintBottom_toTopOf="@+id/cbPunGay"
+        app:layout_constraintEnd_toEndOf="@+id/cbPunGay"
+        app:layout_constraintStart_toStartOf="@+id/cbZap"
+        app:layout_constraintTop_toBottomOf="@+id/cbZap" />
+
+    <CheckBox
+        android:id="@+id/cbCalLar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="14dp"
+        android:text="Calentadores Largos $259"
+        app:layout_constraintBottom_toTopOf="@+id/cbZap"
+        app:layout_constraintEnd_toEndOf="@+id/cbPunBlo"
+        app:layout_constraintStart_toStartOf="@+id/cbZap"
+        app:layout_constraintTop_toBottomOf="@+id/cbCalCor" />
+
+    <CheckBox
+        android:id="@+id/cbLeoDet"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Leotardo con detalles $379"
+        app:layout_constraintBottom_toTopOf="@+id/cbManLar"
+        app:layout_constraintEnd_toEndOf="@+id/cbManLar"
+        app:layout_constraintStart_toStartOf="@+id/cbManLar"
+        app:layout_constraintTop_toBottomOf="@+id/cbLeoSen" />
+
+    <CheckBox
+        android:id="@+id/cbZap"
+        android:layout_width="188dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="45dp"
+        android:text="Zapatillas de Ballet $309"
+        app:layout_constraintBottom_toTopOf="@+id/cbPunBlo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbCalLar" />
+
+    <CheckBox
+        android:id="@+id/cbMallas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="11dp"
+        android:text="Mallas de Ballet $199"
+        app:layout_constraintBottom_toTopOf="@+id/cbCalCor"
+        app:layout_constraintEnd_toEndOf="@+id/cbCalLar"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/cbFalda" />
+
+    <CheckBox
+        android:id="@+id/cbLeoSen"
+        android:layout_width="197dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="1dp"
+        android:text="Leotardo Sencillo $339"
+        app:layout_constraintBottom_toTopOf="@+id/cbLeoDet"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="249dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="26dp"
+        android:background="#F498E5"
+        android:backgroundTint="#FCDBFD"
+        android:text="Dance Shop"
+        android:textAlignment="center"
+        android:textColor="#0A175E"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginBottom="11dp"
+        android:text="Tu tienda de danza."
+        android:textColor="#873EA5"
+        app:layout_constraintBottom_toTopOf="@+id/cbLeoSen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="30dp"
+        android:text="Método de pago."
+        android:textColor="#BCB9B9"
+        app:layout_constraintBottom_toTopOf="@+id/btnComp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbPunGay" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTotal"
+        app:layout_constraintEnd_toStartOf="@+id/btnComp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView3">
+
+        <RadioButton
+            android:id="@+id/rbCon"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="Contado" />
+
+        <RadioButton
+            android:id="@+id/rbTarCre"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:text="Tarjeta de Crédito" />
+
+        <RadioButton
+            android:id="@+id/rbTarDeb"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="Tarjeta de Débito" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnComp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="49dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="compras"
+        android:text="¡Comprar!"
+        android:textColor="#680544"
+        app:layout_constraintBottom_toTopOf="@+id/tvTotal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="17dp"
+        android:background="@color/cardview_shadow_start_color"
+        android:text="Aquí verás el total a pagar."
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnComp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "69751089440",
+    "firebase_url": "https://bach8-8e582-default-rtdb.firebaseio.com",
+    "project_id": "bach8-8e582",
+    "storage_bucket": "bach8-8e582.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69751089440:android:53c66042ab156aca2a8f45",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69751089440-prqhqe3ik93n7uno9jhfdo9utuovl2lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcCyJ0ljGMXkhLEFOZAOg5e51f6yPCJ3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69751089440-prqhqe3ik93n7uno9jhfdo9utuovl2lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69751089440:android:c40477e93fff41bb2a8f45",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69751089440-prqhqe3ik93n7uno9jhfdo9utuovl2lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcCyJ0ljGMXkhLEFOZAOg5e51f6yPCJ3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69751089440-prqhqe3ik93n7uno9jhfdo9utuovl2lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69751089440:android:03de2b0773041d502a8f45",
+        "android_client_info": {
+          "package_name": "com.example.nube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69751089440-prqhqe3ik93n7uno9jhfdo9utuovl2lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcCyJ0ljGMXkhLEFOZAOg5e51f6yPCJ3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69751089440-prqhqe3ik93n7uno9jhfdo9utuovl2lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,55 @@
+package com.example.calculadora;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    EditText uno, dos;
+    Button suma, resta, multi, divi;
+    TextView resultado;
+    String primero, segundo;
+    double n1, n2;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        uno = (EditText)findViewById(R.id.numero1);
+        dos = (EditText)findViewById(R.id.numero2);
+        suma = (Button) findViewById(R.id.btnsumar);
+        resta = (Button) findViewById(R.id.btnrestar);
+        multi = (Button) findViewById(R.id.btnmulti);
+        divi = (Button) findViewById(R.id.btndividir);
+        resultado = (TextView) findViewById(R.id.txt_num);
+
+        suma.setOnClickListener(this);
+        resta.setOnClickListener(this);
+        multi.setOnClickListener(this);
+        divi.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        primero = uno.getText().toString();
+        segundo = dos.getText().toString();
+        n1 = Double.parseDouble(primero);
+        n2 = Double.parseDouble(segundo); // Float.parseFloat() Integer.parseInt()
+
+        if (view.getId() == R.id.btnsumar){
+            resultado.setText(primero + " + " + segundo + " = " + (n1+n2) + "");
+        } else if (view.getId() == R.id.btnrestar){
+            resultado.setText(primero + " - " + segundo + " = " + (n1-n2) + "");
+        } else if (view.getId() == R.id.btnmulti){
+            resultado.setText(primero + " * " + segundo + " = " + (n1*n2) + "");
+        } else if (view.getId() == R.id.btndividir){
+            resultado.setText(primero + " / " + segundo + " = " + (n1/n2) + "");
+        }
+    }
+}
