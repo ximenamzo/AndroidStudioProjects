@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void notificacion(String mensaje) {
+
         final Toast toast = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
