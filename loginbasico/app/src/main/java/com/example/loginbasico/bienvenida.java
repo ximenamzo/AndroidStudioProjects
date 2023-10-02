@@ -15,10 +15,13 @@ public class bienvenida extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bienvenida);
+
         txtbnvn = (TextView) findViewById(R.id.txtbienvenida);
         txtsaludo = (TextView) findViewById(R.id.txthola);
+
         nombre = getIntent().getStringExtra("usuario");
         pass = getIntent().getStringExtra("password");
+
         txtsaludo.setText("Hola " + nombre + "!!");
         txtsaludo.setVisibility(View.VISIBLE);
     }

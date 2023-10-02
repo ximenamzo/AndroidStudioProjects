@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".boston">
+
+    <!--
+    TextView Nombre: (Viene de MainActivity)
+    TextView Edad : (Viene de MainActivity)
+    TextView Sexo : (Viene de MainActivity)
+    botón "Tiempo requerido"
+    TextView (resultado de dar click en Tiempo requerido)
+    botón "Salir" (Regresar al activity principal)
+    -->
+
+    <TextView
+        android:id="@+id/txtnombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="50dp"
+        android:text="Nombre: "
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtedad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtnombre"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
+        android:text="Edad:"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtsexo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtedad"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
+        android:text="Sexo:"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btntiempo"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtsexo"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:text="Tiempo Requerido" />
+
+    <TextView
+        android:id="@+id/txttiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btntiempo"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="35dp"
+        android:text="Tu tiempo requerido es: ..."
+        android:textColor="#616161"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btnvolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#514467"
+        android:text="Volver a la actividad Principal"/>
+
+</RelativeLayout>

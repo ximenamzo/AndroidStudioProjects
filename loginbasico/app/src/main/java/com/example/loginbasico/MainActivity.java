@@ -32,44 +32,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         password = (EditText) findViewById(R.id.editpassword);
         ingresar = (Button) findViewById(R.id.btningresar);
 
-        ingresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                us = usuario.getText().toString();
-                ps = password.getText().toString();
+        ingresar.setOnClickListener(view -> {
+            us = usuario.getText().toString();
+            ps = password.getText().toString();
 
-                // Popup
-                // Sirve para debuggear y ver nombres de variables
-                // mensaje = Toast.makeText(MainActivity.this, us + " " + ps, LENGTH_LONG);
+            // Popup
+            // Sirve para debuggear y ver nombres de variables
+            // mensaje = Toast.makeText(MainActivity.this, us + " " + ps, LENGTH_LONG);
 
-                for (int c=0; c<nombres.length; c++) {
-                    if (us.equals(nombres[c][0]) && ps.equals(nombres[c][1])){
-                        existe = true;
-                    }
+            for (int c=0; c<nombres.length; c++) {
+                if (us.equals(nombres[c][0]) && ps.equals(nombres[c][1])){
+                    existe = true;
                 }
-
-                if (existe) {
-                    //Toast.makeText(MainActivity.this, "Bienvenid@", Toast.LENGTH_SHORT).show();
-                    i = new Intent(MainActivity.this, bienvenida.class);
-                    i.putExtra("usuario", us);
-                    i.putExtra("password", ps);
-                    startActivity(i);
-                } else {
-                    Toast.makeText(MainActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
-                }
-
-                /*if (us.isEmpty() || ps.isEmpty()) {
-                    mensaje = Toast.makeText(MainActivity.this, "Debes llenar los campos primero", Toast.LENGTH_LONG);
-                    mensaje.show();
-                } else if (us.equals("xime") && ps.equals("123")) {
-                    mensaje = Toast.makeText(MainActivity.this, "Bienvenid@", Toast.LENGTH_SHORT);
-                    mensaje.show();
-                    i = new Intent(MainActivity.this, bienvenida.class);
-                    i.putExtra("usuario", us);
-                    i.putExtra("password", ps);
-                    startActivity(i);
-                }*/
             }
+
+            if (existe) {
+                //Toast.makeText(MainActivity.this, "Bienvenid@", Toast.LENGTH_SHORT).show();
+                i = new Intent(MainActivity.this, bienvenida.class);
+                i.putExtra("usuario", us);
+                i.putExtra("password", ps);
+                startActivity(i);
+            } else {
+                Toast.makeText(MainActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+            }
+
+            /*if (us.isEmpty() || ps.isEmpty()) {
+                mensaje = Toast.makeText(MainActivity.this, "Debes llenar los campos primero", Toast.LENGTH_LONG);
+                mensaje.show();
+            } else if (us.equals("xime") && ps.equals("123")) {
+                mensaje = Toast.makeText(MainActivity.this, "Bienvenid@", Toast.LENGTH_SHORT);
+                mensaje.show();
+                i = new Intent(MainActivity.this, bienvenida.class);
+                i.putExtra("usuario", us);
+                i.putExtra("password", ps);
+                startActivity(i);
+            }*/
         });
     }
 

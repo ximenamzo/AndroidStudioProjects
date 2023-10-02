@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:foregroundTint="#03A9F4"
+    tools:context=".calorias">
+
+    <!--
+    TextView Nombre: (Viene de MainActivity)
+    TextView Edad : (Viene de MainActivity)
+    TextView Sexo : (Viene de MainActivity)
+    EditText peso (en Kg)
+    EditText estatura (en cm)
+    botón "Calcular"
+    TextView (resultado de dar click en calcular)
+    botón "Salir" (Regresar al activity principal)
+    -->
+
+    <TextView
+        android:id="@+id/txtnombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="50dp"
+        android:text="Nombre:"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtedad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtnombre"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
+        android:text="Edad:"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtsexo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtedad"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
+        android:text="Sexo:"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/editpeso"
+        style="@style/Widget.Material3.AutoCompleteTextView.FilledBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtsexo"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="18dp"
+        android:hint="Peso en kg"
+        android:inputType="number|numberDecimal"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/editestatura"
+        style="@style/Widget.Material3.AutoCompleteTextView.FilledBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/editpeso"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="10dp"
+        android:hint="Altura en centímetros"
+        android:inputType="number|numberDecimal"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btncalcular"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editestatura"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:text="Calcular TMB" />
+
+    <TextView
+        android:id="@+id/txtresultado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btncalcular"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="35dp"
+        android:text="Tasa Metabólica Basal: ..."
+        android:textColor="#616161"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btnvolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#514467"
+        android:text="Volver a la actividad Principal"/>
+</RelativeLayout>
