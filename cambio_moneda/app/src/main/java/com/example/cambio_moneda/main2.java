@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    
+public class main2 extends AppCompatActivity implements View.OnClickListener{
+
     private static final String API_BASE_URL = "https://api.currencyapi.com/v3/";
     private static final String API_KEY = "cur_live_6ZNhaifAhEyKuZPIce9EA43LDjIrKqNKEepmIlYw";
     EditText etx1, etx2;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // Llenar los spinners con los códigos de moneda
                             Set<String> currencyCodes = apiResponse.getData().keySet();
                             ArrayList<String> currencyList = new ArrayList<>(currencyCodes);
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(main2.this,
                                     android.R.layout.simple_spinner_item, currencyList);
                             spn1.setAdapter(adapter);
                             spn2.setAdapter(adapter);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d("ERRORX", "Api Response Null. 75");
                         }
                     } else {
-                        Toast.makeText(MainActivity.this, "Error al obtener datos de moneda", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(main2.this, "Error al obtener datos de moneda", Toast.LENGTH_SHORT).show();
                         Log.d("DEBUG", "Respuesta sin éxito. 79 Código: " + response.code());
                         try {
                             String errorBody = response.errorBody().string();
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
+                Toast.makeText(main2.this, "Error de red", Toast.LENGTH_SHORT).show();
                 Log.e("ERROR", "Error de red durante la llamada a la API (96): " + t.getMessage());
             }
         });
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         etx2.setText(String.valueOf(resultado));
                         Log.d("SUCCES", "Resultado" + resultado + ". 123");
                     } catch (NumberFormatException e) {
-                        Toast.makeText(MainActivity.this, "Ingrese una cantidad válida", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(main2.this, "Ingrese una cantidad válida", Toast.LENGTH_SHORT).show();
                         Log.d("WARNING", "Number Format Exception. 126");
                     }
                 }
