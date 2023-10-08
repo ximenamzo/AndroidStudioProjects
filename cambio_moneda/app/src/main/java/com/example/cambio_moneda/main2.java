@@ -22,15 +22,15 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-public class main2 extends AppCompatActivity implements View.OnClickListener{
+public class main2 extends AppCompatActivity implements View.OnClickListener {
 
     private static final String API_BASE_URL = "https://api.currencyapi.com/v3/";
     private static final String API_KEY = "cur_live_6ZNhaifAhEyKuZPIce9EA43LDjIrKqNKEepmIlYw";
     EditText etx1, etx2;
     Spinner spn1, spn2;
     Button btn;
-    ApiService apiService;
-    ApiResponse apiResponse;
+    ApiService apiService; // interfaz
+    ApiResponse apiResponse; // clase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,56 +44,72 @@ public class main2 extends AppCompatActivity implements View.OnClickListener{
         btn = findViewById(R.id.btn);
         btn.setOnClickListener(this);
 
-
+        // Adaptador de la interfaz Java a llamadas HTTP
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        Log.d("DEBUG", "Retrofit construido. 52");
+        Log.d("DEBUGX", "(52) Retrofit construido.");
 
+        // Creando interfaz con el adaptador
         apiService = retrofit.create(ApiService.class);
 
+        // Invocación de un método Retrofit que envia una petición a un servidor web y envía una respuesta
+        // Cada llamada produce su propia respuesta HTTP 
         Call<ApiResponse> call = apiService.getCurrencyData();
-        Log.d("DEBUG", "Llamada conseguida. 57");
+        Log.d("DEBUGX", "(60) Llamada conseguida.");
+
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
-                try{
+                try {
+                    // Si hay éxito en la respuesta
                     if (response.isSuccessful()) {
-                        Log.d("DEBUG", "Respuesta exitosa. 63");
+                        Log.d("DEBUGX", "(68) Respuesta exitosa.");
+
+                        // Respuesta igual a contenido
                         apiResponse = response.body();
                         if (apiResponse != null && apiResponse.getData() != null) {
-                            Log.d("API_RESPONSE", "70." + apiResponse.getData().toString());
-                            // Llenar los spinners con los códigos de moneda
-                            Set<String> currencyCodes = apiResponse.getData().keySet();
-                            ArrayList<String> currencyList = new ArrayList<>(currencyCodes);
+
+                            // Muestro en log toda la respuesta
+                            Log.d("API_RESPONSE", "(75)." + apiResponse.getData().toString());
+
+                            // Lleno los Arrays con los códigos "code" del JSON
+                            Set<String> codigosDivisa = apiResponse.getData().keySet();
+                            ArrayList<String> listaCodigosDivisa = new ArrayList<>(codigosDivisa);
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(main2.this,
-                                    android.R.layout.simple_spinner_item, currencyList);
+                                    android.R.layout.simple_spinner_item, listaCodigosDivisa);
+
+                            // Lleno los spinner con los arrays
                             spn1.setAdapter(adapter);
                             spn2.setAdapter(adapter);
                         } else {
-                            Log.d("ERRORX", "Api Response Null. 75");
+                            // Si la respuesta de la API está vacía
+                            Log.e("ERRORX", "(88) ApiResponse Null - vacía.");
                         }
                     } else {
-                        Toast.makeText(main2.this, "Error al obtener datos de moneda", Toast.LENGTH_SHORT).show();
-                        Log.d("DEBUG", "Respuesta sin éxito. 79 Código: " + response.code());
+                        // Si no hay respuesta
+                        Toast.makeText(main2.this, "Error al obtener datos de moneda.", Toast.LENGTH_SHORT).show();
+                        Log.e("ERRORX", "(93) Respuesta sin éxito. Código: " + response.code());
                         try {
+                            // Try para "intentar" traer la descripción del código
                             String errorBody = response.errorBody().string();
-                            Log.d("DEBUG", "Cuerpo de respuesta de error (82): " + errorBody);
+                            Log.e("DEBUGX", "(97) Cuerpo de respuesta de error: " + errorBody);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
                 } catch (Exception e) {
+                    // Si falla el try de toda la respuesta de llamada a la API
                     e.printStackTrace();
-                    Log.e("DEBUG", "Excepción durante llamada a API (89): " + e.getMessage());
+                    Log.e("ERRORX", "(105) Excepción durante llamada a API: " + e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
                 Toast.makeText(main2.this, "Error de red", Toast.LENGTH_SHORT).show();
-                Log.e("ERROR", "Error de red durante la llamada a la API (96): " + t.getMessage());
+                Log.e("ERRORX", "(112) Error de red durante la llamada a la API: " + t.getMessage());
             }
         });
     }
@@ -108,9 +124,6 @@ public class main2 extends AppCompatActivity implements View.OnClickListener{
             CurrencyData monedaDestino = apiResponse.getData().get(codigoDestino);
 
             if (apiResponse != null) {
-                monedaOrigen = apiResponse.getData().get(codigoOrigen);
-                monedaDestino = apiResponse.getData().get(codigoDestino);
-
                 if (monedaOrigen != null && monedaDestino != null) {
                     try {
                         double cantidadIngresada = Double.parseDouble(etx1.getText().toString());
@@ -120,14 +133,16 @@ public class main2 extends AppCompatActivity implements View.OnClickListener{
                         double resultado = (cantidadIngresada / valorMonedaOrigen) * valorMonedaDestino;
 
                         etx2.setText(String.valueOf(resultado));
-                        Log.d("SUCCES", "Resultado" + resultado + ". 123");
+                        Log.d("SUCCES", "(136) Resultado: " + resultado);
+
                     } catch (NumberFormatException e) {
+                        // Si hay errores de tipos de datos
                         Toast.makeText(main2.this, "Ingrese una cantidad válida", Toast.LENGTH_SHORT).show();
-                        Log.d("WARNING", "Number Format Exception. 126");
+                        Log.w("WARNINGX", "(141) Number Format Exception.");
                     }
                 }
             } else {
-                Log.d("ERRORX", "Api Response Null. 130");
+                Log.d("ERRORX", "(145) Api Response Null.");
             }
         }
     }
