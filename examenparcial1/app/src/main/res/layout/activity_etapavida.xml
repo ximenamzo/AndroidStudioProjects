@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".etapavida">
+
+    <TextView
+        android:id="@+id/txtnombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textSize="15sp"
+        android:textColor="#6E6E6E"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="50dp"/>
+    <TextView
+        android:id="@+id/txtname"
+        android:layout_below="@id/txtnombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="50dp"/>
+
+    <TextView
+        android:id="@+id/txtfenac"
+        android:layout_below="@id/txtname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha de Nacimiento:"
+        android:textSize="15sp"
+        android:textColor="#6E6E6E"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"/>
+    <TextView
+        android:id="@+id/txtdate"
+        android:layout_below="@id/txtfenac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="50dp"/>
+
+    <TextView
+        android:id="@+id/txtedad"
+        android:layout_below="@id/txtdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edad:"
+        android:textSize="15sp"
+        android:textColor="#6E6E6E"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"/>
+    <TextView
+        android:id="@+id/txtage"
+        android:layout_below="@id/txtedad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="50dp"/>
+
+    <TextView
+        android:id="@+id/txtsexo"
+        android:layout_below="@id/txtage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sexo:"
+        android:textSize="15sp"
+        android:textColor="#6E6E6E"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"/>
+    <TextView
+        android:id="@+id/txtsex"
+        android:layout_below="@id/txtsexo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="50dp"/>
+
+    <TextView
+        android:id="@+id/txtetapa"
+        android:layout_below="@id/txtsex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Etapa:"
+        android:textSize="15sp"
+        android:textColor="#6E6E6E"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"/>
+    <TextView
+        android:id="@+id/txtstage"
+        android:layout_below="@id/txtetapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="50dp"/>
+
+    <Button
+        android:id="@+id/btnvolver"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Volver a Inicio"/>
+
+</RelativeLayout>

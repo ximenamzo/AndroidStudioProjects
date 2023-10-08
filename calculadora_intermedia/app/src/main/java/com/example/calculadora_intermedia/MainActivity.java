@@ -17,20 +17,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    Button limpiar, borrar, signo, punto, igual, ans;
-    Button div, mod, raiz, potencia, porcentaje, division, multiplicacion, resta, suma;
-    Button lognat, log, factorial, pi, inverso, exp, absoluto, seno, coseno, tangente;
-    Button t1, t2, t3, t4, t5, t6, t7, t8, t9, t0;
-    Double op1, op2, numpi, res;
-    Double ultimo=0.0;
-    Integer aux, aux2, res2;
-    Integer flag=0, operador=0;
-    Long res3;
-    String primero, restxt;
-    EditText num;
-    TextView resultado;
-    CheckBox cientificos;
-    Switch radianes;
+    Button limpiar, borrar, signo, punto, igual, ans; // Botonoes auxiliares
+    Button div, mod, raiz, potencia, porcentaje, division, multiplicacion, resta, suma; // Op comunes
+    Button lognat, log, factorial, pi, inverso, exp, absoluto, seno, coseno, tangente; // Op avanzados
+    Button t1, t2, t3, t4, t5, t6, t7, t8, t9, t0; // Teclas numéricas
+    Double op1, op2, numpi, res, ultimo=0.0; // Números con punto decimal
+    Integer aux, aux2, res2, flag=0, operador=0; // Números enteros
+    Long res3; // Número entero más capacidad
+    String primero, restxt; // Texto - Cadena de texto
+    EditText num; // Elemento donde de edita el número
+    TextView resultado; // Elemento donde se visualiza el resultado
+    CheckBox cientificos; // Botón de selección
+    Switch radianes; // Elemento de activación
 
     private static final int TIEMPO = 5000;
 
@@ -133,7 +131,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        //radianes.setOnCheckedChangeListener();
+        radianes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    layoutCientifico.setVisibility(View.VISIBLE);
+                } else {
+                    layoutCientifico.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     public static long factorial(int n) {

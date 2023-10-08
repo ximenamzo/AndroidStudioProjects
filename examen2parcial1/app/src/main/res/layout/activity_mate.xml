@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".espa">
+
+    <TextView
+        android:id="@+id/txttitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Exámen de Matemáticas"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:layout_marginTop="50dp"
+        android:paddingHorizontal="30dp"/>
+
+
+    <TextView
+        android:id="@+id/ep1"
+        android:layout_below="@id/txttitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Juan tenía 3 galletas y se comió una, ¿Cuántas galletas le quedan a Juan?"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep1"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb1ep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb2ep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb3ep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/ep2"
+        android:layout_below="@id/rgep1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Imagina que tienes 2 carritos y tu mamá te regala 2. ¿Cuántos carritos tienes ahora?"
+        android:textSize="20sp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep2"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb1ep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="4"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb2ep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="6"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb3ep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="8"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/ep3"
+        android:layout_below="@id/rgep2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3. ¿Cuál es el símbolo de la suma?"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep3"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb1ep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-"
+            android:textSize="20sp" />
+        <RadioButton
+            android:id="@+id/rb2ep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="/"
+            android:textSize="20sp" />
+        <RadioButton
+            android:id="@+id/rb3ep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="+"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/ep4"
+        android:layout_below="@id/rgep3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4. Selecciona el número que tiene una decena:"
+        android:textSize="20sp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep4"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb1ep4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="12"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb2ep4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="9"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb3ep4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btncalifica"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rgep4"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:text="Terminar exámen" />
+</RelativeLayout>

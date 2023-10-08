@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".espa">
+
+    <TextView
+        android:id="@+id/txttitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Exámen de Español"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:layout_marginTop="50dp"
+        android:paddingHorizontal="30dp"/>
+
+
+    <TextView
+        android:id="@+id/ep1"
+        android:layout_below="@id/txttitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Selecciona aquella palabra que rime con 'conejo':"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep1"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb1ep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="espejo"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb2ep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="corazón"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb3ep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="jirafa"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/ep2"
+        android:layout_below="@id/rgep1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Selecciona la palabra que inicie con Mayúscula:"
+        android:textSize="20sp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep2"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb1ep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="sol"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb2ep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mariana"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb3ep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="botella"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/ep3"
+        android:layout_below="@id/rgep2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3. Elige las palabras que rimen con campana:"
+        android:textSize="20sp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep3"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb1ep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Casa, conejo"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb2ep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Uva, melón"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb3ep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Manzana, ventana"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/ep4"
+        android:layout_below="@id/rgep3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4. Selecciona la palabra que lleva acento."
+        android:textSize="20sp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="30dp"/>
+    <RadioGroup
+        android:id="@+id/rgep4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ep4"
+        android:layout_centerHorizontal="false"
+        android:layout_marginHorizontal="40dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb1ep4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="casa"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb2ep4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="mamá"
+            android:textSize="15sp" />
+        <RadioButton
+            android:id="@+id/rb3ep4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="dedo"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btncalifica"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rgep4"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:text="Terminar exámen" />
+</RelativeLayout>
