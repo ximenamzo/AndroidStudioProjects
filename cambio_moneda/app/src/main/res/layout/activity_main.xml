@@ -22,57 +22,57 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:orientation="horizontal">
-
             <EditText
                 android:id="@+id/edit1"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:hint="0.00"
                 android:inputType="numberDecimal" />
-
             <Spinner
                 android:id="@+id/spinner1"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="30dp"
-                android:layout_weight="3" />
+                android:layout_weight="2" />
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn"
+            style="@android:style/Widget.Material.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginVertical="20dp"
+            android:layout_marginRight="100dp"
+            android:backgroundTint="#E2D2FF"
+            android:contentDescription="Invertir Valores"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:padding="20dp"
+            android:src="@drawable/sort_arrows"
+            android:focusable="true" />
 
         <LinearLayout
             android:id="@+id/ly2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:orientation="horizontal">
-
             <EditText
                 android:id="@+id/edit2"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:hint="0.00"
                 android:inputType="numberDecimal" />
-
             <Spinner
                 android:id="@+id/spinner2"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="30dp"
-                android:layout_weight="3" />
+                android:layout_weight="2" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btn"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="60dp"
-            android:text="Calcula"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
