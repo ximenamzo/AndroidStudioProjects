@@ -1,0 +1,378 @@
+if (code == "") {
+nombre = "";
+} else if (code == "") {
+nombre = "";
+}
+
+if (code == "") {
+nombre = "";
+} else if (code == "ADA") {
+nombre = "Dirham de Emiratos Árabes Unidos";
+} else if (code == "AED") {
+nombre = "Dirham de Dubái";
+} else if (code == "AFN") {
+nombre = "Afgani afgano";
+} else if (code == "ALL") {
+nombre = "Lek de Albania";
+} else if (code == "AMD") {
+nombre = "Dram armenio";
+} else if (code == "ANG") {
+nombre = "Florín holandés";
+} else if (code == "AOA") {
+nombre = "Kwanza angoleño";
+} else if (code == "ARB") {
+nombre = "Criptomoneda Arbitrum";
+} else if (code == "ARS") {
+nombre = "Peso argentino";
+} else if (code == "AUD") {
+nombre = "Dólar australiano";
+} else if (code == "AVAX") {
+nombre = "Criptomoneda Avalanche";
+} else if (code == "AWG") {
+nombre = "Florín arubeño";
+} else if (code == "AZN") {
+nombre = "Manat azerbaiyano";
+} else if (code == "BAM") {
+nombre = "Marco bosnioherzegovino";
+} else if (code == "BBD") {
+nombre = "Dólar de Barbados";
+} else if (code == "BDT") {
+nombre = "Taka de Bangladesh";
+} else if (code == "BGN") {
+nombre = "Lev de Bulgaria";
+} else if (code == "BHD") {
+nombre = "Dinar bareiní";
+} else if (code == "BIF") {
+nombre = "Franco burundés";
+} else if (code == "BMD") {
+nombre = "Dólar bermudeño";
+} else if (code == "BNB") {
+nombre = "Criptomoneda Binance";
+} else if (code == "BND") {
+nombre = "Dólar de Brunei";
+} else if (code == "BOB") {
+nombre = "Boliviano";
+} else if (code == "BRL") {
+nombre = "Real brasileño";
+} else if (code == "BSD") {
+nombre = "Dólar bahameño";
+} else if (code == "BTC") {
+nombre = "Bitcoin";
+} else if (code == "BTN") {
+nombre = "Ngultrum butanés";
+} else if (code == "BUSD") {
+nombre = "Criptomoneda Binance USD";
+} else if (code == "BWP") {
+nombre = "Pula de Botsuana";
+} else if (code == "BYN") {
+nombre = "Rublo bielorruso";
+} else if (code == "BYR") {
+nombre = "Belarusian Rubles";
+} else if (code == "BZD") {
+nombre = "Dólar beliceño";
+} else if (code == "CAD") {
+nombre = "Dólar canadiense";
+} else if (code == "CDF") {
+nombre = "Franco congoleño";
+} else if (code == "CHF") {
+nombre = "Franco suizo";
+} else if (code == "CLF") {
+nombre = "Unidad de Fomento";
+} else if (code == "CLP") {
+nombre = "Peso chileno";
+} else if (code == "CNY") {
+nombre = "Renminbi de China";
+} else if (code == "COP") {
+nombre = "Peso colombiano";
+} else if (code == "CRC") {
+nombre = "Colón costarricense";
+} else if (code == "CUC") {
+nombre = "Peso convertible de Cuba";
+} else if (code == "CUP") {
+nombre = "Peso cubano";
+} else if (code == "CVE") {
+nombre = "Escudo caboverdiano";
+} else if (code == "CZK") {
+nombre = "Czech Koruna";
+} else if (code == "DAI") {
+nombre = "Stablecoin por Ethereum";
+} else if (code == "DJF") {
+nombre = "Franco yibutiano";
+} else if (code == "DKK") {
+nombre = "Corona danesa";
+} else if (code == "DOP") {
+nombre = "Peso dominicano";
+} else if (code == "DOT") {
+nombre = "Criptomoneda Polkadot";
+} else if (code == "DZD") {
+nombre = "Dinar argelino";
+} else if (code == "EGP") {
+nombre = "Libra egipcia";
+} else if (code == "ERN") {
+nombre = "Nakfa de Eritrea";
+} else if (code == "ETB") {
+nombre = "Birr etíope";
+} else if (code == "ETH") {
+nombre = "Criptomoneda Ethereum";
+} else if (code == "EUR") {
+nombre = "Euro";
+} else if (code == "FJD") {
+nombre = "Dólar fiyiano";
+} else if (code == "FKP") {
+nombre = "Libra malvinense";
+} else if (code == "GBP") {
+nombre = "Libra esterlina";
+} else if (code == "GEL") {
+nombre = "Lari de Georgia";
+} else if (code == "GGP") {
+nombre = "Libra de Guernsey";
+} else if (code == "GHS") {
+nombre = "Cedi de Ghana";
+} else if (code == "GIP") {
+nombre = "Libra gibraltareña";
+} else if (code == "GMD") {
+nombre = "Dalasi de Gambia";
+} else if (code == "GNF") {
+nombre = "Franco guineano";
+} else if (code == "GTQ") {
+nombre = "Quetzal guatemalteco";
+} else if (code == "GYD") {
+nombre = "Dólar guyanés";
+} else if (code == "HKD") {
+nombre = "Dólar de Hong Kong";
+} else if (code == "HNL") {
+nombre = "Lempira hondureña";
+} else if (code == "HRK") {
+nombre = "Kuna croata";
+} else if (code == "HTG") {
+nombre = "Gourde haitiano";
+} else if (code == "HUF") {
+nombre = "Forinto húngaro";
+} else if (code == "IDR") {
+nombre = "Rupia indonesia";
+} else if (code == "ILS") {
+nombre = "Nuevo séquel israelí";
+} else if (code == "IMP") {
+nombre = "Libra de la Isla de Man";
+} else if (code == "INR") {
+nombre = "Rupia india";
+} else if (code == "IQD") {
+nombre = "Dinar iraquí ";
+} else if (code == "IRR") {
+nombre = "Rial iraní";
+} else if (code == "ISK") {
+nombre = "Corona islandesa";
+} else if (code == "JEP") {
+nombre = "Libra de Jersey";
+} else if (code == "JMD") {
+nombre = "Dólar jamaiquino";
+} else if (code == "JOD") {
+nombre = "Dinar jordano";
+} else if (code == "JPY") {
+nombre = "Yen japonés";
+} else if (code == "KES") {
+nombre = "Chelín keniano";
+} else if (code == "KGS") {
+nombre = "Som de Kirguistán";
+} else if (code == "KHR") {
+nombre = "Riel camboyano";
+} else if (code == "KMF") {
+nombre = "Franco comorense";
+} else if (code == "KPW") {
+nombre = "Won norcoreano";
+} else if (code == "KRW") {
+nombre = "Won surcoreano";
+} else if (code == "KWD") {
+nombre = "Dinar kuwaití";
+} else if (code == "KYD") {
+nombre = "Dólar de las Islas Cayman";
+} else if (code == "KZT") {
+nombre = "Tenge kazajo";
+} else if (code == "LAK") {
+nombre = "Kip laosiano";
+} else if (code == "LBP") {
+nombre = "Libra libanesa";
+} else if (code == "LKR") {
+nombre = "Rupia de Sri Lanka";
+} else if (code == "LRD") {
+nombre = "Dólar liberiano";
+} else if (code == "LSL") {
+nombre = "Loti de Lesoto";
+} else if (code == "LTC") {
+nombre = "Criptomoneda LiteCoin";
+} else if (code == "LTL") {
+nombre = "Litai lituano";
+} else if (code == "LVL") {
+nombre = "Lati letón";
+} else if (code == "LYD") {
+nombre = "Dinar libio";
+} else if (code == "MAD") {
+nombre = "Dírham marroquí";
+} else if (code == "MATIC") {
+nombre = "Criptomoneda Polygon";
+} else if (code == "MDL") {
+nombre = "Leu Moldavo";
+} else if (code == "MGA") {
+nombre = "Ariary malgache";
+} else if (code == "MKD") {
+nombre = "Dinar de Macedonia";
+} else if (code == "MMK") {
+nombre = "Kyat birmano";
+} else if (code == "MNT") {
+nombre = "Tugrik de Mongolia";
+} else if (code == "MOP") {
+nombre = "Pataca de Macao";
+} else if (code == "MRO") {
+nombre = "Uguiya de Mauritania";
+} else if (code == "MUR") {
+nombre = "Rupia de Mauricio";
+} else if (code == "MVR") {
+nombre = "Rupia de maldivas";
+} else if (code == "MWK") {
+nombre = "Kwacha malauí";
+} else if (code == "MXN") {
+nombre = "Peso mexicano";
+} else if (code == "MYR") {
+nombre = "Ringgit malayo";
+} else if (code == "MZN") {
+nombre = "Metical mozambiqueño";
+} else if (code == "NAD") {
+nombre = "Dólar de Namibia";
+} else if (code == "NGN") {
+nombre = "Naira nigeriano";
+} else if (code == "NIO") {
+nombre = "Córdoba oro nicaraguense";
+} else if (code == "NOK") {
+nombre = "Corona noruega";
+} else if (code == "NPR") {
+nombre = "Rupia nepalí";
+} else if (code == "NZD") {
+nombre = "Dólar neozelandés";
+} else if (code == "OMR") {
+nombre = "Rial omaní";
+} else if (code == "OP") {
+nombre = "Criptomoneda Optimism Crypto";
+} else if (code == "PAB") {
+nombre = "Balboa de Panamá";
+} else if (code == "PEN") {
+nombre = "Nuevo Sol peruano";
+} else if (code == "PGK") {
+nombre = "Kina de Papúa Nueva Guinea";
+} else if (code == "PHP") {
+nombre = "Peso filipino";
+} else if (code == "PKR") {
+nombre = "Rupia pakistaní";
+} else if (code == "PLN") {
+nombre = "Zloty de Polonia";
+} else if (code == "PYG") {
+nombre = "Guaraní de Paraguay";
+} else if (code == "QAR") {
+nombre = "Riyal catarí";
+} else if (code == "RON") {
+nombre = "Leu rumano";
+} else if (code == "RSD") {
+nombre = "Dinar serbio";
+} else if (code == "RUB") {
+nombre = "Rublo ruso";
+} else if (code == "RWF") {
+nombre = "Franco ruandés";
+} else if (code == "SAR") {
+nombre = "Riyal saudí";
+} else if (code == "SBD") {
+nombre = "Dólar de Islas Salomón";
+} else if (code == "SCR") {
+nombre = "Rupia de Seychelles";
+} else if (code == "SDG") {
+nombre = "Libra sudanesa";
+} else if (code == "SEK") {
+nombre = "Corona sueca";
+} else if (code == "SGD") {
+nombre = "Dólar de Singapur";
+} else if (code == "SHP") {
+nombre = "Libra de Santa Helena";
+} else if (code == "SLL") {
+nombre = "Leone de Sierra Leona";
+} else if (code == "SOL") {
+nombre = "Criptomoneda Solana";
+} else if (code == "SOS") {
+nombre = "Chelín somalí";
+} else if (code == "SRD") {
+nombre = "Dólar de Surinam";
+} else if (code == "STD") {
+nombre = "Dobra de San Tomé y Príncipe";
+} else if (code == "SVC") {
+nombre = "Colón de El Salvador";
+} else if (code == "SYP") {
+nombre = "Libra siria";
+} else if (code == "SZL") {
+nombre = "Lilangeni";
+} else if (code == "THB") {
+nombre = "Baht tailandés";
+} else if (code == "TJS") {
+nombre = "Somoni de Tajikistán";
+} else if (code == "TMT") {
+nombre = "Manat turcomano";
+} else if (code == "TND") {
+nombre = "Dinar tunecino";
+} else if (code == "TOP") {
+nombre = "Pa’anga de Tonga";
+} else if (code == "TRY") {
+nombre = "Lira turca";
+} else if (code == "TTD") {
+nombre = "Dólar de Trinidad y Tobago";
+} else if (code == "TWD") {
+nombre = "Nuevo dólar de Taiwán";
+} else if (code == "TZS") {
+nombre = "Chelín tanzano";
+} else if (code == "UAH") {
+nombre = "Grivnia de Ucrania";
+} else if (code == "UGX") {
+nombre = "Chelín ugandés";
+} else if (code == "USD") {
+nombre = "Dólar estadounidense";
+} else if (code == "USDC") {
+nombre = "Criptomoneda StableCoin";
+} else if (code == "USDT") {
+nombre = "Criptomoneda Tether";
+} else if (code == "UYU") {
+nombre = "Peso uruguayo";
+} else if (code == "UZS") {
+nombre = "Som uzbeko";
+} else if (code == "VEF") {
+nombre = "Bolívar venezolano";
+} else if (code == "VND") {
+nombre = "Dong vietnamita";
+} else if (code == "VUV") {
+nombre = "Vatu de Vanuatu";
+} else if (code == "WST") {
+nombre = "Tala de Samoa";
+} else if (code == "XAF") {
+nombre = "Franco CFA de África Central";
+} else if (code == "XAG") {
+nombre = "Plata gramo";
+} else if (code == "XAU") {
+nombre = "Oro gramo";
+} else if (code == "XCD") {
+nombre = "Dólar del Caribe Oriental";
+} else if (code == "XDR") {
+nombre = "SDR (Derecho Especial de Retiro)";
+} else if (code == "XOF") {
+nombre = "Franco CFA de África Occidental";
+} else if (code == "XPD") {
+nombre = "Onza de Paladio";
+} else if (code == "XPF") {
+nombre = "Franco CFP";
+} else if (code == "XPT") {
+nombre = "Onza de platino";
+} else if (code == "XRP") {
+nombre = "Criptomoneda Ledger (antes Ripple)";
+} else if (code == "YER") {
+nombre = "Rial de Yemen";
+} else if (code == "ZAR") {
+nombre = "Rand africano";
+} else if (code == "ZMK") {
+nombre = "Kwacha zambiano anterior";
+} else if (code == "ZMW") {
+nombre = "Kwacha zambiano actual";
+} else if (code == "ZWL") {
+nombre = "Dólar zimbabuense";}

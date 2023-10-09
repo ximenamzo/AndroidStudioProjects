@@ -17,25 +17,37 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/ly1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/edit1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="3"
-                android:hint="0.00"
-                android:inputType="numberDecimal" />
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_weight="2" />
+            android:orientation="vertical"
+            android:layout_marginTop="100dp">
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre Moneda"
+                android:textSize="18sp"
+                android:layout_marginHorizontal="30dp"/>
+            <LinearLayout
+                android:id="@+id/ly1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/edit1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="3"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal" />
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_weight="2" />
+            </LinearLayout>
         </LinearLayout>
 
         <ImageButton
@@ -54,6 +66,17 @@
             android:src="@drawable/sort_arrows"
             android:focusable="true" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre Moneda"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="30dp"/>
         <LinearLayout
             android:id="@+id/ly2"
             android:layout_width="match_parent"
@@ -73,6 +96,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="30dp"
                 android:layout_weight="2" />
+        </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

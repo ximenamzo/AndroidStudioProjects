@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String API_BASE_URL = "https://api.currencyapi.com/v3/";
     private static final String API_KEY = "cur_live_6ZNhaifAhEyKuZPIce9EA43LDjIrKqNKEepmIlYw";
     EditText etx1, etx2;
+    TextView txt1, txt2;
     Spinner spn1, spn2;
     ImageButton btn;
     ApiService apiService; // interfaz
@@ -41,10 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etx1 = findViewById(R.id.edit1);
-        etx2 = findViewById(R.id.edit2);
-        spn1 = findViewById(R.id.spinner1);
-        spn2 = findViewById(R.id.spinner2);
+        etx1 = (EditText) findViewById(R.id.edit1);
+        etx2 = (EditText) findViewById(R.id.edit2);
+        txt1 = (TextView) findViewById(R.id.txt1);
+        txt2 = (TextView) findViewById(R.id.txt2);
+        spn1 = (Spinner) findViewById(R.id.spinner1);
+        spn2 = (Spinner) findViewById(R.id.spinner2);
         etx1.addTextChangedListener(this);
         etx2.addTextChangedListener(this);
 
@@ -131,8 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (etx1.isFocused()) {
             // Si estan escribiendo en etx1 se hace la conversión a etx2
-            convertirDivisa(etx1, etx2, spn1, spn2);
-        } else if (etx2.isFocused()) {
+            convertirDivisa(etx1, etx2, spn1, spn2); } else if (etx2.isFocused()) {
             // Si estan escribiendo en etx2 ahora se escribe la conversión en etx1
             convertirDivisa(etx2, etx1, spn2, spn1);
         }
@@ -195,8 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("DEBUG", origen + " vacio.");
                     }
                 }
-            }.execute();
-        } catch (NumberFormatException e) {
+            }.execute(); } catch (NumberFormatException e) {
             // Logs debug para ver errores pero salen si es vacío entonces lo quito
                 // Manejo de excepciones si se ingresa una cantidad no válida
                 // Log.w("WARNINGX", "(207) Number Format Exception.");
@@ -250,5 +252,196 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Call<ApiResponse> getCurrencyData();
         // Representa la solicitud HTTP enviada al servidor
            // La respuesta se espera que sea un objeto de tipo ApiResponse
+    }
+    
+    public String obtenerNombre(String code){
+        String nombre = null;
+        if (code.isEmpty()) { nombre = ""; } 
+            else if (code.equals("ADA")) { nombre = "Dirham de Emiratos Árabes Unidos"; } 
+            else if (code.equals("AED")) { nombre = "Dirham de Dubái"; } 
+            else if (code.equals("AFN")) { nombre = "Afgani afgano"; } 
+            else if (code.equals("ALL")) { nombre = "Lek de Albania"; } 
+            else if (code.equals("AMD")) { nombre = "Dram armenio"; } 
+            else if (code.equals("ANG")) { nombre = "Florín holandés"; } 
+            else if (code.equals("AOA")) { nombre = "Kwanza angoleño"; } 
+            else if (code.equals("ARB")) { nombre = "Criptomoneda Arbitrum"; } 
+            else if (code.equals("ARS")) { nombre = "Peso argentino"; } 
+            else if (code.equals("AUD")) { nombre = "Dólar australiano"; } 
+            else if (code.equals("AVAX")) { nombre = "Criptomoneda Avalanche"; } 
+            else if (code.equals("AWG")) { nombre = "Florín arubeño"; } 
+            else if (code.equals("AZN")) { nombre = "Manat azerbaiyano"; } 
+            else if (code.equals("BAM")) { nombre = "Marco bosnioherzegovino"; } 
+            else if (code.equals("BBD")) { nombre = "Dólar de Barbados"; } 
+            else if (code.equals("BDT")) { nombre = "Taka de Bangladesh"; } 
+            else if (code.equals("BGN")) { nombre = "Lev de Bulgaria"; } 
+            else if (code.equals("BHD")) { nombre = "Dinar bareiní"; } 
+            else if (code.equals("BIF")) { nombre = "Franco burundés"; } 
+            else if (code.equals("BMD")) { nombre = "Dólar bermudeño"; } 
+            else if (code.equals("BNB")) { nombre = "Criptomoneda Binance"; } 
+            else if (code.equals("BND")) { nombre = "Dólar de Brunei"; } 
+            else if (code.equals("BOB")) { nombre = "Boliviano"; } 
+            else if (code.equals("BRL")) { nombre = "Real brasileño"; } 
+            else if (code.equals("BSD")) { nombre = "Dólar bahameño"; } 
+            else if (code.equals("BTC")) { nombre = "Bitcoin"; } 
+            else if (code.equals("BTN")) { nombre = "Ngultrum butanés"; } 
+            else if (code.equals("BUSD")) { nombre = "Criptomoneda Binance USD"; } 
+            else if (code.equals("BWP")) { nombre = "Pula de Botsuana"; } 
+            else if (code.equals("BYN")) { nombre = "Rublo bielorruso"; } 
+            else if (code.equals("BYR")) { nombre = "Belarusian Rubles"; } 
+            else if (code.equals("BZD")) { nombre = "Dólar beliceño"; } 
+            else if (code.equals("CAD")) { nombre = "Dólar canadiense"; } 
+            else if (code.equals("CDF")) { nombre = "Franco congoleño"; } 
+            else if (code.equals("CHF")) { nombre = "Franco suizo"; } 
+            else if (code.equals("CLF")) { nombre = "Unidad de Fomento"; } 
+            else if (code.equals("CLP")) { nombre = "Peso chileno"; } 
+            else if (code.equals("CNY")) { nombre = "Renminbi de China"; } 
+            else if (code.equals("COP")) { nombre = "Peso colombiano"; } 
+            else if (code.equals("CRC")) { nombre = "Colón costarricense"; } 
+            else if (code.equals("CUC")) { nombre = "Peso convertible de Cuba"; } 
+            else if (code.equals("CUP")) { nombre = "Peso cubano"; } 
+            else if (code.equals("CVE")) { nombre = "Escudo caboverdiano"; } 
+            else if (code.equals("CZK")) { nombre = "Czech Koruna"; } 
+            else if (code.equals("DAI")) { nombre = "Stablecoin por Ethereum"; } 
+            else if (code.equals("DJF")) { nombre = "Franco yibutiano"; } 
+            else if (code.equals("DKK")) { nombre = "Corona danesa"; } 
+            else if (code.equals("DOP")) { nombre = "Peso dominicano"; } 
+            else if (code.equals("DOT")) { nombre = "Criptomoneda Polkadot"; } 
+            else if (code.equals("DZD")) { nombre = "Dinar argelino"; } 
+            else if (code.equals("EGP")) { nombre = "Libra egipcia"; } 
+            else if (code.equals("ERN")) { nombre = "Nakfa de Eritrea"; } 
+            else if (code.equals("ETB")) { nombre = "Birr etíope"; } 
+            else if (code.equals("ETH")) { nombre = "Criptomoneda Ethereum"; } 
+            else if (code.equals("EUR")) { nombre = "Euro"; } 
+            else if (code.equals("FJD")) { nombre = "Dólar fiyiano"; } 
+            else if (code.equals("FKP")) { nombre = "Libra malvinense"; } 
+            else if (code.equals("GBP")) { nombre = "Libra esterlina"; } 
+            else if (code.equals("GEL")) { nombre = "Lari de Georgia"; } 
+            else if (code.equals("GGP")) { nombre = "Libra de Guernsey"; } 
+            else if (code.equals("GHS")) { nombre = "Cedi de Ghana"; } 
+            else if (code.equals("GIP")) { nombre = "Libra gibraltareña"; } 
+            else if (code.equals("GMD")) { nombre = "Dalasi de Gambia"; } 
+            else if (code.equals("GNF")) { nombre = "Franco guineano"; } 
+            else if (code.equals("GTQ")) { nombre = "Quetzal guatemalteco"; } 
+            else if (code.equals("GYD")) { nombre = "Dólar guyanés"; } 
+            else if (code.equals("HKD")) { nombre = "Dólar de Hong Kong"; } 
+            else if (code.equals("HNL")) { nombre = "Lempira hondureña"; } 
+            else if (code.equals("HRK")) { nombre = "Kuna croata"; } 
+            else if (code.equals("HTG")) { nombre = "Gourde haitiano"; } 
+            else if (code.equals("HUF")) { nombre = "Forinto húngaro"; } 
+            else if (code.equals("IDR")) { nombre = "Rupia indonesia"; } 
+            else if (code.equals("ILS")) { nombre = "Nuevo séquel israelí"; } 
+            else if (code.equals("IMP")) { nombre = "Libra de la Isla de Man"; } 
+            else if (code.equals("INR")) { nombre = "Rupia india"; } 
+            else if (code.equals("IQD")) { nombre = "Dinar iraquí "; } 
+            else if (code.equals("IRR")) { nombre = "Rial iraní"; } 
+            else if (code.equals("ISK")) { nombre = "Corona islandesa"; } 
+            else if (code.equals("JEP")) { nombre = "Libra de Jersey"; } 
+            else if (code.equals("JMD")) { nombre = "Dólar jamaiquino"; } 
+            else if (code.equals("JOD")) { nombre = "Dinar jordano"; } 
+            else if (code.equals("JPY")) { nombre = "Yen japonés"; } 
+            else if (code.equals("KES")) { nombre = "Chelín keniano"; } 
+            else if (code.equals("KGS")) { nombre = "Som de Kirguistán"; } 
+            else if (code.equals("KHR")) { nombre = "Riel camboyano"; } 
+            else if (code.equals("KMF")) { nombre = "Franco comorense"; } 
+            else if (code.equals("KPW")) { nombre = "Won norcoreano"; } 
+            else if (code.equals("KRW")) { nombre = "Won surcoreano"; } 
+            else if (code.equals("KWD")) { nombre = "Dinar kuwaití"; } 
+            else if (code.equals("KYD")) { nombre = "Dólar de las Islas Cayman"; } 
+            else if (code.equals("KZT")) { nombre = "Tenge kazajo"; } 
+            else if (code.equals("LAK")) { nombre = "Kip laosiano"; } 
+            else if (code.equals("LBP")) { nombre = "Libra libanesa"; } 
+            else if (code.equals("LKR")) { nombre = "Rupia de Sri Lanka"; } 
+            else if (code.equals("LRD")) { nombre = "Dólar liberiano"; } 
+            else if (code.equals("LSL")) { nombre = "Loti de Lesoto"; } 
+            else if (code.equals("LTC")) { nombre = "Criptomoneda LiteCoin"; } 
+            else if (code.equals("LTL")) { nombre = "Litai lituano"; } 
+            else if (code.equals("LVL")) { nombre = "Lati letón"; } 
+            else if (code.equals("LYD")) { nombre = "Dinar libio"; } 
+            else if (code.equals("MAD")) { nombre = "Dírham marroquí"; } 
+            else if (code.equals("MATIC")) { nombre = "Criptomoneda Polygon"; } 
+            else if (code.equals("MDL")) { nombre = "Leu Moldavo"; } 
+            else if (code.equals("MGA")) { nombre = "Ariary malgache"; } 
+            else if (code.equals("MKD")) { nombre = "Dinar de Macedonia"; } 
+            else if (code.equals("MMK")) { nombre = "Kyat birmano"; } 
+            else if (code.equals("MNT")) { nombre = "Tugrik de Mongolia"; } 
+            else if (code.equals("MOP")) { nombre = "Pataca de Macao"; } 
+            else if (code.equals("MRO")) { nombre = "Uguiya de Mauritania"; } 
+            else if (code.equals("MUR")) { nombre = "Rupia de Mauricio"; } 
+            else if (code.equals("MVR")) { nombre = "Rupia de maldivas"; } 
+            else if (code.equals("MWK")) { nombre = "Kwacha malauí"; } 
+            else if (code.equals("MXN")) { nombre = "Peso mexicano"; } 
+            else if (code.equals("MYR")) { nombre = "Ringgit malayo"; } 
+            else if (code.equals("MZN")) { nombre = "Metical mozambiqueño"; } 
+            else if (code.equals("NAD")) { nombre = "Dólar de Namibia"; } 
+            else if (code.equals("NGN")) { nombre = "Naira nigeriano"; } 
+            else if (code.equals("NIO")) { nombre = "Córdoba oro nicaraguense"; } 
+            else if (code.equals("NOK")) { nombre = "Corona noruega"; } 
+            else if (code.equals("NPR")) { nombre = "Rupia nepalí"; } 
+            else if (code.equals("NZD")) { nombre = "Dólar neozelandés"; } 
+            else if (code.equals("OMR")) { nombre = "Rial omaní"; } 
+            else if (code.equals("OP")) { nombre = "Criptomoneda Optimism Crypto"; } 
+            else if (code.equals("PAB")) { nombre = "Balboa de Panamá"; } 
+            else if (code.equals("PEN")) { nombre = "Nuevo Sol peruano"; } 
+            else if (code.equals("PGK")) { nombre = "Kina de Papúa Nueva Guinea"; } 
+            else if (code.equals("PHP")) { nombre = "Peso filipino"; } 
+            else if (code.equals("PKR")) { nombre = "Rupia pakistaní"; } 
+            else if (code.equals("PLN")) { nombre = "Zloty de Polonia"; } 
+            else if (code.equals("PYG")) { nombre = "Guaraní de Paraguay"; } 
+            else if (code.equals("QAR")) { nombre = "Riyal catarí"; } 
+            else if (code.equals("RON")) { nombre = "Leu rumano"; } 
+            else if (code.equals("RSD")) { nombre = "Dinar serbio"; } 
+            else if (code.equals("RUB")) { nombre = "Rublo ruso"; } 
+            else if (code.equals("RWF")) { nombre = "Franco ruandés"; } 
+            else if (code.equals("SAR")) { nombre = "Riyal saudí"; } 
+            else if (code.equals("SBD")) { nombre = "Dólar de Islas Salomón"; } 
+            else if (code.equals("SCR")) { nombre = "Rupia de Seychelles"; } 
+            else if (code.equals("SDG")) { nombre = "Libra sudanesa"; } 
+            else if (code.equals("SEK")) { nombre = "Corona sueca"; } 
+            else if (code.equals("SGD")) { nombre = "Dólar de Singapur"; } 
+            else if (code.equals("SHP")) { nombre = "Libra de Santa Helena"; } 
+            else if (code.equals("SLL")) { nombre = "Leone de Sierra Leona"; } 
+            else if (code.equals("SOL")) { nombre = "Criptomoneda Solana"; } 
+            else if (code.equals("SOS")) { nombre = "Chelín somalí"; } 
+            else if (code.equals("SRD")) { nombre = "Dólar de Surinam"; } 
+            else if (code.equals("STD")) { nombre = "Dobra de San Tomé y Príncipe"; } 
+            else if (code.equals("SVC")) { nombre = "Colón de El Salvador"; } 
+            else if (code.equals("SYP")) { nombre = "Libra siria"; } 
+            else if (code.equals("SZL")) { nombre = "Lilangeni"; } 
+            else if (code.equals("THB")) { nombre = "Baht tailandés"; } 
+            else if (code.equals("TJS")) { nombre = "Somoni de Tajikistán"; } 
+            else if (code.equals("TMT")) { nombre = "Manat turcomano"; } 
+            else if (code.equals("TND")) { nombre = "Dinar tunecino"; } 
+            else if (code.equals("TOP")) { nombre = "Pa’anga de Tonga"; } 
+            else if (code.equals("TRY")) { nombre = "Lira turca"; } 
+            else if (code.equals("TTD")) { nombre = "Dólar de Trinidad y Tobago"; } 
+            else if (code.equals("TWD")) { nombre = "Nuevo dólar de Taiwán"; } 
+            else if (code.equals("TZS")) { nombre = "Chelín tanzano"; } 
+            else if (code.equals("UAH")) { nombre = "Grivnia de Ucrania"; } 
+            else if (code.equals("UGX")) { nombre = "Chelín ugandés"; } 
+            else if (code.equals("USD")) { nombre = "Dólar estadounidense"; } 
+            else if (code.equals("USDC")) { nombre = "Criptomoneda StableCoin"; } 
+            else if (code.equals("USDT")) { nombre = "Criptomoneda Tether"; } 
+            else if (code.equals("UYU")) { nombre = "Peso uruguayo"; } 
+            else if (code.equals("UZS")) { nombre = "Som uzbeko"; } 
+            else if (code.equals("VEF")) { nombre = "Bolívar venezolano"; } 
+            else if (code.equals("VND")) { nombre = "Dong vietnamita"; } 
+            else if (code.equals("VUV")) { nombre = "Vatu de Vanuatu"; } 
+            else if (code.equals("WST")) { nombre = "Tala de Samoa"; } 
+            else if (code.equals("XAF")) { nombre = "Franco CFA de África Central"; } 
+            else if (code.equals("XAG")) { nombre = "Plata gramo"; } 
+            else if (code.equals("XAU")) { nombre = "Oro gramo"; } 
+            else if (code.equals("XCD")) { nombre = "Dólar del Caribe Oriental"; } 
+            else if (code.equals("XDR")) { nombre = "SDR (Derecho Especial de Retiro)"; } 
+            else if (code.equals("XOF")) { nombre = "Franco CFA de África Occidental"; } 
+            else if (code.equals("XPD")) { nombre = "Onza de Paladio"; } 
+            else if (code.equals("XPF")) { nombre = "Franco CFP"; } 
+            else if (code.equals("XPT")) { nombre = "Onza de platino"; } 
+            else if (code.equals("XRP")) { nombre = "Criptomoneda Ledger (antes Ripple)"; } 
+            else if (code.equals("YER")) { nombre = "Rial de Yemen"; } 
+            else if (code.equals("ZAR")) { nombre = "Rand africano"; } 
+            else if (code.equals("ZMK")) { nombre = "Kwacha zambiano anterior"; } 
+            else if (code.equals("ZMW")) { nombre = "Kwacha zambiano actual"; } 
+            else if (code.equals("ZWL")) { nombre = "Dólar zimbabuense";
+        } return nombre;
     }
 }
