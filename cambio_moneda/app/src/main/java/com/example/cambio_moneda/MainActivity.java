@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -126,6 +127,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
                 Log.e("ERRORX", "(123) Error de red durante la llamada a la API: " + t.getMessage());
             }
+        });
+
+        // Para poner titulos
+        spn1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String code = spn1.getSelectedItem().toString();
+                String nombre = obtenerNombre(code);
+                txt1.setText(nombre); }
+            @Override public void onNothingSelected(AdapterView<?> parentView) {}
+        });
+        spn2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String code = spn2.getSelectedItem().toString();
+                String nombre = obtenerNombre(code);
+                txt2.setText(nombre); }
+            @Override public void onNothingSelected(AdapterView<?> parentView) {}
         });
     }
 
