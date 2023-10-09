@@ -6,9 +6,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.math.BigDecimal;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         etx1 = (EditText) findViewById(R.id.edit1);
         etx2 = (EditText) findViewById(R.id.edit2);
+        etx2.setEnabled(false);etx2.setFocusable(false);etx2.setClickable(false);
         txt1 = (TextView) findViewById(R.id.txt1);
         txt2 = (TextView) findViewById(R.id.txt2);
         spn1 = (Spinner) findViewById(R.id.spinner1);
@@ -53,7 +55,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn = (Button) findViewById(R.id.btn);
-        btn.setOnClickListener(view -> convertirUnidades());
+        btn.setOnClickListener(view -> {
+            String aux = String.valueOf(etx1.getText());
+            if (!aux.isEmpty()){
+                convertirUnidades();
+            } else { Toast.makeText(MainActivity.this, "Escribe un valor para convertir!", Toast.LENGTH_SHORT).show(); }
+        });
     }
 
     private void convertirUnidades() {
