@@ -25,7 +25,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Estado:"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
                 <Spinner
                     android:id="@+id/spn_estado"
                     android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Municipio:"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
                 <Spinner
                     android:id="@+id/spn_municipio"
                     android:layout_width="wrap_content"
@@ -49,53 +49,26 @@
         </LinearLayout>
 
         <!-- F E C H A  -->
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtfecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:foregroundGravity="right"
-                android:gravity="right"
-                android:text="Fecha:"
-                android:textSize="18sp"
-                android:paddingRight="10dp"/>
-            <TextView
-                android:id="@+id/txtfecha"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:text="Miércoles 31 de Septiembre de 2023"
-                android:textSize="18sp"/>
-        </LinearLayout>
+            android:text="Miércoles 31 de Septiembre de 2023"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"/>
 
 
         <!-- L U G A R : municipio y estado  -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:foregroundGravity="right"
-                android:gravity="right"
-                android:text="Lugar:"
-                android:textSize="18sp"
-                android:paddingRight="10dp"/>
             <TextView
                 android:id="@+id/txtlugar"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
                 android:text="Heroica Ciudad de Juchitán de Zaragoza, Oaxaca."
-                android:textSize="18sp"/>
-        </LinearLayout>
+                android:textSize="22sp"
+                android:paddingHorizontal="30dp"
+                android:gravity="center"
+                android:layout_marginTop="20dp"/>
 
         <!-- L A T I T U D    Y    L O N G I T U D -->
         <LinearLayout
@@ -125,11 +98,11 @@
 
         <!-- C I E L O  -->
             <TextView
-                android:id="@+id/txtcieloynubes"
+                android:id="@+id/txtcielo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Cielo nublado - cobertura de nubes del 90.51%"
+                android:text="Ahora mismo hay lluvia ligera."
                 android:textSize="18sp"
                 android:layout_marginTop="30dp"
                 android:paddingHorizontal="20dp"/>
@@ -137,52 +110,60 @@
 
         <!-- T E M P E R A T U R A  -->
         <TextView
+            android:id="@+id/txttemp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:foregroundGravity="right"
             android:gravity="center"
-            android:text="Temperatura"
+            android:text="Temperatura actual: 99.99 °C"
             android:textSize="19sp" />
+        <TextView
+            android:id="@+id/txtsensacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Sensación térmica de 100 °C"
+            android:textSize="14sp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-            android:paddingHorizontal="15dp">
+            android:layout_marginTop="15dp"
+            android:paddingHorizontal="20dp">
             <TextView
                 android:id="@+id/txttempmin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Mínima\n-100°C"
-                android:textSize="18sp"/>
+                android:text="Temp. Mínima\n-100°C"
+                android:textSize="16sp"/>
             <TextView
                 android:id="@+id/txttempmax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Máxima\n100 °C"
-                android:textSize="18sp"/>
+                android:text="Temp. Máxima\n100 °C"
+                android:textSize="16sp"/>
         </LinearLayout>
-
-
-        <!-- T E M P E R A T U R A  -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:foregroundGravity="right"
-            android:gravity="center"
-            android:text="Precipitación"
-            android:textSize="18sp" />
+            android:gravity="left"
+            android:text="*Temperatura máxima y mínima de las próximas 24 horas."
+            android:textSize="11sp"
+            android:paddingLeft="25dp"
+            android:layout_marginTop="7dp"/>
+
+
+        <!-- O T R O S  -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="30dp"
             android:paddingHorizontal="15dp">
             <TextView
                 android:id="@+id/txtprepor"
@@ -191,32 +172,44 @@
                 android:layout_weight="5"
                 android:gravity="center"
                 android:text="Probabilidad de\nlluvia del 95.00%"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
             <TextView
                 android:id="@+id/txtprelit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="center"
-                android:text="Caída de\n90.00 litros/m2"
-                android:textSize="18sp"/>
+                android:text="Volumen de lluvia: 10.17mm (últ. 3hrs)"
+                android:textSize="16sp"/>
         </LinearLayout>
-
-
-        <!-- V I E N T O  -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:foregroundGravity="right"
-            android:gravity="center"
-            android:text="Viento"
-            android:textSize="18sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="15dp">
+            <TextView
+                android:id="@+id/txtnub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Nubosidad: 95.00%"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/txthum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Humedad: 95.00%"
+                android:textSize="16sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
             android:paddingHorizontal="15dp">
             <TextView
                 android:id="@+id/txtvievel"
@@ -224,16 +217,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="center"
-                android:text="Velocidad de\n9.99 km/h"
-                android:textSize="18sp"/>
+                android:text="Velocidad del viento\nde 9.99 km/h"
+                android:textSize="16sp"/>
             <TextView
                 android:id="@+id/txtviegradir"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="center"
-                android:text="Dirección a 53.02°\nSuroeste"
-                android:textSize="18sp"/>
+                android:text="Dirección del viento al Suroeste a 53.02°"
+                android:textSize="16sp"/>
         </LinearLayout>
 
     </LinearLayout>
