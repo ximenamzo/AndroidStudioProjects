@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,24 +16,25 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String URL_BASE = "https://api.openweathermap.org/data/2.5/";
     private static final String API_KEY = "b671cc4ecb7f9a993eef15559b270e24";
-    //https://api.openweathermap.org/data/2.5/weather?lat=19.0532&lon=-104.3164&appid=b671cc4ecb7f9a993eef15559b270e24
+    //https://api.openweathermap.org/data/2.5/weather?lat=19.0532&lon=-104.3164&lang=es&appid=b671cc4ecb7f9a993eef15559b270e24
+    //https://api.openweathermap.org/data/2.5/forecast?lat=19.0532&lon=-104.3164&lang=es&appid=b671cc4ecb7f9a993eef15559b270e24
     TextView txtfecha, txtlugar, txtlat, txtlon, txtcieloynubes, txttempmin, txttempmax,
             txtprepro, txtprelit, txtvievel, txtviegradir;
     Spinner spne, spnm;
-    String estado="", municipio="";
+    String estado="", municipio="", latitud="", longitud="";
     private JSONArray lugaresArray;
 
     @Override
@@ -56,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
         spnm = findViewById(R.id.spn_municipio);
 
         try {
-            // Cargar el archivo JSON local
+            // Cargo el JSON local con estados y municipios de México para que me den latitud y longitud
+            // JSON descargado de https://smn.conagua.gob.mx/es/web-service-api 
+                // (ya no sirve como API, solo se descarga un comprimido .gz con el JSON)
             InputStream is = getAssets().open("lugares.json");
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -64,84 +67,80 @@ public class MainActivity extends AppCompatActivity {
             is.close();
             String json = new String(buffer, "UTF-8");
             lugaresArray = new JSONArray(json);
-            Log.e("DEBUGXX", "(67) Json Local: " + lugaresArray);
+            Log.d("DEBUGXX", "(69) Json Local: " + lugaresArray);
 
-            // Llenar spne con los estados
+            // Uso el Set para no repetir elementos
             Set<String> estadosSet = new HashSet<>();
             for (int i = 0; i < lugaresArray.length(); i++) {
                 JSONObject lugar = lugaresArray.getJSONObject(i);
                 estadosSet.add(lugar.getString("nes"));
             }
+            // Lleno Spinner de Estados con los nombres de estados
             List<String> estadosList = new ArrayList<>(estadosSet);
-            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, estadosList);
-            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spne.setAdapter(adapter1);
+            Collections.sort(estadosList);
+            Log.d("DEBUGXX", "(80) Lista de los estados: " + estadosList);
+            ArrayAdapter<String> adapterEstados = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, estadosList);
+            adapterEstados.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spne.setAdapter(adapterEstados);
 
-            // Configurar un listener para spne
+            // Listener que dependiendo del estado seleccionado, colocar sus respectivos municipios
             spne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    String selectedEstado = (String) parentView.getItemAtPosition(position);
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int posicion, long id) {
+                    estado = (String) parentView.getItemAtPosition(posicion);
                     // Llenar spnm con los municipios correspondientes al estado seleccionado
-                    fillspnm(selectedEstado);
+                    llenarMunicipios(estado);
                 }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    // Manejar el caso cuando no se ha seleccionado ningún estado
-                }
+                @Override public void onNothingSelected(AdapterView<?> parentView){}
             });
 
-            // Establecer los valores predeterminados para spne y spnm
-            spne.setSelection(estadosList.indexOf("Colima")); // Predeterminado: Colima
-            fillspnm("Colima"); // Llena automáticamente spnm con los municipios de Colima
-
+            // Valores predeterminados
+            spne.setSelection(estadosList.indexOf("Colima"));
+            llenarMunicipios("Colima");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Configurar un listener para spnm (para obtener latitud y longitud)
+        // Ya con el municipio seleccionado puedo obtener la latitud y la longitud de mi JSON local
         spnm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String selectedMunicipio = (String) parentView.getItemAtPosition(position);
-                // Obtener latitud y longitud del municipio seleccionado
-                getLatLongFromMunicipio(selectedMunicipio);
+                municipio = (String) parentView.getItemAtPosition(position);
+                // Traigo la latitud y la longitud del municipio seleccionado (con JSON local)
+                obtenerLatitudLongitud(municipio);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Manejar el caso cuando no se ha seleccionado ningún municipio
-            }
+            @Override public void onNothingSelected(AdapterView<?> parentView) {}
         });
     }
 
-    private void fillspnm(String selectedEstado) {
+    private void llenarMunicipios(String estado) {
         List<String> municipiosList = new ArrayList<>();
         for (int i = 0; i < lugaresArray.length(); i++) {
             try {
                 JSONObject lugar = lugaresArray.getJSONObject(i);
-                if (lugar.getString("nes").equals(selectedEstado)) {
+                if (lugar.getString("nes").equals(estado)) {
                     municipiosList.add(lugar.getString("nmun"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        Collections.sort(municipiosList);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, municipiosList);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnm.setAdapter(adapter2);
     }
 
-    private void getLatLongFromMunicipio(String selectedMunicipio) {
+    private void obtenerLatitudLongitud(String municipio) {
         try {
             for (int i = 0; i < lugaresArray.length(); i++) {
                 JSONObject lugar = lugaresArray.getJSONObject(i);
-                if (lugar.getString("nmun").equals(selectedMunicipio)) {
-                    String latitud = lugar.getString("lat");
-                    String longitud = lugar.getString("lon");
-                    // Ahora tienes la latitud y longitud, puedes realizar la solicitud a la API
-                    getWeatherData(latitud, longitud);
+                // Si en el JSON 'lugar' encuentra el estado y el municipio entoncesss...
+                if (lugar.getString("nes").equals(estado) && lugar.getString("nmun").equals(municipio)) {
+                    latitud = lugar.getString("lat");
+                    longitud = lugar.getString("lon");
+                    // Con estos datos puedo acceder a la API
+                    datosOpenWeatherApi(latitud, longitud);
                 }
             }
         } catch (Exception e) {
@@ -149,62 +148,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getWeatherData(String latitud, String longitud) {
-        // Configurar la URL de la API de OpenWeatherMap (reemplaza "tu_clave_de_api" por tu clave de API)
-        String url = URL_BASE + "weather?lat=" + latitud + "&lon=" + longitud + "&appid=" + API_KEY;
-
-        // Crear una instancia de RequestQueue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        // Realizar una solicitud GET a la API de OpenWeatherMap
+    private void datosOpenWeatherApi(String latitud, String longitud) {
+        String url = URL_BASE + "forecast?lat=" + latitud + "&lon=" + longitud + "&lang=es&appid=" + API_KEY + "&units=metric";
+        Log.d("DEBUGXX", "(152) Url final: " + url);
+        
+        // Nueva instancia de RequestQueue (cola de solicitud)
+        RequestQueue solicitudCola = Volley.newRequestQueue(this);
+        
+        // Realizo una solicitud GET a la API de OpenWeatherMap (es plan gratuito jeje)
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Procesar la respuesta JSON de la API (datos climáticos)
-                        try {
-                            JSONObject coord = response.getJSONObject("coord");
-                            double latitud = coord.getDouble("lat");
-                            double longitud = coord.getDouble("lon");
+                Request.Method.GET, url, null, response -> {
+                    // Traigo datos de la API a distintas variables
+                    try {
+                        JSONArray weatherArray = response.getJSONArray("weather");
+                        JSONObject clima = weatherArray.getJSONObject(0);
+                        String descripcion = clima.getString("description");
 
-                            JSONArray weatherArray = response.getJSONArray("weather");
-                            JSONObject weather = weatherArray.getJSONObject(0);
-                            String descripcionClima = weather.getString("description");
+                        JSONObject main = response.getJSONObject("main");
+                        double temperaturaMinima = main.getDouble("temp_min");
+                        double temperaturaMaxima = main.getDouble("temp_max");
+                        int presion = main.getInt("pressure");
 
-                            JSONObject main = response.getJSONObject("main");
-                            double temperatura = main.getDouble("temp");
-                            double temperaturaMinima = main.getDouble("temp_min");
-                            double temperaturaMaxima = main.getDouble("temp_max");
-                            int presion = main.getInt("pressure");
-                            int humedad = main.getInt("humidity");
+                        JSONObject viento = response.getJSONObject("wind");
+                        double velocidad = viento.getDouble("speed");
+                        int direccion = viento.getInt("deg");
 
-                            int visibilidad = response.getInt("visibility");
+                        JSONObject clouds = response.getJSONObject("clouds");
+                        int nubosidad = clouds.getInt("all");
 
-                            JSONObject wind = response.getJSONObject("wind");
-                            double velocidadViento = wind.getDouble("speed");
-                            int direccionViento = wind.getInt("deg");
+                        double pop = response.getInt("pop");
 
-                            JSONObject clouds = response.getJSONObject("clouds");
-                            int porcentajeNubosidad = clouds.getInt("all");
+                        // Rellenar TextView
+                        txtlugar.setText(response.getString(municipio +", "+ estado +"."));
+                        txtlat.setText("Latitud: " + latitud);
+                        txtlon.setText("Longitud: " + longitud);
+                        txtcieloynubes.setText("Cielo "+descripcion+" - cobertura de nubes del "+nubosidad+"%");
+                        txttempmin.setText("Mínima: " + temperaturaMinima + " °C");
+                        txttempmax.setText("Máxima: " + temperaturaMaxima + " °C");
+                        txtprepro.setText("Probabilidad del lluvia del " + pop + "%");
+                        txtprelit.setText("Presión: " + presion + " hPa");
+                        txtvievel.setText("Viento: " + velocidad + " m/s");
+                        txtviegradir.setText("Dirección del viento: " + direccion + "°");
 
-                            // Mostrar los datos en los TextView
-                            txtlugar.setText(response.getString("name"));
-                            txtlat.setText("Latitud: " + latitud);
-                            txtlon.setText("Longitud: " + longitud);
-                            txtcieloynubes.setText("Clima: " + descripcionClima);
-                            txttempmin.setText("Temp. Mínima: " + temperaturaMinima + "°C");
-                            txttempmax.setText("Temp. Máxima: " + temperaturaMaxima + "°C");
-                            txtprepro.setText("Nubosidad: " + porcentajeNubosidad + "%");
-                            txtprelit.setText("Presión: " + presion + " hPa");
-                            txtvievel.setText("Viento: " + velocidadViento + " m/s");
-                            txtviegradir.setText("Dirección del viento: " + direccionViento + "°");
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 },
                 new Response.ErrorListener() {
@@ -217,8 +204,6 @@ public class MainActivity extends AppCompatActivity {
         );
 
         // Agregar la solicitud a la cola de solicitudes
-        requestQueue.add(request);
+        solicitudCola.add(request);
     }
-    //https://api.openweathermap.org/data/2.5/lat=18.9371&lon=-103.9650&appid=b671cc4ecb7f9a993eef15559b270e24
-    //https://api.openweathermap.org/data/2.5/weather?lat=19.0532&lon=-104.3164&appid=b671cc4ecb7f9a993eef15559b270e24
 }
