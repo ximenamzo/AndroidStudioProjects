@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="5"
+                android:paddingLeft="25dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estado:"
+                    android:textSize="20sp"/>
+                <Spinner
+                    android:id="@+id/spn_estado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="6">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Municipio:"
+                    android:textSize="20sp"/>
+                <Spinner
+                    android:id="@+id/spn_municipio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- F E C H A  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:foregroundGravity="right"
+                android:gravity="right"
+                android:text="Fecha:"
+                android:textSize="18sp"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:id="@+id/txtfecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="Miércoles 31 de Septiembre de 2023"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+
+        <!-- L U G A R : municipio y estado  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:foregroundGravity="right"
+                android:gravity="right"
+                android:text="Lugar:"
+                android:textSize="18sp"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:id="@+id/txtlugar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="Heroica Ciudad de Juchitán de Zaragoza, Oaxaca."
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <!-- L A T I T U D    Y    L O N G I T U D -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:paddingHorizontal="50dp">
+            <TextView
+                android:id="@+id/txtlat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Latitud: -1234.1234"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/txtlon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Longitud: -1234.1234"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+        <!-- C I E L O  -->
+            <TextView
+                android:id="@+id/txtcieloynubes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Cielo nublado - cobertura de nubes del 90.51%"
+                android:textSize="18sp"
+                android:layout_marginTop="30dp"
+                android:paddingHorizontal="20dp"/>
+
+
+        <!-- T E M P E R A T U R A  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:foregroundGravity="right"
+            android:gravity="center"
+            android:text="Temperatura"
+            android:textSize="19sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:paddingHorizontal="15dp">
+            <TextView
+                android:id="@+id/txttempmin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Mínima\n-100°C"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txttempmax"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Máxima\n100 °C"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+
+        <!-- T E M P E R A T U R A  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:foregroundGravity="right"
+            android:gravity="center"
+            android:text="Precipitación"
+            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:paddingHorizontal="15dp">
+            <TextView
+                android:id="@+id/txtprepor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Probabilidad de\nlluvia del 95.00%"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txtprelit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Caída de\n90.00 litros/m2"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+
+        <!-- V I E N T O  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:foregroundGravity="right"
+            android:gravity="center"
+            android:text="Viento"
+            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:paddingHorizontal="15dp">
+            <TextView
+                android:id="@+id/txtvievel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Velocidad de\n9.99 km/h"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txtviegradir"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Dirección a 53.02°\nSuroeste"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
