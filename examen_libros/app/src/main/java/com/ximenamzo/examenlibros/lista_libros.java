@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.ximenamzo.examenlibros.db.Connect;
+import com.ximenamzo.examenlibros.db.Variables;
+import com.ximenamzo.examenlibros.modelos.Libros;
 
 import java.util.ArrayList;
 
@@ -30,7 +33,7 @@ public class lista_libros extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_libros);
-        setTitle("Personas");
+        setTitle("Libros");
 
         lista = (ListView) findViewById(R.id.lista);
         mostrar();
@@ -89,6 +92,15 @@ public class lista_libros extends AppCompatActivity implements AdapterView.OnIte
         Bundle b = new Bundle();
         b.putSerializable("libro", libro); // se empaqueta el objeto con la etiqueta libro
         ii.putExtras(b);
-        startActivity(ii);
+        startActivityForResult(ii, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK)
+                mostrar();
+        }
     }
 }

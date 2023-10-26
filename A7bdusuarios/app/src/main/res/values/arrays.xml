@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="items_sexo">
+        <item>Mujer</item>
+        <item>Hombre</item>
+        <item>No especificado</item>
+    </array>
+    <array name="items_orden">
+        <item>Nombre</item>
+        <item>Apellido</item>
+        <item>Edad</item>
+        <item>Estatura</item>
+    </array>
+    <array name="datos">
+        <item>Id</item>
+        <item>Nombre</item>
+        <item>Apellido</item>
+        <item>Edad</item>
+        <item>Sexo</item>
+        <item>FechaNacimiento</item>
+        <item>Estatura</item>
+        <item>Telefono</item>
+    </array>
+</resources>

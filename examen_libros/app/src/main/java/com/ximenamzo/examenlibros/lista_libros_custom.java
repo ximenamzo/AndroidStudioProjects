@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.ximenamzo.examenlibros.db.Connect;
+import com.ximenamzo.examenlibros.db.Variables;
+import com.ximenamzo.examenlibros.modelos.Libros;
 
 import java.util.ArrayList;
 
@@ -34,7 +37,7 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
                 campo = Variables.CAMPO_TITULO;
             } else if (extras.containsKey("autor")) {
                 busqueda = extras.getString("autor");
-                campo = Variables.CAMPO_AUTOR;
+                campo = Variables.CAMPO_PERSONA[0];
             }
         }
 
@@ -58,11 +61,11 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
         SQLiteDatabase bd = conectar.getReadableDatabase();
         Libros libro = null;
         datoslibro = new ArrayList<Libros>();
-        String[] campos = {Variables.CAMPO_ID, Variables.CAMPO_ISBN, Variables.CAMPO_TITULO, Variables.CAMPO_AUTOR, Variables.CAMPO_EDITORIAL, Variables.CAMPO_PAGINAS};
+        String[] campos = {Variables.CAMPO_IDS[0], Variables.CAMPO_ID2[0], Variables.CAMPO_TITULO, Variables.CAMPO_PERSONA[0], Variables.CAMPO_EDITORIAL, Variables.CAMPO_CANTIDADES[0]};
         String whereLike = campo + " LIKE ?";
 
         try {
-            Cursor cursor = bd.query(Variables.NOMBRE_TABLA, campos, whereLike, new String[]{"%" + busqueda + "%"}, null, null, null);
+            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[0], campos, whereLike, new String[]{"%" + busqueda + "%"}, null, null, null);
             if (cursor.getCount() > 0) {
                 Toast.makeText(this, "Registros encontrados: " + cursor.getCount(), Toast.LENGTH_SHORT).show();
                 datoslibro.clear();

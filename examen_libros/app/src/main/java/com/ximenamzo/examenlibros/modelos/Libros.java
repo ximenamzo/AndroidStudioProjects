@@ -1,18 +1,20 @@
-package com.ximenamzo.examenlibros;
+package com.ximenamzo.examenlibros.modelos;
 
 import java.io.Serializable;
 
 public class Libros implements Serializable {
     Integer id, paginas;
     String isbn, titulo, autor, editorial;
+    Double precio;
     
-    public Libros(Integer id, String isbn, String titulo, String autor, String editorial, Integer paginas) {
+    public Libros(Integer id, String isbn, String titulo, String autor, String editorial, Integer paginas, Double precio) {
         this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
         this.autor = autor;
         this.editorial = editorial;
         this.paginas = paginas;
+        this.precio = precio;
     }
 
     public Libros() {
@@ -31,4 +33,6 @@ public class Libros implements Serializable {
     public void setEditorial(String editorial) { this.editorial = editorial; }
     public Integer getPaginas() { return paginas; }
     public void setPaginas(Integer paginas) { this.paginas = paginas; }
+    public Double getPrecio() { return precio; }
+    public void setPrecio(Double precio) { this.precio = precio; }
 }

@@ -1,4 +1,4 @@
-package com.ximenamzo.examenlibros;
+package ximenamzo.a7bdusuarios.bd;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class Connect extends SQLiteOpenHelper {
+    public static final int APPVERSION = 1;
+
     public Connect(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

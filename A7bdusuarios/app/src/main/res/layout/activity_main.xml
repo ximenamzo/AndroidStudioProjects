@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ly1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_person_24"
+            android:layout_marginBottom="5dp" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etxnombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_person_outline_24"
+            android:layout_marginBottom="5dp" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etxapellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp"
+            android:baselineAligned="false">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/menusexo"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Sexo"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center"
+                android:contentDescription="Selecciona una opción de sexo"
+                app:startIconDrawable="@drawable/baseline_transgender_24">
+
+                <AutoCompleteTextView
+                    android:id="@+id/itemsexo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Selecciona una opción de sexo"
+                    android:inputType="none"
+                    app:simpleItems="@array/items_sexo"
+                    tools:ignore="EditableContentDescCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:hint="Edad"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/baseline_groups_24"
+                android:layout_marginStart="5dp" >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxedad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:hint="Cumpleaños"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/baseline_calendar_month_24"
+                android:layout_marginBottom="5dp"
+                android:focusable="false"
+                app:hintTextColor="#5B5B5B" >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxfenac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:maxLength="10"
+                    android:focusable="false"
+                    android:textColor="#717171" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btncalendario"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#9B67F6"
+                android:text="."
+                app:icon="@drawable/baseline_calendar_month_24"
+                app:iconTint="#000000" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Teléfono"
+                app:endIconMode="clear_text"
+                android:layout_marginEnd="5dp"
+                app:startIconDrawable="@drawable/baseline_phone_24">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxtelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="10" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:hint="Estatura"
+                app:endIconMode="clear_text"
+                android:layout_marginStart="5dp"
+                app:startIconDrawable="@drawable/baseline_height_24" >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxestatura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+        <Button
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btnlimpiar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limpiar campos"
+            android:layout_gravity="end" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/grupo1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ly1">
+
+        <Button
+            android:id="@+id/btninsertar1"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#673AB7"
+            android:text="Añadir"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:icon="@drawable/baseline_add_24"
+            app:iconTint="#FFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/grupo2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grupo1"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnver"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="#E2D2FF"
+            android:text="Ver todos los registros"
+            android:textSize="18sp"
+            android:textColor="#1E1E1E"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="o bien, puedes buscar por el valor ingresando UN SOLO campo arriba"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/btnbuscar"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar dato"
+            android:textSize="15sp"
+            android:textColor="#1E1E1E"
+            app:icon="@drawable/baseline_search_24"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

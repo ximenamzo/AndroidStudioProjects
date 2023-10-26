@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".detalle_libro">
+    tools:context=".detalle">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
@@ -15,7 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,43 +27,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
-                android:visibility="visible">
+                android:padding="16dp">
+
                 <TextView
-                    android:id="@+id/txttitulo"
+                    android:id="@+id/txtnombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Titulo"
+                    android:text="Nombre"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
+
                 <TextView
-                    android:id="@+id/txtisbn"
+                    android:id="@+id/txtsexo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="ISBN"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:layout_marginTop="16dp"
+                    android:text="Sexo"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary" />
+
                 <TextView
-                    android:id="@+id/txtautor"
+                    android:id="@+id/txtedad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Autor"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
+                    android:text="Edad"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary" />
+
                 <TextView
-                    android:id="@+id/txteditorial"
+                    android:id="@+id/txtfenac"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Editorial"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
+                    android:text="Cumpleaños"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary" />
+
                 <TextView
-                    android:id="@+id/txtpaginas"
+                    android:id="@+id/txtestatura"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Paginas"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
+                    android:text="Estatura"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/txttelefono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Teléfono"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
 
 
@@ -83,34 +98,50 @@
                     android:layout_marginVertical="16dp"
                     android:text="Id"
                     android:textAppearance="?attr/textAppearanceBodyMedium" />
+
                 <EditText
-                    android:id="@+id/editIsbn"
+                    android:id="@+id/editNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ISBN" />
+                    android:hint="Nombre"
+                    android:inputType="text" />
                 <EditText
-                    android:id="@+id/editTitulo"
+                    android:id="@+id/editApellido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Titulo" />
+                    android:hint="Apellido"
+                    android:inputType="text" />
                 <EditText
-                    android:id="@+id/editAutor"
+                    android:id="@+id/editEdad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Autor" />
+                    android:hint="Edad"
+                    android:inputType="number" />
                 <EditText
-                    android:id="@+id/editEditorial"
+                    android:id="@+id/editSexo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Editorial" />
+                    android:hint="Sexo"
+                    android:inputType="text" />
                 <EditText
-                    android:id="@+id/editPaginas"
+                    android:id="@+id/editFenac"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Paginas" />
+                    android:hint="Fecha"
+                    android:inputType="text"/>
+                <EditText
+                    android:id="@+id/editEstatura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Estatura"
+                    android:inputType="number" />
+                <EditText
+                    android:id="@+id/editTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Telefono"
+                    android:inputType="number" />
             </LinearLayout>
-
-
 
 
 
@@ -159,8 +190,8 @@
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
+
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/extended_fab"

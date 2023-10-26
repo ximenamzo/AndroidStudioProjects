@@ -4,12 +4,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.ximenamzo.examenlibros.db.Connect;
+import com.ximenamzo.examenlibros.db.Variables;
+import com.ximenamzo.examenlibros.modelos.Libros;
 
 public class detalle_libro extends AppCompatActivity {
     TextView out_isbn, out_titulo, out_autor, out_editorial, out_paginas, txtid;
@@ -166,12 +167,12 @@ public class detalle_libro extends AppCompatActivity {
         String[] parametros = {String.valueOf(libro.getId())};
         //String[] campos = {Variables.CAMPO_ID, Variables.CAMPO_ISBN, Variables.CAMPO_TITULO, Variables.CAMPO_AUTOR, Variables.CAMPO_EDITORIAL, Variables.CAMPO_PAGINAS};
         ContentValues valores = new ContentValues();
-        valores.put(Variables.CAMPO_ISBN, edit_isbn.getText().toString());
+        valores.put(Variables.CAMPO_ID2[0], edit_isbn.getText().toString());
         valores.put(Variables.CAMPO_TITULO, edit_titulo.getText().toString());
-        valores.put(Variables.CAMPO_AUTOR, edit_autor.getText().toString());
+        valores.put(Variables.CAMPO_PERSONA[0], edit_autor.getText().toString());
         valores.put(Variables.CAMPO_EDITORIAL, edit_editorial.getText().toString());
-        valores.put(Variables.CAMPO_PAGINAS, edit_paginas.getText().toString());
-        bd.update(Variables.NOMBRE_TABLA, valores, Variables.CAMPO_ID + "=?", parametros);
+        valores.put(Variables.CAMPO_CANTIDADES[0], edit_paginas.getText().toString());
+        bd.update(Variables.NOMBRE_TABLA[0], valores, Variables.CAMPO_IDS[0] + "=?", parametros);
         Toast.makeText(this, "Registro actualizado.", Toast.LENGTH_LONG).show();
         bd.close();
 
@@ -192,7 +193,7 @@ public class detalle_libro extends AppCompatActivity {
         String isbn = out_isbn.getText().toString();
         SQLiteDatabase bd = conectar.getWritableDatabase();
         String[] parametros = {isbn};
-        int n = bd.delete(Variables.NOMBRE_TABLA,Variables.CAMPO_ISBN + "=?", parametros);
+        int n = bd.delete(Variables.NOMBRE_TABLA[0],Variables.CAMPO_ID2[0] + "=?", parametros);
         Toast.makeText(this,"Usuarios eliminados: " + n, Toast.LENGTH_LONG).show();
         bd.close();
 
@@ -205,10 +206,11 @@ public class detalle_libro extends AppCompatActivity {
         if (libro == null) libro = new Libros();
         SQLiteDatabase bd = conectar.getReadableDatabase();
         String[] parametros = {isbn};
-        String[] campos = {Variables.CAMPO_ID,Variables.CAMPO_ISBN,Variables.CAMPO_TITULO,Variables.CAMPO_AUTOR,Variables.CAMPO_EDITORIAL,Variables.CAMPO_PAGINAS};
+        String[] campos = {Variables.CAMPO_IDS[0],Variables.CAMPO_ID2[0],Variables.CAMPO_TITULO,
+                Variables.CAMPO_PERSONA[0],Variables.CAMPO_EDITORIAL,Variables.CAMPO_CANTIDADES[0]};
 
         try {
-            Cursor cursor = bd.query(Variables.NOMBRE_TABLA, campos, Variables.CAMPO_ISBN + " =?", parametros, null, null, null);
+            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[0], campos, Variables.CAMPO_ID2[0] + " =?", parametros, null, null, null);
             if (cursor.getCount() > 0){
                 cursor.moveToFirst();
                 Log.d("DEBUGXX", "ISBN encontrado: "+ cursor.getString(0) + ". Con el ID: "+ cursor.getString(1)+".");
