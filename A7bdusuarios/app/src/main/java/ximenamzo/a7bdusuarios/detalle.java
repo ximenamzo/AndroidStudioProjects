@@ -63,18 +63,18 @@ public class detalle extends AppCompatActivity {
 
         conexion = new Connect(this, Variables.NOMBRE_BD, null, 1);
 
+        // RECIBIENDO DATOS
         Bundle objeto = getIntent().getExtras(); // trae el objeto
         Log.d("DEBUG_XX", "Objeto de detalle: " + objeto.toString());
         if (objeto != null) {
             usuario = (Usuarios) objeto.getSerializable("usuario");
-            int id = objeto.getInt("id");
-
-            Log.d("DEBUG_XX", "ID que me da el objeto en detalle: "+id);
 
             if (usuario != null) {
-                Log.d("DEBUG_XX", usuario.toString());
+                Log.d("DEBUG_XX", "Detalles de todo el objeto: " + usuario.toString());
                 mostrarDatos();
             } else {
+                //int id = objeto.getInt("id");
+                int id = getIntent().getIntExtra("id", 0);
                 Log.d("DEBUG_XX", "ID que estare buscando en detalle: "+id);
                 buscarId(id);
             };

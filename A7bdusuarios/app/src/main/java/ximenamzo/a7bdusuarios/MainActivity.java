@@ -26,12 +26,6 @@ import java.util.Locale;
 import ximenamzo.a7bdusuarios.bd.Connect;
 import ximenamzo.a7bdusuarios.bd.Variables;
 
-/* TODO
-* Dar enter en la lista
-* Activar botón de Buscar
-* Ordenar lista
-* Spiner items vista
-* */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText in_nombre, in_apellido, in_edad, in_telefono, in_estatura, in_cumple;
@@ -100,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             in_telefono.setText("");
             in_estatura.setText("");
             in_cumple.setText("");
+            itemSexo.setText("");
         }
 
         if (v == ver) {
@@ -179,6 +174,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void busqueda(String datoQueBusco, Integer campo) {
+        nombre = in_nombre.getText().toString();
+        apellido = in_apellido.getText().toString();
+        edad = in_edad.getText().toString();
+        telefono = in_telefono.getText().toString();
+        estatura = in_estatura.getText().toString();
+        fenac = in_cumple.getText().toString();
+        String[] partes = fenac.split("-");
+        String mes = partes[1];
+
         SQLiteDatabase bd = conexion.getReadableDatabase();
         String consulta = "SELECT " + Variables.CAMPO_ID + " FROM " + Variables.NOMBRE_TABLA + " WHERE " + Variables.CAMPO_AUX[campo] + " COLLATE NOCASE LIKE ?";
 
@@ -191,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (cursor.getCount() > 0) {
                 if (cursor.getCount() == 1) {
                     cursor.moveToFirst();
-                    String id = cursor.getString(0);
+                    Integer id = Integer.valueOf(cursor.getString(0));
                     cursor.close();
                     Log.d("DEBUG_XX", "ID encontrado: " + id);
                     Intent i = new Intent(this, detalle.class);
@@ -199,10 +203,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(i);
                 } else {
                     cursor.close();
+                    String columna = Variables.CAMPO_AUX[campo];
                     Log.d("DEBUG_XX", "Múltiples resultados, redirigiendo a lista_custom.");
                     Intent i = new Intent(this, lista_custom.class);
                     i.putExtra("busqueda", datoQueBusco);
-                    i.putExtra("campo", campo);
+                    i.putExtra("campo", columna);
+                    Log.d("DEBUG_XX", "Buscaré "+datoQueBusco+" en "+columna+" ("+campo+"). En MainActivity.java 200");
                     startActivity(i);
                 }
             } else {

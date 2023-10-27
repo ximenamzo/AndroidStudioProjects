@@ -38,28 +38,9 @@ public class lista_custom extends AppCompatActivity implements AdapterView.OnIte
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            if (extras.containsKey("nombre")) {
-                busqueda = extras.getString("nombre");
-                campo = Variables.CAMPO_NOMBRE;
-            } else if (extras.containsKey("apellido")) {
-                busqueda = extras.getString("apellido");
-                campo = Variables.CAMPO_APELLIDO;
-            } else if (extras.containsKey("edad")) {
-                busqueda = extras.getString("edad");
-                campo = Variables.CAMPO_EDAD;
-            } else if (extras.containsKey("sexo")) {
-                busqueda = extras.getString("sexo");
-                campo = Variables.CAMPO_SEXO;
-            } else if (extras.containsKey("fenac")) {
-                busqueda = extras.getString("fenac");
-                campo = Variables.CAMPO_FENAC;
-            } else if (extras.containsKey("estatura")) {
-                busqueda = extras.getString("estatura");
-                campo = Variables.CAMPO_ESTATURA;
-            } else if (extras.containsKey("telefono")) {
-                busqueda = extras.getString("telefono");
-                campo = Variables.CAMPO_TELEFONO;
-            }
+            busqueda = extras.getString("busqueda");
+            campo = extras.getString("campo");
+            Log.d("DEBUG_XX", "Extras "+busqueda+" y "+campo+". En lista_custom.java 43");
         }
 
         setTitle("Resultados de la búsqueda: '" + busqueda + "'");
@@ -72,6 +53,8 @@ public class lista_custom extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.items_orden, R.layout.custom_item);
         adapter.setDropDownViewResource(R.layout.custom_dropdown_item);
         itemOrden.setAdapter(adapter);
+
+        /* Orden de la lista */
         itemOrden.setOnItemClickListener((parent, view, position, id) -> {
             orden = (String) parent.getItemAtPosition(position);
 
@@ -102,12 +85,14 @@ public class lista_custom extends AppCompatActivity implements AdapterView.OnIte
         conexion = new Connect(this, Variables.NOMBRE_BD, null, 1);
 
         mostrar(busqueda, campo, "id");
+        Log.d("DEBUG_XX", "Mostrando "+busqueda+" en "+campo+". En lista_custom.java 87");
         ArrayAdapter<String> aa = new ArrayAdapter<>(this, R.layout.item_lista, listausuarios);
         lista.setAdapter(aa);
         lista.setOnItemClickListener(this);
     }
 
     private void mostrar(String busqueda, String campo, String orden) {
+        Log.d("DEBUG_XX", "Mostrando "+busqueda+" en "+campo+". En lista_custom.java 94");
         SQLiteDatabase bd = conexion.getReadableDatabase();
         Usuarios usuario = null;
         datosusuario = new ArrayList<Usuarios>();
@@ -138,7 +123,7 @@ public class lista_custom extends AppCompatActivity implements AdapterView.OnIte
             }
             cursor.close();
         } catch (Exception e) {
-            Toast.makeText(this, "Error al acceder a la BD.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error al acceder a la BD. En lista_custom.java", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
         bd.close();
