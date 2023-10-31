@@ -1,4 +1,4 @@
-package com.ximenamzo.examenlibros;
+package com.ximenamzo.examenlibros.vistas.clientes;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,22 +13,23 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
-import com.ximenamzo.examenlibros.modelos.Libros;
+import com.ximenamzo.examenlibros.modelos.Clientes;
 
 import java.util.ArrayList;
 
-public class lista_libros_custom extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class lista_clientes_custom extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lista;
-    ArrayList<String> listalibros;
-    ArrayList<Libros> datoslibro;
+    ArrayList<String> listaclientes;
+    ArrayList<Clientes> datoscliente;
     Connect conectar;
     private String busqueda = "", campo = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_libros);
+        setContentView(R.layout.activity_lista);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -41,12 +42,12 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
             }
         }
 
-        setTitle("Libros relacionados con '" + busqueda + "'");
+        setTitle("Clientes relacionados con '" + busqueda + "'");
 
-        lista = (ListView) findViewById(R.id.lista);
+        lista = findViewById(R.id.lista);
 
-        listalibros = new ArrayList<String>();
-        ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listalibros);
+        listaclientes = new ArrayList<>();
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listaclientes);
         lista.setAdapter(aa);
         lista.setOnItemClickListener(this);
 
@@ -59,30 +60,27 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
     private void mostrar(String busqueda, String campo) {
         conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
         SQLiteDatabase bd = conectar.getReadableDatabase();
-        Libros libro = null;
-        datoslibro = new ArrayList<Libros>();
-        String[] campos = {Variables.CAMPO_IDS[0], Variables.CAMPO_ID2[0], Variables.CAMPO_TITULO, Variables.CAMPO_PERSONA[0], Variables.CAMPO_EDITORIAL, Variables.CAMPO_CANTIDADES[0]};
+        Clientes cliente;
+        datoscliente = new ArrayList<>();
+        String[] campos = {Variables.CAMPO_IDS[0], Variables.CAMPO_PERSONA[1], Variables.CAMPO_ID2[1]};
         String whereLike = campo + " LIKE ?";
 
         try {
-            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[0], campos, whereLike, new String[]{"%" + busqueda + "%"}, null, null, null);
+            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[1], campos, whereLike, new String[]{"%" + busqueda + "%"}, null, null, null);
             if (cursor.getCount() > 0) {
                 Toast.makeText(this, "Registros encontrados: " + cursor.getCount(), Toast.LENGTH_SHORT).show();
-                datoslibro.clear();
+                datoscliente.clear();
 
                 while (cursor.moveToNext()) {
-                    libro = new Libros();
-                    libro.setId(Integer.valueOf(cursor.getString(0)));
-                    libro.setIsbn(cursor.getString(1));
-                    libro.setTitulo(cursor.getString(2));
-                    libro.setAutor(cursor.getString(3));
-                    libro.setEditorial(cursor.getString(4));
-                    libro.setPaginas(Integer.valueOf(cursor.getString(5)));
-                    datoslibro.add(libro);
+                    cliente = new Clientes();
+                    cliente.setId(Integer.valueOf(cursor.getString(0)));
+                    cliente.setNombre(cursor.getString(1));
+                    cliente.setRfc(cursor.getString(2));
+                    datoscliente.add(cliente);
                 }
             } else {
                 Toast.makeText(this, "Sin registros.", Toast.LENGTH_SHORT).show();
-                datoslibro.clear();
+                datoscliente.clear();
             }
             cursor.close();
         } catch (Exception e) {
@@ -97,21 +95,21 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
     private void agregarLista() {
         ArrayAdapter<String> aa = (ArrayAdapter<String>) lista.getAdapter();
         aa.clear(); // Limpia la lista existente por si a caso
-        for (int i = 0; i < datoslibro.size(); i++) {
+        for (int i = 0; i < datoscliente.size(); i++) {
             aa.add(
-                datoslibro.get(i).getId() + " | " +
-                datoslibro.get(i).getTitulo() + " - " +
-                datoslibro.get(i).getAutor()
+                    datoscliente.get(i).getId() + " | " +
+                            datoscliente.get(i).getNombre() + " - " +
+                            datoscliente.get(i).getRfc()
             );
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Libros libro = datoslibro.get(position);
-        Intent ii = new Intent(this, detalle_libro.class);
+        Clientes cliente = datoscliente.get(position);
+        Intent ii = new Intent(this, detalle_cliente.class);
         Bundle b = new Bundle();
-        b.putSerializable("libro", libro); // se empaqueta el objeto con la etiqueta libro
+        b.putSerializable("cliente", cliente); // se empaqueta el objeto con la etiqueta cliente
         ii.putExtras(b);
         startActivityForResult(ii, 1);
     }

@@ -1,4 +1,4 @@
-package com.ximenamzo.examenlibros;
+package com.ximenamzo.examenlibros.vistas.libros;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
 
@@ -29,18 +30,18 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_main_libros);
         setTitle("Libros");
 
-        in_isbn = (EditText) findViewById(R.id.etxid);
-        in_titulo = (EditText) findViewById(R.id.etxtitulo);
-        in_autor = (EditText) findViewById(R.id.etxautor);
-        in_editorial = (EditText) findViewById(R.id.etxeditorial);
-        in_paginas = (EditText) findViewById(R.id.etxpaginas);
-        in_precio = (EditText) findViewById(R.id.etxprecio);
+        in_isbn = findViewById(R.id.etxid);
+        in_titulo = findViewById(R.id.etxtitulo);
+        in_autor = findViewById(R.id.etxautor);
+        in_editorial = findViewById(R.id.etxeditorial);
+        in_paginas = findViewById(R.id.etxpaginas);
+        in_precio = findViewById(R.id.etxprecio);
 
-        insert = (Button) findViewById(R.id.btninsertar1);
-        searchTitulo = (Button) findViewById(R.id.btnbuscar1);
-        searchAutor = (Button) findViewById(R.id.btnbuscar2);
-        ver = (Button) findViewById(R.id.btnver);
-        limpiar = (Button) findViewById(R.id.btnlimpiar);
+        insert = findViewById(R.id.btninsertar1);
+        searchTitulo = findViewById(R.id.btnbuscar1);
+        searchAutor = findViewById(R.id.btnbuscar2);
+        ver = findViewById(R.id.btnver);
+        limpiar = findViewById(R.id.btnlimpiar);
 
         insert.setOnClickListener(this);
         searchTitulo.setOnClickListener(this);
@@ -101,7 +102,6 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
     }
 
     private void insertar() {
-        // Método más seguro
         SQLiteDatabase db = conectar.getWritableDatabase();
         String isbn = in_isbn.getText().toString();
 
@@ -113,7 +113,8 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
             valores.put(Variables.CAMPO_TITULO, in_titulo.getText().toString()); //titulo
             valores.put(Variables.CAMPO_PERSONA[0], in_autor.getText().toString()); // autor
             valores.put(Variables.CAMPO_EDITORIAL, in_editorial.getText().toString()); // editorial
-            valores.put(Variables.CAMPO_CANTIDADES[0], in_paginas.getText().toString());
+            valores.put(Variables.CAMPO_CANTIDADES[0], in_paginas.getText().toString()); // paginas
+            valores.put(Variables.CAMPO_DINERO[0], in_precio.getText().toString()); // precio
             long id = db.insert(Variables.NOMBRE_TABLA[0], Variables.CAMPO_IDS[0],valores);
             if (id != -1) {
                 Toast.makeText(this, "Registro exitoso con id "+id, Toast.LENGTH_SHORT).show();
@@ -125,15 +126,15 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
     }
 
     private void buscarTitulo() {
-        SQLiteDatabase bd = null;
+        SQLiteDatabase bd;
         bd = conectar.getReadableDatabase();
-        String titulo = null;
+        String titulo;
         titulo = in_titulo.getText().toString();
-        String consulta = null;
+        String consulta;
         consulta = "SELECT " + Variables.CAMPO_ID2[0] + " FROM " + Variables.NOMBRE_TABLA[0] + " WHERE " + Variables.CAMPO_TITULO + " LIKE ?";
 
         try {
-            Cursor cursor = null;
+            Cursor cursor;
             cursor = bd.rawQuery(consulta, new String[]{"%" + titulo + "%"});
             if (cursor.getCount() > 1) {
                 cursor.close();
@@ -159,15 +160,15 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
     }
 
     private void buscarAutor() {
-        SQLiteDatabase bd = null;
+        SQLiteDatabase bd;
         bd = conectar.getReadableDatabase();
-        String autor = null;
+        String autor;
         autor = in_autor.getText().toString();
-        String consulta = null;
+        String consulta;
         consulta = "SELECT " + Variables.CAMPO_ID2[0] + " FROM " + Variables.NOMBRE_TABLA[0] + " WHERE " + Variables.CAMPO_PERSONA[0] + " LIKE ?";
 
         try {
-            Cursor cursor = null;
+            Cursor cursor;
             cursor = bd.rawQuery(consulta, new String[]{"%" + autor + "%"});
             if (cursor.getCount() > 1) {
                 cursor.close();

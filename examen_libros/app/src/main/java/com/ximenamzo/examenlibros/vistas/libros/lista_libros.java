@@ -1,4 +1,4 @@
-package com.ximenamzo.examenlibros;
+package com.ximenamzo.examenlibros.vistas.libros;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
 import com.ximenamzo.examenlibros.modelos.Libros;
@@ -32,12 +33,12 @@ public class lista_libros extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_libros);
+        setContentView(R.layout.activity_lista);
         setTitle("Libros");
 
-        lista = (ListView) findViewById(R.id.lista);
+        lista = findViewById(R.id.lista);
         mostrar();
-        ArrayAdapter<String> aa =new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listalibros);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listalibros);
         lista.setAdapter(aa);
         lista.setOnItemClickListener(this);
 
@@ -48,9 +49,9 @@ public class lista_libros extends AppCompatActivity implements AdapterView.OnIte
     private void mostrar() {
         conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
         SQLiteDatabase bd = conectar.getReadableDatabase();
-        Libros libro = null;
-        datoslibro = new ArrayList<Libros>();
-        Cursor cursor = bd.rawQuery("SELECT * FROM " + Variables.NOMBRE_TABLA, null);
+        Libros libro;
+        datoslibro = new ArrayList<>();
+        Cursor cursor = bd.rawQuery("SELECT * FROM " + Variables.NOMBRE_TABLA[0], null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -61,26 +62,23 @@ public class lista_libros extends AppCompatActivity implements AdapterView.OnIte
                 libro.setAutor(cursor.getString(3));
                 libro.setEditorial(cursor.getString(4));
                 libro.setPaginas(Integer.valueOf(cursor.getString(5)));
+                libro.setPrecio(Double.valueOf(cursor.getString(6)));
                 datoslibro.add(libro);
             } while (cursor.moveToNext());
         } else {
             Toast.makeText(this, "Registros limpios.", Toast.LENGTH_SHORT).show();
-            listalibros = new ArrayList<String>();
+            listalibros = new ArrayList<>();
             listalibros.add("Sin registros.");
         }
         cursor.close();
         bd.close();
-        agregarLista();
-    }
 
-
-    private void agregarLista() {
-        listalibros = new ArrayList<String>();
+        listalibros = new ArrayList<>();
         for(int i = 0; i< datoslibro.size(); i++){
             listalibros.add(
-                datoslibro.get(i).getId() + " | " +
-                datoslibro.get(i).getTitulo() + " - " +
-                datoslibro.get(i).getAutor()
+                    datoslibro.get(i).getId() + " | " +
+                            datoslibro.get(i).getTitulo() + " - " +
+                            datoslibro.get(i).getAutor()
             );
         }
     }

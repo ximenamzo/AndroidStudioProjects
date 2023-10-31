@@ -1,9 +1,384 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainVentas">
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".vistas.ventas.MainVentas">
 
+    <LinearLayout
+        android:id="@+id/ly1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        android:background="@drawable/rounded_bottom_corners"
+        android:elevation="10dp"
+
+        android:paddingHorizontal="30dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="20dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="RFC del Cliente"
+            app:boxBackgroundColor="#FDFDFD"
+
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_qr_code_24">
+
+            <AutoCompleteTextView
+                android:id="@+id/campoRfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="13"
+                app:dropDownBackgroundTint="#F6F6F6" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Cliente:"
+            android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginVertical="5dp"
+            android:layout_marginStart="20dp"
+            app:boxBackgroundColor="#FDFDFD"
+
+            android:hint="Nombre"
+            app:hintTextColor="#767676"
+
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_person_24">
+
+            <AutoCompleteTextView
+                android:id="@+id/campoNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#767676" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="30dp"
+            app:boxBackgroundColor="#FDFDFD"
+
+            android:hint="ISBN del Libro"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/round_library_books_24">
+
+            <AutoCompleteTextView
+                android:id="@+id/campoISBN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="10" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Titulo y Autor del libro:"
+            android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            app:boxBackgroundColor="#FDFDFD"
+
+            android:hint="Titulo"
+            app:hintTextColor="#767676"
+
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_menu_book_24">
+
+            <AutoCompleteTextView
+                android:id="@+id/cammpoTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#767676" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            app:boxBackgroundColor="#FDFDFD"
+
+            android:hint="Autor"
+            app:hintTextColor="#767676"
+
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_local_library_24">
+
+            <AutoCompleteTextView
+                android:id="@+id/campoAutor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#767676" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Precio: "
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Cantidad: "
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="5"
+                android:hint="0.00"
+                app:boxBackgroundColor="#FCFCFC"
+                app:startIconDrawable="@drawable/baseline_attach_money_24"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/campoPrecio"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:focusable="false"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btnrestar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Restar cantidad"
+                android:src="@drawable/baseline_remove_24" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:hint="0"
+                app:boxBackgroundColor="#FDFDFD"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/campoCantidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btnsumar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Restar cantidad"
+                android:src="@drawable/baseline_add_24"
+                app:tint="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnlimpiar"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vaciar\ndatos"
+                android:textColor="#929292"
+                app:icon="@drawable/baseline_delete_24"
+                app:iconTint="#C30E0E" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Costo final: $ "
+                    android:textColor="#1D5620"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtcostotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="0.00"
+                    android:textColor="#227B25"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/grupo1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ly1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnventa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:paddingStart="30dp"
+            android:paddingVertical="10dp"
+            android:backgroundTint="#4CAF50"
+
+            android:text="Hacer venta"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+
+            app:icon="@drawable/baseline_add_shopping_cart_24"
+            app:iconTint="#FFFFFF"
+            app:iconGravity="textEnd"
+            app:iconSize="30dp"
+
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/grupo2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grupo1" >
+        <Button
+            android:id="@+id/btnbuscar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:backgroundTint="#CBB3F4"
+            android:text="Buscar Venta por RFC o Nombre del Cliente"
+            style="@style/Widget.Material3.Button.TonalButton" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/grupo3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/grupo2" >
+        <Button
+            android:id="@+id/btnver"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ver registro de todas las ventas"
+            android:textSize="15.5sp"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+<!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="3"
+                android:hint="Precio"
+                app:endIconMode="clear_text" >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxprecio"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:maxLength="6" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <NumberPicker
+                android:id="@+id/numberPicker"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="2"
+                android:maxValue="10"
+                android:minValue="0" />
+        </LinearLayout>
+
+-->

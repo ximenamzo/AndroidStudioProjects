@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vistas.libros.detalle_libro">
+    tools:context=".vistas.clientes.detalle_cliente">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
@@ -31,47 +31,19 @@
                 android:padding="16dp"
                 android:visibility="visible">
                 <TextView
-                    android:id="@+id/txttitulo"
+                    android:id="@+id/txtnombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Titulo"
+                    android:text="Nombre"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
                 <TextView
-                    android:id="@+id/txtisbn"
+                    android:id="@+id/txtrfc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="ISBN"
+                    android:text="RFC"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?android:attr/textColorSecondary" />
-                <TextView
-                    android:id="@+id/txtautor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Autor"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-                <TextView
-                    android:id="@+id/txteditorial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Editorial"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-                <TextView
-                    android:id="@+id/txtpaginas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Paginas"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-                <TextView
-                    android:id="@+id/txtprecio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Precio"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
             </LinearLayout>
 
 
@@ -91,35 +63,15 @@
                     android:text="Id"
                     android:textAppearance="?attr/textAppearanceBodyMedium" />
                 <EditText
-                    android:id="@+id/editIsbn"
+                    android:id="@+id/editNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ISBN" />
+                    android:hint="Nombre" />
                 <EditText
-                    android:id="@+id/editTitulo"
+                    android:id="@+id/editRfc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Titulo" />
-                <EditText
-                    android:id="@+id/editAutor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Autor" />
-                <EditText
-                    android:id="@+id/editEditorial"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Editorial" />
-                <EditText
-                    android:id="@+id/editPaginas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Paginas" />
-                <EditText
-                    android:id="@+id/editPrecio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Precio" />
+                    android:hint="Rfc" />
             </LinearLayout>
 
 

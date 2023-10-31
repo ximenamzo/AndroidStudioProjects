@@ -3,10 +3,10 @@ package com.ximenamzo.examenlibros.modelos;
 import java.io.Serializable;
 
 public class Clientes implements Serializable {
-    Integer id, rfc;
-    String nombre;
+    Integer id;
+    String nombre, rfc;
 
-    public Clientes(Integer id, Integer rfc, String nombre) {
+    public Clientes(Integer id, String rfc, String nombre) {
         this.id = id;
         this.rfc = rfc;
         this.nombre = nombre;
@@ -18,8 +18,8 @@ public class Clientes implements Serializable {
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
-    public Integer getRfc() { return rfc; }
-    public void setRfc(Integer rfc) { this.rfc = rfc; }
+    public String getRfc() { return rfc; }
+    public void setRfc(String rfc) { this.rfc = rfc; }
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 }

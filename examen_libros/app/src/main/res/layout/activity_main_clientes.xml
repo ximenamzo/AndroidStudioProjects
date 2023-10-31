@@ -1,9 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainClientes">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".vistas.clientes.MainClientes">
+
+    <LinearLayout
+        android:id="@+id/ly1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
+        android:paddingTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del cliente"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_person_24">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etxnombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:hint="RFC"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_qr_code_24">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etxrfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="13" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btnlimpiar"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limpiar campos"
+            android:layout_gravity="end"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/grupo1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        android:paddingBottom="20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ly1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btninsertar1"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="Añadir"
+            android:backgroundTint="#673AB7"
+            android:textColor="@color/white"
+            app:icon="@drawable/baseline_add_24"
+            app:iconTint="#FFFFFF"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/grupo2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grupo1" >
+
+        <Button
+            android:id="@+id/btnbuscar1"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:text="Buscar por Nombre" />
+
+        <Button
+            android:id="@+id/btnbuscar2"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="Buscar en los RFC" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/grupo3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grupo2" >
+
+        <Button
+            android:id="@+id/btnver"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"
+            android:text="Ver registro de todos los clientes"
+            android:backgroundTint="#351966"
+            android:textColor="@color/white"
+            android:textSize="15.5sp"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

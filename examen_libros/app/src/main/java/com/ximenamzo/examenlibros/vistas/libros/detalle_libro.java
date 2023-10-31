@@ -1,4 +1,4 @@
-package com.ximenamzo.examenlibros;
+package com.ximenamzo.examenlibros.vistas.libros;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
 import com.ximenamzo.examenlibros.modelos.Libros;
 
 public class detalle_libro extends AppCompatActivity {
-    TextView out_isbn, out_titulo, out_autor, out_editorial, out_paginas, txtid;
-    EditText edit_isbn, edit_titulo, edit_autor, edit_editorial, edit_paginas;
+    TextView out_isbn, out_titulo, out_autor, out_editorial, out_paginas, out_precio, txtid;
+    EditText edit_isbn, edit_titulo, edit_autor, edit_editorial, edit_paginas, edit_precio;
     Button btneliminar, btneditar, btncancelar, btnguardar;
     private Libros libro;
     Connect conectar;
@@ -36,26 +37,28 @@ public class detalle_libro extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_libro);
         setTitle("Detalles del Libro");
 
-        editlayout = (LinearLayout) findViewById(R.id.editLayout);
-        textlayout = (LinearLayout) findViewById(R.id.textLayout);
+        editlayout = findViewById(R.id.editLayout);
+        textlayout = findViewById(R.id.textLayout);
 
-        txtid = (TextView) findViewById(R.id.txtid);
-        out_isbn = (TextView) findViewById(R.id.txtisbn);
-        out_titulo = (TextView) findViewById(R.id.txttitulo);
-        out_autor = (TextView) findViewById(R.id.txtautor);
-        out_editorial = (TextView) findViewById(R.id.txteditorial);
-        out_paginas = (TextView) findViewById(R.id.txtpaginas);
+        txtid = findViewById(R.id.txtid);
+        out_isbn = findViewById(R.id.txtisbn);
+        out_titulo = findViewById(R.id.txttitulo);
+        out_autor = findViewById(R.id.txtautor);
+        out_editorial = findViewById(R.id.txteditorial);
+        out_paginas = findViewById(R.id.txtpaginas);
+        out_precio = findViewById(R.id.txtprecio);
 
-        edit_isbn = (EditText) findViewById(R.id.editIsbn);
-        edit_titulo = (EditText) findViewById(R.id.editTitulo);
-        edit_autor = (EditText) findViewById(R.id.editAutor);
-        edit_editorial = (EditText) findViewById(R.id.editEditorial);
-        edit_paginas = (EditText) findViewById(R.id.editPaginas);
+        edit_isbn = findViewById(R.id.editIsbn);
+        edit_titulo = findViewById(R.id.editTitulo);
+        edit_autor = findViewById(R.id.editAutor);
+        edit_editorial = findViewById(R.id.editEditorial);
+        edit_paginas = findViewById(R.id.editPaginas);
+        edit_precio = findViewById(R.id.editPrecio);
 
-        btneliminar = (Button) findViewById(R.id.btnEliminar);
-        btneditar = (Button) findViewById(R.id.btnEditar);
-        btncancelar = (Button) findViewById(R.id.btnCancelar);
-        btnguardar = (Button) findViewById(R.id.btnGuardar);
+        btneliminar = findViewById(R.id.btnEliminar);
+        btneditar = findViewById(R.id.btnEditar);
+        btncancelar = findViewById(R.id.btnCancelar);
+        btnguardar = findViewById(R.id.btnGuardar);
 
         conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
 
@@ -106,12 +109,14 @@ public class detalle_libro extends AppCompatActivity {
             out_autor.setText(libro.getAutor());
             out_editorial.setText(libro.getEditorial());
             out_paginas.setText(String.valueOf(libro.getPaginas()));
+            out_precio.setText(String.valueOf(libro.getPaginas()));
         } else {
             // Oculta editText y sus botones Guardar y Cancelar
             edit_titulo.setVisibility(View.GONE);
             edit_autor.setVisibility(View.GONE);
             edit_editorial.setVisibility(View.GONE);
             edit_paginas.setVisibility(View.GONE);
+            edit_precio.setVisibility(View.GONE);
         }
         btnguardar.setVisibility(View.GONE);
         btncancelar.setVisibility(View.GONE);
@@ -120,6 +125,7 @@ public class detalle_libro extends AppCompatActivity {
         out_autor.setVisibility(View.VISIBLE);
         out_editorial.setVisibility(View.VISIBLE);
         out_paginas.setVisibility(View.VISIBLE);
+        out_precio.setVisibility(View.VISIBLE);
         btneliminar.setVisibility(View.VISIBLE);
         btneditar.setVisibility(View.VISIBLE);
     }
@@ -132,6 +138,7 @@ public class detalle_libro extends AppCompatActivity {
         edit_autor.setText(libro.getAutor());
         edit_editorial.setText(libro.getEditorial());
         edit_paginas.setText(String.valueOf(libro.getPaginas()));
+        edit_precio.setText(String.valueOf(libro.getPaginas()));
 
         // oculto los textViews y botones
         textlayout.setVisibility(View.GONE);
@@ -140,6 +147,7 @@ public class detalle_libro extends AppCompatActivity {
         out_autor.setVisibility(View.GONE);
         out_editorial.setVisibility(View.GONE);
         out_paginas.setVisibility(View.GONE);
+        out_precio.setVisibility(View.GONE);
         btneliminar.setVisibility(View.GONE);
         btneditar.setVisibility(View.GONE);
 
@@ -150,6 +158,7 @@ public class detalle_libro extends AppCompatActivity {
         edit_autor.setVisibility(View.VISIBLE);
         edit_editorial.setVisibility(View.VISIBLE);
         edit_paginas.setVisibility(View.VISIBLE);
+        edit_precio.setVisibility(View.VISIBLE);
         btnguardar.setVisibility(View.VISIBLE);
         btncancelar.setVisibility(View.VISIBLE);
     }
@@ -161,6 +170,7 @@ public class detalle_libro extends AppCompatActivity {
         libro.setAutor(edit_autor.getText().toString());
         libro.setEditorial(edit_editorial.getText().toString());
         libro.setPaginas(Integer.parseInt(edit_paginas.getText().toString()));
+        libro.setPrecio(Double.parseDouble(edit_paginas.getText().toString()));
 
         // BD aquí
         SQLiteDatabase bd = conectar.getWritableDatabase();
@@ -172,6 +182,7 @@ public class detalle_libro extends AppCompatActivity {
         valores.put(Variables.CAMPO_PERSONA[0], edit_autor.getText().toString());
         valores.put(Variables.CAMPO_EDITORIAL, edit_editorial.getText().toString());
         valores.put(Variables.CAMPO_CANTIDADES[0], edit_paginas.getText().toString());
+        valores.put(Variables.CAMPO_DINERO[0], edit_precio.getText().toString());
         bd.update(Variables.NOMBRE_TABLA[0], valores, Variables.CAMPO_IDS[0] + "=?", parametros);
         Toast.makeText(this, "Registro actualizado.", Toast.LENGTH_LONG).show();
         bd.close();
@@ -206,8 +217,11 @@ public class detalle_libro extends AppCompatActivity {
         if (libro == null) libro = new Libros();
         SQLiteDatabase bd = conectar.getReadableDatabase();
         String[] parametros = {isbn};
-        String[] campos = {Variables.CAMPO_IDS[0],Variables.CAMPO_ID2[0],Variables.CAMPO_TITULO,
-                Variables.CAMPO_PERSONA[0],Variables.CAMPO_EDITORIAL,Variables.CAMPO_CANTIDADES[0]};
+        /*String[] campos = {Variables.CAMPO_IDS[0],
+                Variables.CAMPO_ID2[0],Variables.CAMPO_TITULO,
+                Variables.CAMPO_PERSONA[0],Variables.CAMPO_EDITORIAL,
+                Variables.CAMPO_CANTIDADES[0], Variables.CAMPO_DINERO[0]}; /**/
+        String[] campos = Variables.CAMPOS_TABLAS[0];
 
         try {
             Cursor cursor = bd.query(Variables.NOMBRE_TABLA[0], campos, Variables.CAMPO_ID2[0] + " =?", parametros, null, null, null);
@@ -220,6 +234,7 @@ public class detalle_libro extends AppCompatActivity {
                 libro.setAutor(cursor.getString(3));
                 libro.setEditorial(cursor.getString(4));
                 libro.setPaginas(Integer.valueOf(cursor.getString(5)));
+                libro.setPrecio(Double.valueOf(cursor.getString(5)));
                 cursor.close();
             } else {
                 Toast.makeText(this, "No se encontraron datos para ISBN: " + isbn, Toast.LENGTH_SHORT).show();

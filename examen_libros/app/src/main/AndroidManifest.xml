@@ -13,22 +13,22 @@
         android:theme="@style/Theme.Examen_libros"
         tools:targetApi="31">
         <activity
-            android:name=".MainVentas"
+            android:name=".vistas.ventas.MainVentas"
             android:exported="false" />
         <activity
-            android:name=".MainClientes"
+            android:name=".vistas.clientes.MainClientes"
             android:exported="false" />
         <activity
-            android:name=".MainLibros"
+            android:name=".vistas.libros.MainLibros"
             android:exported="false" />
         <activity
-            android:name=".lista_libros"
+            android:name=".vistas.libros.lista_libros"
             android:exported="false" />
         <activity
-            android:name=".lista_libros_custom"
+            android:name=".vistas.libros.lista_libros_custom"
             android:exported="false" />
         <activity
-            android:name=".detalle_libro"
+            android:name=".vistas.libros.detalle_libro"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
