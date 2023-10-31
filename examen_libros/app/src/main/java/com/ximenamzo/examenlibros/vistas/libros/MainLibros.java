@@ -115,7 +115,7 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
             valores.put(Variables.CAMPO_EDITORIAL, in_editorial.getText().toString()); // editorial
             valores.put(Variables.CAMPO_CANTIDADES[0], in_paginas.getText().toString()); // paginas
             valores.put(Variables.CAMPO_DINERO[0], in_precio.getText().toString()); // precio
-            long id = db.insert(Variables.NOMBRE_TABLA[0], Variables.CAMPO_IDS[0],valores);
+            long id = db.insert(Variables.NOMBRE_TABLA[0], Variables.CAMPO_IDS[0], valores);
             if (id != -1) {
                 Toast.makeText(this, "Registro exitoso con id "+id, Toast.LENGTH_SHORT).show();
             } else {
