@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class Connect extends SQLiteOpenHelper {
-    public static final Integer APPVERSION = 1;
+    public static final Integer APPVERSION = 2;
     public Connect(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

@@ -12,25 +12,26 @@ public class Variables {
     public static final String[] CAMPO_DINERO = {"precio","costotal"};
     public static final String[][] CAMPOS_TABLAS = {
             {CAMPO_IDS[0],CAMPO_ID2[0],CAMPO_TITULO,CAMPO_PERSONA[0],CAMPO_EDITORIAL,CAMPO_CANTIDADES[0],CAMPO_DINERO[0]},
-            {CAMPO_IDS[0],CAMPO_PERSONA[0],CAMPO_ID2[0]},
+            {CAMPO_IDS[0],CAMPO_PERSONA[1],CAMPO_ID2[1]},
             {CAMPO_IDS[0],CAMPO_IDS[1],CAMPO_IDS[2],CAMPO_CANTIDADES[1],CAMPO_DINERO[1]}};
 
-    public static final String[] CREAR_TABLA = {"CREATE TABLE " + NOMBRE_TABLA[0] +
-            " (" + CAMPO_IDS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+    public static final String[] CREAR_TABLA = {
+            "CREATE TABLE " + NOMBRE_TABLA[0] + " (" + CAMPO_IDS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CAMPO_ID2[0] + " TEXT UNIQUE, " + CAMPO_TITULO + " TEXT, " + CAMPO_PERSONA[0] + " TEXT, " +
             CAMPO_EDITORIAL + " TEXT, " + CAMPO_CANTIDADES[0] + " INTEGER, "+ CAMPO_DINERO[0] +" REAL)",
 
             "CREATE TABLE " + NOMBRE_TABLA[1] + " (" + CAMPO_IDS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            CAMPO_ID2[1] + " TEXT UNIQUE, " + CAMPO_TITULO + " TEXT, " + CAMPO_PERSONA[1] + " TEXT)",
+                    CAMPO_PERSONA[1] + " TEXT," + CAMPO_ID2[1] + " TEXT UNIQUE)",
 
             "CREATE TABLE " + NOMBRE_TABLA[2] + " (" + CAMPO_IDS[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CAMPO_IDS[1] + " INTEGER , " + CAMPO_IDS[2] + " INTEGER, " +
-            CAMPO_CANTIDADES[1] + " INTEGER, " + CAMPO_DINERO[1] + " REAL)"};
+            CAMPO_CANTIDADES[1] + " INTEGER, " + CAMPO_DINERO[1] + " REAL)"
+    };
 
     public static final String[] ELIMINAR_TABLA = {
-            "DROP TABLE IF EXIST" + NOMBRE_TABLA[0],
-            "DROP TABLE IF EXIST" + NOMBRE_TABLA[1],
-            "DROP TABLE IF EXIST" + NOMBRE_TABLA[2]
+            "DROP TABLE IF EXISTS " + NOMBRE_TABLA[0],
+            "DROP TABLE IF EXISTS " + NOMBRE_TABLA[1],
+            "DROP TABLE IF EXISTS " + NOMBRE_TABLA[2]
     };
 }
 

@@ -58,7 +58,7 @@ public class lista_clientes_custom extends AppCompatActivity implements AdapterV
     }
 
     private void mostrar(String busqueda, String campo) {
-        conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
         SQLiteDatabase bd = conectar.getReadableDatabase();
         Clientes cliente;
         datoscliente = new ArrayList<>();

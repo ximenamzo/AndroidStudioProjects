@@ -51,7 +51,7 @@ public class detalle_cliente extends AppCompatActivity {
         btncancelar = findViewById(R.id.btnCancelar);
         btnguardar = findViewById(R.id.btnGuardar);
 
-        conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
 
         Bundle objeto = getIntent().getExtras(); // trae el objeto
         if (objeto != null) {

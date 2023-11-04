@@ -1,5 +1,7 @@
 package com.ximenamzo.examenlibros.modelos;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Libros implements Serializable {
@@ -20,6 +22,14 @@ public class Libros implements Serializable {
     public Libros() {
 
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Libro [id=" + id + ", ISBN=" + isbn + ", Título=" + titulo + ", Autor=" + autor + ", Editorial=" + editorial +
+                ", Páginas=" + paginas + ", Precio=" + precio + "]";
+    }
+
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }

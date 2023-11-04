@@ -31,6 +31,24 @@
             android:name=".vistas.libros.detalle_libro"
             android:exported="false" />
         <activity
+            android:name=".vistas.clientes.lista_clientes"
+            android:exported="false" />
+        <activity
+            android:name=".vistas.clientes.lista_clientes_custom"
+            android:exported="false" />
+        <activity
+            android:name=".vistas.clientes.detalle_cliente"
+            android:exported="false" />
+        <activity
+            android:name=".vistas.ventas.lista_ventas"
+            android:exported="false" />
+        <activity
+            android:name=".vistas.ventas.lista_ventas_custom"
+            android:exported="false" />
+        <activity
+            android:name=".vistas.ventas.detalle_venta"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

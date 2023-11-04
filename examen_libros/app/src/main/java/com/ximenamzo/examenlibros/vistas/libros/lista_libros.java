@@ -47,7 +47,7 @@ public class lista_libros extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void mostrar() {
-        conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
         SQLiteDatabase bd = conectar.getReadableDatabase();
         Libros libro;
         datoslibro = new ArrayList<>();
@@ -81,6 +81,8 @@ public class lista_libros extends AppCompatActivity implements AdapterView.OnIte
                             datoslibro.get(i).getAutor()
             );
         }
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listalibros);
+        lista.setAdapter(aa);
     }
 
     @Override

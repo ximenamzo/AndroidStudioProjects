@@ -3,6 +3,7 @@ package com.ximenamzo.examenlibros.vistas.ventas;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,6 +25,9 @@ import com.ximenamzo.examenlibros.db.Variables;
 import com.ximenamzo.examenlibros.modelos.Libros;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainVentas extends AppCompatActivity implements View.OnClickListener {
     TextView out_costotal;
@@ -35,17 +39,21 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
     Intent i;
     Integer cantidad, idCliente, idLibro;
     Double precio, costotal;
+    private final ArrayList<String> listaClientes = new ArrayList<>();
+    private final ArrayList<String> listaLibros = new ArrayList<>();
+    private final Set<String> setClientes = new HashSet<>();
+    private final Set<String> setLibros = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_ventas);
-        setTitle("Libros");
+        setTitle("Ventas");
 
         campoRfc = findViewById(R.id.campoRfc);
         campoNombre = findViewById(R.id.campoNombre);
         campoIsbn = findViewById(R.id.campoISBN);
-        campoTitulo = findViewById(R.id.cammpoTitulo);
+        campoTitulo = findViewById(R.id.campoTitulo);
         campoAutor = findViewById(R.id.campoAutor);
         campoPrecio = findViewById(R.id.campoPrecio);
         campoCantidad = findViewById(R.id.campoCantidad);
@@ -56,6 +64,8 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         limpiar = findViewById(R.id.btnlimpiar);
         search = findViewById(R.id.btnbuscar);
         ver = findViewById(R.id.btnver);
+
+        out_costotal = findViewById(R.id.txtcostotal);
 
         btnRestar.setOnClickListener(this);
         btnSumar.setOnClickListener(this);
@@ -71,6 +81,13 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         adaptadorLibro(campoIsbn);
         adaptadorLibro(campoTitulo);
         adaptadorLibro(campoAutor);
+
+        campoRfc.setOnClickListener(view -> campoRfc.showDropDown());
+        campoNombre.setOnClickListener(view -> campoNombre.showDropDown());
+        campoIsbn.setOnClickListener(view -> campoIsbn.showDropDown());
+        campoTitulo.setOnClickListener(view -> campoTitulo.showDropDown());
+        campoAutor.setOnClickListener(view -> campoAutor.showDropDown());
+
     }
 
     @Override
@@ -117,47 +134,68 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             if (v == search) buscarPorCliente();
         }
 
+        cantidad = Integer.parseInt(campoCantidad.getText().toString());
+
         if (v == btnRestar) {
-            cantidad = Integer.parseInt(campoCantidad.getText().toString());
             if (cantidad == 1) {
                 btnRestar.setEnabled(false);
             } else if (cantidad > 1) {
                 btnRestar.setEnabled(true);
                 cantidad--;
-                campoCantidad.setText(cantidad);
+                campoCantidad.setText(String.valueOf(cantidad));
+                double total = Double.parseDouble(campoPrecio.getText().toString()) * cantidad;
+                out_costotal.setText(String.valueOf(total));
             }
         }
 
         if (v == btnSumar) {
-            cantidad = Integer.parseInt(campoCantidad.getText().toString());
             cantidad++;
-            campoCantidad.setText(cantidad);
+            campoCantidad.setText(String.valueOf(cantidad));
+            double total = Double.parseDouble(campoPrecio.getText().toString()) * cantidad;
+            out_costotal.setText(String.valueOf(total));
         }
     }
 
     private void adaptadorCliente(AutoCompleteTextView campo) {
-        ArrayList<String> lista = new ArrayList<>();
         SQLiteDatabase db = conectar.getReadableDatabase();
-        String consulta = "SELECT " + Variables.CAMPO_ID2[1] + ", " + Variables.CAMPO_PERSONA[1] + " FROM " + Variables.NOMBRE_TABLA[1];
+        String consulta = "SELECT * FROM " + Variables.NOMBRE_TABLA[1];
         Cursor cursor = db.rawQuery(consulta, null);
+        listaClientes.clear();
+        setClientes.clear();
+        List<String> listaRFCNombre = new ArrayList<>();
+        List<String> listaNombreRFC = new ArrayList<>();
         if (cursor.moveToFirst()) {
+            String[] columnNames = cursor.getColumnNames();
+            for (String columnName : columnNames) {
+                Log.d("Depuracion", "Nombre de columna: " + columnName);
+            }
             do {
-                String rfc = cursor.getString(cursor.getInt(0));
-                String nombre = cursor.getString(cursor.getInt(1));
-                String datoCompleto;
-                if (campo == campoRfc) {
-                    datoCompleto = rfc + " - " + nombre;
-                } else if (campo == campoNombre) {
-                    datoCompleto = nombre + " - " + rfc;
-                } else { datoCompleto = ""; }
-                lista.add(datoCompleto);
+                @SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex(Variables.CAMPO_IDS[0]));
+                @SuppressLint("Range") String nombre = cursor.getString(cursor.getColumnIndex(Variables.CAMPO_PERSONA[1]));
+                @SuppressLint("Range") String rfc = cursor.getString(cursor.getColumnIndex(Variables.CAMPO_ID2[1]));
+
+                Log.d("Depuracion", "ID: " + id);
+                Log.d("Depuracion", "Nombre: " + nombre);
+                Log.d("Depuracion", "RFC: " + rfc);
+
+                String datoCompletoRFCNombre = rfc + " - " + nombre;
+                String datoCompletoNombreRFC = nombre + " - " + rfc;
+
+                listaRFCNombre.add(datoCompletoRFCNombre);
+                listaNombreRFC.add(datoCompletoNombreRFC);
+
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
+
+        List<String> listaSeleccionada = (campo == campoRfc) ? listaRFCNombre : listaNombreRFC;
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, lista);
+                android.R.layout.simple_dropdown_item_1line, listaSeleccionada);
+
         campo.setAdapter(adapter);
+
         campo.setOnItemClickListener((parent, view, position, id) -> {
             String item = (String) parent.getItemAtPosition(position);
             String[] partes = item.split(" - ");
@@ -177,13 +215,21 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         });
     }
 
-    private void adaptadorLibro(AutoCompleteTextView campo) {
+
+    private void adaptadorLibro(AutoCompleteTextView campo) { // TODO
         SQLiteDatabase db = conectar.getReadableDatabase();
         Libros libro;
         ArrayList<Libros> datoslibro = new ArrayList<>();
-        ArrayList<String> lista = new ArrayList<>();
         String consulta = "SELECT * FROM " + Variables.NOMBRE_TABLA[0];
         Cursor cursor = db.rawQuery(consulta, null);
+
+        listaLibros.clear();
+        setLibros.clear();
+
+        List<String> listaISBNtitulo = new ArrayList<>();
+        List<String> listaTituloAutor = new ArrayList<>();
+        List<String> listaAutorTitulo = new ArrayList<>();
+
         if (cursor.moveToFirst()) {
             do {
                 libro = new Libros();
@@ -192,71 +238,49 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
                 libro.setTitulo(cursor.getString(2));
                 libro.setAutor(cursor.getString(3));
                 libro.setEditorial(cursor.getString(4));
-                libro.setPaginas(Integer.valueOf(cursor.getString(5)));
-                libro.setPrecio(Double.valueOf(cursor.getString(6)));
+                libro.setPaginas(cursor.getInt(5));
+                libro.setPrecio(cursor.getDouble(6));
                 datoslibro.add(libro);
-
-                /*String isbn = cursor.getString(cursor.getInt(0));
-                String titulo = cursor.getString(cursor.getInt(1));
-                String autor = cursor.getString(cursor.getInt(1));
-
-                String datoCompleto;
-                if (campo==campoIsbn) {
-                    datoCompleto = isbn + " - " + titulo;
-                } else if (campo==campoTitulo) {
-                    datoCompleto = titulo + " - " + autor;
-                } else if (campo==campoAutor) {
-                    datoCompleto = autor + " - " + titulo;
-                } else {
-                    datoCompleto = "";
-                }
-                lista.add(datoCompleto);/**/
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         db.close();
 
-        if (campo==campoIsbn) {
-            for(int i = 0; i< datoslibro.size(); i++){
-                lista.add(datoslibro.get(i).getIsbn() + " - " + datoslibro.get(i).getTitulo());
-            }
-        } else if (campo==campoTitulo) {
-            for(int i = 0; i< datoslibro.size(); i++){
-                lista.add(datoslibro.get(i).getTitulo() + " - " + datoslibro.get(i).getAutor());
-            }
-        } else if (campo==campoAutor) {
-            for(int i = 0; i< datoslibro.size(); i++){
-                lista.add(datoslibro.get(i).getAutor() + " - " + datoslibro.get(i).getTitulo());
+        for (Libros libroItem : datoslibro) {
+            if (campo == campoIsbn) {
+                listaLibros.add(libroItem.getIsbn() + " - " + libroItem.getTitulo());
+                setLibros.add(libroItem.getIsbn() + " - " + libroItem.getTitulo());
+            } else if (campo == campoTitulo) {
+                listaLibros.add(libroItem.getTitulo() + " - " + libroItem.getAutor());
+                setLibros.add(libroItem.getTitulo() + " - " + libroItem.getAutor());
+            } else if (campo == campoAutor) {
+                listaLibros.add(libroItem.getAutor() + " - " + libroItem.getTitulo());
+                setLibros.add(libroItem.getAutor() + " - " + libroItem.getTitulo());
             }
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, lista);
+                android.R.layout.simple_dropdown_item_1line, listaLibros);
         campo.setAdapter(adapter);
+
         campo.setOnItemClickListener((parent, view, position, id) -> {
-            //String item = (String) parent.getItemAtPosition(position);
             Libros itemLibro = datoslibro.get(position);
-            /*String[] partes = item.split(" - ");
-            String isbn, titulo, autor, precio;
-            if (campo==campoIsbn) {
-                rfc = partes[0];
-                nombre = partes[1];
-            } else {
-                nombre = partes[0];
-                rfc = partes[1];
-            }/**/
             campoIsbn.setText(itemLibro.getIsbn());
             campoTitulo.setText(itemLibro.getTitulo());
             campoAutor.setText(itemLibro.getAutor());
             campoPrecio.setText(String.valueOf(itemLibro.getPrecio()));
             campoCantidad.setText("1");
+            out_costotal.setText(String.valueOf(itemLibro.getPrecio()));
         });
     }
 
+
     private void insertar() {
         SQLiteDatabase db = conectar.getWritableDatabase();
+        String isbn = campoIsbn.getText().toString();
         String rfc = campoRfc.getText().toString();
-        idLibro = getObjectId(db, rfc, 0);
+        idLibro = getObjectId(db, isbn, 0);
         idCliente = getObjectId(db, rfc, 1);
         Log.d("DEBUG_XX", "IDs del Libro es "+idLibro+" y Cliente "+idCliente);
 
@@ -264,14 +288,16 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             cantidad = Integer.parseInt(campoCantidad.getText().toString());
             precio = Double.parseDouble(campoPrecio.getText().toString());
             costotal = precio * cantidad;
+
             Log.d("DEBUG_XX", "Libros("+cantidad+") * $"+precio+" = $"+costotal);
+
             //SQLiteDatabase db = conectar.getWritableDatabase();
             ContentValues valores = new ContentValues();
             valores.put(Variables.CAMPO_IDS[1], idLibro); // id del libro
             valores.put(Variables.CAMPO_IDS[2], idCliente); // id del cliente
             valores.put(Variables.CAMPO_CANTIDADES[1], cantidad); // cantidad de libros a comprar
             valores.put(Variables.CAMPO_DINERO[1], costotal); // total a pagar
-            long id = db.insert(Variables.NOMBRE_TABLA[2], Variables.CAMPO_IDS[0], valores);
+            long id = db.insert(Variables.NOMBRE_TABLA[2], null, valores);
             if (id != -1) {
                 Toast.makeText(this, "Registro exitoso con id "+id, Toast.LENGTH_SHORT).show();
             } else {
@@ -297,44 +323,41 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         bd.close();
     }
 
-    private int getObjectId(@NonNull SQLiteDatabase db, String dato, @NonNull Integer x) {
+    private int getObjectId(@NonNull SQLiteDatabase db, String dato, Integer x) {
         String[] parametros = {dato};
         String[] campos = {Variables.CAMPO_IDS[0]};
         Cursor cursor = db.query(Variables.NOMBRE_TABLA[x], campos, Variables.CAMPO_ID2[x] + "=?", parametros, null, null, null);
         boolean existe = cursor.getCount() > 0;
-        Log.d("DEBUG_XX", "Id del Cliente: "+cursor.getInt(0));
-        cursor.close();
+        int id = 0;
         if (existe) {
-            return cursor.getInt(0);
-        } else {
-            return 0;
+            cursor.moveToFirst();
+            id = cursor.getInt(0);
         }
+        Log.d("DEBUG_XX", "Id del objeto "+x+": "+cursor.getInt(0));
+        cursor.close();
+        return id;
     }
 
     private void buscarData(SQLiteDatabase db, String dbVariable,String dato) {
         String consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE " + dbVariable + " LIKE ?";
-        // ^
         try {
             Cursor cursor = db.rawQuery(consulta, new String[]{"%" + dato + "%"});
-            // ^
-            if (cursor.getCount() > 1) {
+            int count = cursor.getCount();
+            if (count > 1) {
                 cursor.close();
                 i = new Intent(MainVentas.this, lista_ventas_custom.class);
                 i.putExtra("variable", dbVariable);
                 i.putExtra("dato", dato);
-                // ^^
                 startActivity(i);
-            } else if (cursor.getCount() == 1) {
+            } else if (count == 1) {
                 cursor.moveToFirst();
-                Log.d("DEBUGXX", "Cursores0: "+cursor.getString(0));
                 String idc = cursor.getString(0);
                 cursor.close();
                 i = new Intent(MainVentas.this, detalle_venta.class);
                 i.putExtra("id_cliente", idc);
                 startActivity(i);
             } else {
-                Toast.makeText(this, "No hay datos disponibles para el "+dbVariable+ " '" + dato+"'.", Toast.LENGTH_LONG).show();
-                // ^
+                Toast.makeText(this, "No hay datos disponibles para el " + dbVariable + " '" + dato + "'.", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             Toast.makeText(this, "Error al buscar: " + e.getMessage(), Toast.LENGTH_LONG).show();

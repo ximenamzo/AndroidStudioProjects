@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
+import com.ximenamzo.examenlibros.modelos.DB;
 
 public class MainClientes extends AppCompatActivity implements View.OnClickListener {
 
@@ -77,15 +78,24 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
             if (!nombre.isEmpty() && !rfc.isEmpty()) {
                 insertar();
             } else {
-                Toast.makeText(this, "Ingrese todos los datos.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Ingrese los datos restantes.", Toast.LENGTH_LONG).show();
             }
         }
-        if(!rfc.isEmpty()){
-            if(v == searchNombre) buscarNombre();
+
+        if(v == searchNombre){
+            if(!nombre.isEmpty()) {
+                DB.buscar(this, in_nombre.getText().toString(),Variables.NOMBRE_TABLA[1],Variables.CAMPO_PERSONA[1]);
+            } else {
+                Toast.makeText(this, "Ingrese un nombre para buscar.", Toast.LENGTH_SHORT).show();
+            }
         }
 
-        if(!nombre.isEmpty()){
-            if(v == searchRfc) buscarRfc();
+        if(v == searchRfc){
+            if(!rfc.isEmpty()) {
+                DB.buscar(this, in_rfc.getText().toString(),Variables.NOMBRE_TABLA[1],Variables.CAMPO_ID2[1]);
+            } else {
+                Toast.makeText(this, "Ingrese un RFC para buscar.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -107,74 +117,6 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
             }
         }
         db.close();
-    }
-
-    private void buscarNombre() {
-        SQLiteDatabase bd;
-        bd = conectar.getReadableDatabase();
-        String nombre;
-        nombre = in_nombre.getText().toString();
-        String consulta;
-        consulta = "SELECT " + Variables.CAMPO_ID2[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE " + Variables.CAMPO_PERSONA[1] + " LIKE ?";
-
-        try {
-            Cursor cursor;
-            cursor = bd.rawQuery(consulta, new String[]{"%" + nombre + "%"});
-            if (cursor.getCount() > 1) {
-                cursor.close();
-                i = new Intent(MainClientes.this, lista_clientes_custom.class);
-                i.putExtra("nombre", nombre);
-                startActivity(i);
-            } else if (cursor.getCount() == 1) {
-                cursor.moveToFirst();
-                Log.d("DEBUGXX", "Cursores0: "+cursor.getString(0));
-                String id = cursor.getString(0);
-                cursor.close();
-                i = new Intent(MainClientes.this, detalle_cliente.class);
-                i.putExtra("id", id);
-                startActivity(i);
-            } else {
-                Toast.makeText(this, "No hay datos disponibles para el nombre " + nombre, Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Error al buscar el nombre: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-        bd.close();
-    }
-
-    private void buscarRfc() {
-        SQLiteDatabase bd;
-        bd = conectar.getReadableDatabase();
-        String rfc;
-        rfc = in_rfc.getText().toString();
-        String consulta;
-        consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE " + Variables.CAMPO_ID2[1] + " LIKE ?";
-
-        try {
-            Cursor cursor;
-            cursor = bd.rawQuery(consulta, new String[]{"%" + rfc + "%"});
-            if (cursor.getCount() > 1) {
-                cursor.close();
-                i = new Intent(MainClientes.this, lista_clientes_custom.class);
-                i.putExtra("rfc", rfc);
-                startActivity(i);
-            } else if (cursor.getCount() == 1) {
-                cursor.moveToFirst();
-                Log.d("DEBUGXX", "Cursores tit 0: "+cursor.getString(0));
-                String id = cursor.getString(0);
-                cursor.close();
-                i = new Intent(MainClientes.this, detalle_cliente.class);
-                i.putExtra("id", id);
-                startActivity(i);
-            } else {
-                Toast.makeText(this, "No hay registros que coincidan con " + rfc, Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Error al buscar el rfc: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-        bd.close();
     }
 
     private boolean rfcExiste(SQLiteDatabase db, String rfc) {

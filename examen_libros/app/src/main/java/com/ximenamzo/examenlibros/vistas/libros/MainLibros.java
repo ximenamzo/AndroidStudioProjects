@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
+import com.ximenamzo.examenlibros.modelos.DB;
 
 public class MainLibros extends AppCompatActivity implements View.OnClickListener {
 
@@ -86,18 +86,28 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
         String precio = in_precio.getText().toString();
 
         if (v == insert) {
-            if (!isbn.isEmpty() && !titulo.isEmpty() && !autor.isEmpty() && !editorial.isEmpty() && !paginas.isEmpty() && !precio.isEmpty()) {
+            if (!isbn.isEmpty() && !titulo.isEmpty() && !autor.isEmpty() &&
+                    !editorial.isEmpty() && !paginas.isEmpty() && !precio.isEmpty()) {
                 insertar();
             } else {
-                Toast.makeText(this, "Ingrese todos los datos.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Ingrese los datos restantes.", Toast.LENGTH_LONG).show();
             }
         }
-        if(!titulo.isEmpty()){
-            if(v == searchTitulo) buscarTitulo();
+
+        if(v == searchTitulo){
+            if(!titulo.isEmpty()) {
+                DB.buscar(this, in_titulo.getText().toString(),Variables.NOMBRE_TABLA[0],Variables.CAMPO_TITULO);
+            } else {
+                Toast.makeText(this, "Ingrese un titulo para buscar.", Toast.LENGTH_SHORT).show();
+            }
         }
 
-        if(!autor.isEmpty()){
-            if(v == searchAutor) buscarAutor();
+        if(v == searchAutor){
+            if(!autor.isEmpty()) {
+                DB.buscar(this, in_autor.getText().toString(),Variables.NOMBRE_TABLA[0],Variables.CAMPO_PERSONA[0]);
+            } else {
+                Toast.makeText(this, "Ingrese un autor para buscar.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -106,7 +116,7 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
         String isbn = in_isbn.getText().toString();
 
         if (isbnExiste(db, isbn)) {
-            Toast.makeText(this, "ISBN ya registrado.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "ISBN ya registrado.", Toast.LENGTH_SHORT).show();
         } else {
             ContentValues valores = new ContentValues();
             valores.put(Variables.CAMPO_ID2[0], in_isbn.getText().toString()); // isbn
@@ -123,74 +133,6 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
             }
         }
         db.close();
-    }
-
-    private void buscarTitulo() {
-        SQLiteDatabase bd;
-        bd = conectar.getReadableDatabase();
-        String titulo;
-        titulo = in_titulo.getText().toString();
-        String consulta;
-        consulta = "SELECT " + Variables.CAMPO_ID2[0] + " FROM " + Variables.NOMBRE_TABLA[0] + " WHERE " + Variables.CAMPO_TITULO + " LIKE ?";
-
-        try {
-            Cursor cursor;
-            cursor = bd.rawQuery(consulta, new String[]{"%" + titulo + "%"});
-            if (cursor.getCount() > 1) {
-                cursor.close();
-                i = new Intent(MainLibros.this, lista_libros_custom.class);
-                i.putExtra("titulo", titulo);
-                startActivity(i);
-            } else if (cursor.getCount() == 1) {
-                cursor.moveToFirst();
-                Log.d("DEBUGXX", "Cursores tit 0: "+cursor.getString(0));
-                String isbn = cursor.getString(0);
-                cursor.close();
-                i = new Intent(MainLibros.this, detalle_libro.class);
-                i.putExtra("isbn", isbn);
-                startActivity(i);
-            } else {
-                Toast.makeText(this, "No titulos que coincidan con " + titulo, Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Error al buscar el titulo: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-        bd.close();
-    }
-
-    private void buscarAutor() {
-        SQLiteDatabase bd;
-        bd = conectar.getReadableDatabase();
-        String autor;
-        autor = in_autor.getText().toString();
-        String consulta;
-        consulta = "SELECT " + Variables.CAMPO_ID2[0] + " FROM " + Variables.NOMBRE_TABLA[0] + " WHERE " + Variables.CAMPO_PERSONA[0] + " LIKE ?";
-
-        try {
-            Cursor cursor;
-            cursor = bd.rawQuery(consulta, new String[]{"%" + autor + "%"});
-            if (cursor.getCount() > 1) {
-                cursor.close();
-                i = new Intent(MainLibros.this, lista_libros_custom.class);
-                i.putExtra("autor", autor);
-                startActivity(i);
-            } else if (cursor.getCount() == 1) {
-                cursor.moveToFirst();
-                Log.d("DEBUGXX", "Cursores0: "+cursor.getString(0));
-                String isbn = cursor.getString(0);
-                cursor.close();
-                i = new Intent(MainLibros.this, detalle_libro.class);
-                i.putExtra("isbn", isbn);
-                startActivity(i);
-            } else {
-                Toast.makeText(this, "No hay datos disponibles para el autor " + autor, Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Error al buscar al autor: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-        bd.close();
     }
 
     private boolean isbnExiste(SQLiteDatabase db, String isbn) {

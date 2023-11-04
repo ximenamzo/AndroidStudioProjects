@@ -42,7 +42,7 @@ public class detalle_venta extends AppCompatActivity {
         out_cantidad = findViewById(R.id.txtcantidad);
         out_costotal = findViewById(R.id.txtcostotal);
 
-        conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
 
         Bundle objeto = getIntent().getExtras(); // trae el objeto
         if (objeto != null) {
@@ -98,15 +98,15 @@ public class detalle_venta extends AppCompatActivity {
             int cantidadVenta = cursor.getInt(7);
             double costoTotalVenta = cursor.getDouble(8);
 
-            out_id.setText("ID Venta: " + idVenta);
+            out_id.setText("Venta #" + idVenta);
             out_nombre.setText("Cliente: " + nombreCliente);
-            out_rfc.setText("RFC del Cliente: " + rfcCliente);
-            out_titulo.setText("Título del Libro: " + tituloLibro);
-            out_autor.setText("Autor del Libro: " + autorLibro);
-            out_isbn.setText("ISBN del Libro: " + isbnLibro);
+            out_rfc.setText("RFC: " + rfcCliente);
+            out_titulo.setText("Libro: " + tituloLibro);
+            out_autor.setText("Autor: " + autorLibro);
+            out_isbn.setText("ISBN: " + isbnLibro);
             out_precio.setText("Precio del Libro: $" + precioLibro);
-            out_cantidad.setText("Cantidad: " + cantidadVenta);
-            out_costotal.setText("Costo Total: $" + costoTotalVenta);
+            out_cantidad.setText("Cantidad comprada: " + cantidadVenta);
+            out_costotal.setText(" " + costoTotalVenta);
 
         } else {
             Toast.makeText(this, "No se encontraron registros de ventas para el ID especificado.", Toast.LENGTH_SHORT).show();

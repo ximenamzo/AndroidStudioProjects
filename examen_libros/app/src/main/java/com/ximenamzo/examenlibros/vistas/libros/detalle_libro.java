@@ -29,7 +29,7 @@ public class detalle_libro extends AppCompatActivity {
     private Libros libro;
     Connect conectar;
     String isbnSolo;
-    LinearLayout editlayout, textlayout;
+    LinearLayout infolayout, editlayout, textlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class detalle_libro extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_libro);
         setTitle("Detalles del Libro");
 
+        infolayout = findViewById(R.id.lyinfo);
         editlayout = findViewById(R.id.editLayout);
         textlayout = findViewById(R.id.textLayout);
 
@@ -60,7 +61,7 @@ public class detalle_libro extends AppCompatActivity {
         btncancelar = findViewById(R.id.btnCancelar);
         btnguardar = findViewById(R.id.btnGuardar);
 
-        conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
 
         Bundle objeto = getIntent().getExtras(); // trae el objeto
         if (objeto != null) {
@@ -103,13 +104,14 @@ public class detalle_libro extends AppCompatActivity {
     private void mostrarDatos() {
         editlayout.setVisibility(View.GONE);
         textlayout.setVisibility(View.VISIBLE);
+        infolayout.setVisibility(View.VISIBLE);
         if (libro != null) {
             out_isbn.setText(libro.getIsbn());
             out_titulo.setText(libro.getTitulo());
             out_autor.setText(libro.getAutor());
             out_editorial.setText(libro.getEditorial());
             out_paginas.setText(String.valueOf(libro.getPaginas()));
-            out_precio.setText(String.valueOf(libro.getPaginas()));
+            out_precio.setText(String.valueOf(libro.getPrecio()));
         } else {
             // Oculta editText y sus botones Guardar y Cancelar
             edit_titulo.setVisibility(View.GONE);
@@ -138,10 +140,11 @@ public class detalle_libro extends AppCompatActivity {
         edit_autor.setText(libro.getAutor());
         edit_editorial.setText(libro.getEditorial());
         edit_paginas.setText(String.valueOf(libro.getPaginas()));
-        edit_precio.setText(String.valueOf(libro.getPaginas()));
+        edit_precio.setText(String.valueOf(libro.getPrecio()));
 
         // oculto los textViews y botones
         textlayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.GONE);
         out_titulo.setVisibility(View.GONE);
         out_isbn.setVisibility(View.GONE);
         out_autor.setVisibility(View.GONE);
@@ -170,19 +173,20 @@ public class detalle_libro extends AppCompatActivity {
         libro.setAutor(edit_autor.getText().toString());
         libro.setEditorial(edit_editorial.getText().toString());
         libro.setPaginas(Integer.parseInt(edit_paginas.getText().toString()));
-        libro.setPrecio(Double.parseDouble(edit_paginas.getText().toString()));
+        libro.setPrecio(Double.parseDouble(edit_precio.getText().toString()));
 
         // BD aquí
         SQLiteDatabase bd = conectar.getWritableDatabase();
         String[] parametros = {String.valueOf(libro.getId())};
         //String[] campos = {Variables.CAMPO_ID, Variables.CAMPO_ISBN, Variables.CAMPO_TITULO, Variables.CAMPO_AUTOR, Variables.CAMPO_EDITORIAL, Variables.CAMPO_PAGINAS};
         ContentValues valores = new ContentValues();
-        valores.put(Variables.CAMPO_ID2[0], edit_isbn.getText().toString());
-        valores.put(Variables.CAMPO_TITULO, edit_titulo.getText().toString());
-        valores.put(Variables.CAMPO_PERSONA[0], edit_autor.getText().toString());
-        valores.put(Variables.CAMPO_EDITORIAL, edit_editorial.getText().toString());
-        valores.put(Variables.CAMPO_CANTIDADES[0], edit_paginas.getText().toString());
-        valores.put(Variables.CAMPO_DINERO[0], edit_precio.getText().toString());
+        valores.put(Variables.CAMPO_ID2[0], libro.getIsbn());
+        valores.put(Variables.CAMPO_TITULO, libro.getTitulo());
+        valores.put(Variables.CAMPO_PERSONA[0], libro.getAutor());
+        valores.put(Variables.CAMPO_EDITORIAL, libro.getEditorial());
+        valores.put(Variables.CAMPO_CANTIDADES[0], libro.getPaginas());
+        valores.put(Variables.CAMPO_DINERO[0], libro.getPrecio());
+
         bd.update(Variables.NOMBRE_TABLA[0], valores, Variables.CAMPO_IDS[0] + "=?", parametros);
         Toast.makeText(this, "Registro actualizado.", Toast.LENGTH_LONG).show();
         bd.close();
@@ -192,6 +196,7 @@ public class detalle_libro extends AppCompatActivity {
         btnguardar.setVisibility(View.GONE);
         btncancelar.setVisibility(View.GONE);
         textlayout.setVisibility(View.VISIBLE);
+        infolayout.setVisibility(View.VISIBLE);
         mostrarDatos();
     }
 

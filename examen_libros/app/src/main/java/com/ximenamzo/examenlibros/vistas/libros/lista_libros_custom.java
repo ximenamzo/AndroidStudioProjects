@@ -19,6 +19,7 @@ import com.ximenamzo.examenlibros.db.Variables;
 import com.ximenamzo.examenlibros.modelos.Libros;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class lista_libros_custom extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lista;
@@ -33,13 +34,12 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            if (extras.containsKey("titulo")) {
-                busqueda = extras.getString("titulo");
-                campo = Variables.CAMPO_TITULO;
-            } else if (extras.containsKey("autor")) {
-                busqueda = extras.getString("autor");
-                campo = Variables.CAMPO_PERSONA[0];
-            }
+            /*
+            * i.putExtra("campo", campoDondeBusco);
+              i.putExtra("dato", datoQueBusco);
+            * */
+            campo = extras.getString("campo");
+            busqueda = extras.getString("dato");
         }
 
         setTitle("Libros relacionados con '" + busqueda + "'");
@@ -58,11 +58,11 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
     }
 
     private void mostrar(String busqueda, String campo) {
-        conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
         SQLiteDatabase bd = conectar.getReadableDatabase();
         Libros libro;
         datoslibro = new ArrayList<>();
-        String[] campos = {Variables.CAMPO_IDS[0], Variables.CAMPO_ID2[0], Variables.CAMPO_TITULO, Variables.CAMPO_PERSONA[0], Variables.CAMPO_EDITORIAL, Variables.CAMPO_CANTIDADES[0]};
+        String[] campos = Variables.CAMPOS_TABLAS[0];
         String whereLike = campo + " LIKE ?";
 
         try {
@@ -79,7 +79,7 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
                     libro.setAutor(cursor.getString(3));
                     libro.setEditorial(cursor.getString(4));
                     libro.setPaginas(Integer.valueOf(cursor.getString(5)));
-                    libro.setPaginas(Integer.valueOf(cursor.getString(5)));
+                    libro.setPrecio(Double.valueOf(cursor.getString(6)));
                     datoslibro.add(libro);
                 }
             } else {
@@ -93,17 +93,13 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
         }
         bd.close();
 
-        agregarLista();
-    }
-
-    private void agregarLista() {
         ArrayAdapter<String> aa = (ArrayAdapter<String>) lista.getAdapter();
         aa.clear(); // Limpia la lista existente por si a caso
         for (int i = 0; i < datoslibro.size(); i++) {
             aa.add(
-                datoslibro.get(i).getId() + " | " +
-                datoslibro.get(i).getTitulo() + " - " +
-                datoslibro.get(i).getAutor()
+                    datoslibro.get(i).getId() + " | " +
+                            datoslibro.get(i).getTitulo() + " - " +
+                            datoslibro.get(i).getAutor()
             );
         }
     }

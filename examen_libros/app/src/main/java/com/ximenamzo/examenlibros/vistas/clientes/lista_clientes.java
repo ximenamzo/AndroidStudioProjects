@@ -47,7 +47,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void mostrar() {
-        conectar = new Connect(this, Variables.NOMBRE_BD, null, 1);
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
         SQLiteDatabase bd = conectar.getReadableDatabase();
         Clientes cliente;
         datoscliente = new ArrayList<>();

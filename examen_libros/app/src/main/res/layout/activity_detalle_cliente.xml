@@ -6,73 +6,121 @@
     android:layout_height="match_parent"
     tools:context=".vistas.clientes.detalle_cliente">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="Detalles del Cliente"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
+
+        android:paddingTop="40dp"
+        android:paddingStart="40dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/title">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingVertical="30dp"
+            android:paddingHorizontal="20dp">
 
-            <!-- TEXTO NORMAL -->
             <LinearLayout
-                android:id="@+id/textLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:visibility="visible">
-                <TextView
-                    android:id="@+id/txtnombre"
-                    android:layout_width="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- INFO -->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Nombre"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
-                <TextView
-                    android:id="@+id/txtrfc"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="right">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre"
+                        android:textAppearance="?attr/textAppearanceTitleLarge" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="RFC"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary" />
+                </LinearLayout>
+
+                <!-- TEXTO NORMAL -->
+                <LinearLayout
+                    android:id="@+id/textLayout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="RFC"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    android:layout_weight="8"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+                    <TextView
+                        android:id="@+id/txtnombre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre"
+                        android:textAppearance="?attr/textAppearanceTitleLarge" />
+                    <TextView
+                        android:id="@+id/txtrfc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="RFC"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary" />
+                </LinearLayout>
+
+
+                <!-- MODO EDICION -->
+                <LinearLayout
+                    android:id="@+id/editLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/txtid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp"
+                        android:text="Id"
+                        android:textAppearance="?attr/textAppearanceBodyMedium" />
+                    <EditText
+                        android:id="@+id/editNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre" />
+                    <EditText
+                        android:id="@+id/editRfc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Rfc" />
+                </LinearLayout>
+
             </LinearLayout>
 
 
-            <!-- MODO EDICION -->
-            <LinearLayout
-                android:id="@+id/editLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:visibility="gone">
-                <TextView
-                    android:id="@+id/txtid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="16dp"
-                    android:text="Id"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-                <EditText
-                    android:id="@+id/editNombre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nombre" />
-                <EditText
-                    android:id="@+id/editRfc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Rfc" />
-            </LinearLayout>
 
 
 
@@ -84,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_margin="8dp"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <!-- MODO NORMAL -->

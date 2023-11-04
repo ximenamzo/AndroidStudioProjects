@@ -103,7 +103,7 @@
                 android:id="@+id/etxprecio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:maxLength="6" />
         </com.google.android.material.textfield.TextInputLayout>
 
