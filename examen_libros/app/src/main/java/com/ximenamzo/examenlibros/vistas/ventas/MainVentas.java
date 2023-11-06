@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -38,11 +40,8 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
     Connect conectar;
     Intent i;
     Integer cantidad, idCliente, idLibro;
-    Double precio, costotal;
-    private final ArrayList<String> listaClientes = new ArrayList<>();
-    private final ArrayList<String> listaLibros = new ArrayList<>();
-    private final Set<String> setClientes = new HashSet<>();
-    private final Set<String> setLibros = new HashSet<>();
+    Double precio, costotal, cero = 0.00;
+    boolean isEditingRFC = false, isEditingNombre = false, isEditingISBN = false, isEditingTitulo = false, isEditingAutor = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +87,80 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         campoTitulo.setOnClickListener(view -> campoTitulo.showDropDown());
         campoAutor.setOnClickListener(view -> campoAutor.showDropDown());
 
+        campoRfc.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void afterTextChanged(Editable editable) { String rfc = editable.toString();
+                if (rfc.isEmpty()) { if (!isEditingRFC) { isEditingNombre = true; campoNombre.setText(""); isEditingNombre = false; } }
+            }
+        });
+
+        campoNombre.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable editable) { String nombre = editable.toString();
+                if (nombre.isEmpty()) { if (!isEditingNombre) { isEditingRFC = true; campoRfc.setText(""); isEditingRFC = false; } }
+            }
+        });
+
+        campoIsbn.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void afterTextChanged(Editable editable) { String isbn = editable.toString();
+                if (isbn.isEmpty()) { if (!isEditingISBN) {
+                        isEditingTitulo = true; isEditingAutor = true;
+                        campoTitulo.setText(""); campoAutor.setText("");
+                        campoPrecio.setText(""); campoCantidad.setText("");
+                        out_costotal.setText(String.valueOf(cero));
+                        isEditingTitulo = false; isEditingAutor = false;
+                    }
+                }
+            }
+        });
+
+        campoTitulo.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable editable) { String titulo = editable.toString();
+                if (titulo.isEmpty()) {
+                    if (!isEditingTitulo) {
+                        isEditingISBN = true; isEditingAutor = true;
+                        campoIsbn.setText(""); campoAutor.setText("");
+                        campoPrecio.setText(""); campoCantidad.setText("");
+                        out_costotal.setText(String.valueOf(cero));
+                        isEditingISBN = false; isEditingAutor = false;
+                    }
+                }
+            }
+        });
+
+        campoAutor.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable editable) { String autor = editable.toString();
+                if (autor.isEmpty()) {
+                    if (!isEditingAutor) {
+                        isEditingISBN = true; isEditingTitulo = true;
+                        campoIsbn.setText(""); campoTitulo.setText("");
+                        campoPrecio.setText(""); campoCantidad.setText("");
+                        out_costotal.setText(String.valueOf(cero));
+                        isEditingISBN = false; isEditingTitulo = false;
+                    }
+                }
+            }
+        });
+
+        campoCantidad.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable editable) {
+                int cant = Integer.parseInt(editable.toString());
+                if (cant < 1) {
+                    campoCantidad.setText("1");
+                    Toast.makeText(getApplicationContext(), "La cantidad mínima de compra es 1 libro. No es posible comprar 0 libros.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -100,7 +173,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             campoAutor.setText("");
             campoPrecio.setText("");
             campoCantidad.setText("");
-            out_costotal.setText("0.00");
+            out_costotal.setText(String.valueOf(cero));
         }
         if (v == ver) {
             SQLiteDatabase bd = conectar.getReadableDatabase();
@@ -134,25 +207,27 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             if (v == search) buscarPorCliente();
         }
 
-        cantidad = Integer.parseInt(campoCantidad.getText().toString());
+        if (v == btnRestar || v == btnSumar) {
+            cantidad = Integer.parseInt(campoCantidad.getText().toString());
 
-        if (v == btnRestar) {
-            if (cantidad == 1) {
-                btnRestar.setEnabled(false);
-            } else if (cantidad > 1) {
-                btnRestar.setEnabled(true);
-                cantidad--;
+            if (v == btnRestar) {
+                if (cantidad == 1) {
+                    btnRestar.setEnabled(false);
+                } else if (cantidad > 1) {
+                    btnRestar.setEnabled(true);
+                    cantidad--;
+                    campoCantidad.setText(String.valueOf(cantidad));
+                    double total = Double.parseDouble(campoPrecio.getText().toString()) * cantidad;
+                    out_costotal.setText(String.valueOf(total));
+                }
+            }
+
+            if (v == btnSumar) {
+                cantidad++;
                 campoCantidad.setText(String.valueOf(cantidad));
                 double total = Double.parseDouble(campoPrecio.getText().toString()) * cantidad;
                 out_costotal.setText(String.valueOf(total));
             }
-        }
-
-        if (v == btnSumar) {
-            cantidad++;
-            campoCantidad.setText(String.valueOf(cantidad));
-            double total = Double.parseDouble(campoPrecio.getText().toString()) * cantidad;
-            out_costotal.setText(String.valueOf(total));
         }
     }
 
@@ -160,10 +235,8 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         SQLiteDatabase db = conectar.getReadableDatabase();
         String consulta = "SELECT * FROM " + Variables.NOMBRE_TABLA[1];
         Cursor cursor = db.rawQuery(consulta, null);
-        listaClientes.clear();
-        setClientes.clear();
-        List<String> listaRFCNombre = new ArrayList<>();
-        List<String> listaNombreRFC = new ArrayList<>();
+        List<String> listaRFCNombre = new ArrayList<>(); // orden RFC - Nombre
+        List<String> listaNombreRFC = new ArrayList<>(); // orden Nombre - RFC
         if (cursor.moveToFirst()) {
             String[] columnNames = cursor.getColumnNames();
             for (String columnName : columnNames) {
@@ -216,19 +289,12 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void adaptadorLibro(AutoCompleteTextView campo) { // TODO
+    private void adaptadorLibro(AutoCompleteTextView campo) {
         SQLiteDatabase db = conectar.getReadableDatabase();
         Libros libro;
         ArrayList<Libros> datoslibro = new ArrayList<>();
         String consulta = "SELECT * FROM " + Variables.NOMBRE_TABLA[0];
         Cursor cursor = db.rawQuery(consulta, null);
-
-        listaLibros.clear();
-        setLibros.clear();
-
-        List<String> listaISBNtitulo = new ArrayList<>();
-        List<String> listaTituloAutor = new ArrayList<>();
-        List<String> listaAutorTitulo = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             do {
@@ -246,6 +312,9 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
 
         cursor.close();
         db.close();
+
+        List<String> listaLibros = new ArrayList<>();
+        Set<String> setLibros = new HashSet<>();
 
         for (Libros libroItem : datoslibro) {
             if (campo == campoIsbn) {
@@ -274,6 +343,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             out_costotal.setText(String.valueOf(itemLibro.getPrecio()));
         });
     }
+
 
 
     private void insertar() {
@@ -319,6 +389,8 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             buscarData(bd, Variables.CAMPO_ID2[1], rfc);
         } else if (!nombre.isEmpty()) {
             buscarData(bd, Variables.CAMPO_PERSONA[1],nombre);
+        } else {
+            Toast.makeText(this, "Error en la búsqueda.", Toast.LENGTH_SHORT).show();
         }
         bd.close();
     }
@@ -338,15 +410,16 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         return id;
     }
 
-    private void buscarData(SQLiteDatabase db, String dbVariable,String dato) {
+    private void buscarData(SQLiteDatabase db, String dbVariable, String dato) {
         String consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE " + dbVariable + " LIKE ?";
         try {
             Cursor cursor = db.rawQuery(consulta, new String[]{"%" + dato + "%"});
+
             int count = cursor.getCount();
             if (count > 1) {
                 cursor.close();
                 i = new Intent(MainVentas.this, lista_ventas_custom.class);
-                i.putExtra("variable", dbVariable);
+                i.putExtra("campo", dbVariable);
                 i.putExtra("dato", dato);
                 startActivity(i);
             } else if (count == 1) {
@@ -354,7 +427,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
                 String idc = cursor.getString(0);
                 cursor.close();
                 i = new Intent(MainVentas.this, detalle_venta.class);
-                i.putExtra("id_cliente", idc);
+                i.putExtra("idCliente", idc);
                 startActivity(i);
             } else {
                 Toast.makeText(this, "No hay datos disponibles para el " + dbVariable + " '" + dato + "'.", Toast.LENGTH_LONG).show();

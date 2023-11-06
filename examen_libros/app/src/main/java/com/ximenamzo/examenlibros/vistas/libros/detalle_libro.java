@@ -222,10 +222,6 @@ public class detalle_libro extends AppCompatActivity {
         if (libro == null) libro = new Libros();
         SQLiteDatabase bd = conectar.getReadableDatabase();
         String[] parametros = {isbn};
-        /*String[] campos = {Variables.CAMPO_IDS[0],
-                Variables.CAMPO_ID2[0],Variables.CAMPO_TITULO,
-                Variables.CAMPO_PERSONA[0],Variables.CAMPO_EDITORIAL,
-                Variables.CAMPO_CANTIDADES[0], Variables.CAMPO_DINERO[0]}; /**/
         String[] campos = Variables.CAMPOS_TABLAS[0];
 
         try {

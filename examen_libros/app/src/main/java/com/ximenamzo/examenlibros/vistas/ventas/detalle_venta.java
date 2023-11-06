@@ -44,13 +44,19 @@ public class detalle_venta extends AppCompatActivity {
 
         conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
 
-        Bundle objeto = getIntent().getExtras(); // trae el objeto
+        Bundle objeto = getIntent().getExtras();
         if (objeto != null) {
-            id = objeto.getInt("id");
-            mostrarDetalles(id);
-        } else {
-            out_id.setText("Error trayéndo datos.");
-        }
+            if (objeto.containsKey("idVenta")) {
+                id = objeto.getInt("idVenta");
+                mostrarDetalles(id);
+            } else if (objeto.containsKey("idCliente")) {
+                int idCliente = objeto.getInt("idCliente");
+                id = buscarVenta(idCliente);
+                if (id != -1) {
+                    mostrarDetalles(id);
+                } else { out_id.setText("No se encontraron ventas para el cliente especificado."); finish(); }
+            } else { out_id.setText("Error trayendo datos."); finish(); }
+        } else { out_id.setText("Error trayendo datos."); finish(); }
 
         ExtendedFloatingActionButton extendedFab = findViewById(R.id.extended_fab);
         extendedFab.setOnClickListener(view -> {
@@ -58,6 +64,25 @@ public class detalle_venta extends AppCompatActivity {
             setResult(RESULT_OK, resultIntent);
             finish();
         });
+    }
+
+    private int buscarVenta(Integer idCliente) {
+        conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
+        SQLiteDatabase bd = conectar.getReadableDatabase();
+
+        String[] parametros = {String.valueOf(idCliente)};
+        String[] campos = {Variables.CAMPO_IDS[0]};
+        Cursor cursor = bd.query(Variables.NOMBRE_TABLA[2], campos, Variables.CAMPO_IDS[2] + " =?", parametros, null, null, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            int idVenta = cursor.getInt(0);
+            cursor.close();
+            bd.close();
+            return idVenta;
+        } else {
+            Toast.makeText(this, "No se encontraron registros de ventas para el ID especificado.", Toast.LENGTH_SHORT).show();
+            return 0;
+        }
     }
 
     private void mostrarDetalles(Integer idVenta) {

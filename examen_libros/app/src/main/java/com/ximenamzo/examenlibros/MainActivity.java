@@ -69,25 +69,25 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i <= 10; i++) {
             Libros libro = new Libros(null, datos[i][1], datos[i][2], datos[i][3], datos[i][4], Integer.parseInt(datos[i][5]), Double.parseDouble(datos[i][6]));
             libros.add(libro);
-            Log.d("DEBUG_INDATOS", libro.toString());
+            //Log.d("DEBUG_INDATOS", libro.toString());
 
             Clientes cliente = new Clientes(null, datos[i][7], datos[i][8]);
             clientes.add(cliente);
-            Log.d("DEBUG_INDATOS", cliente.toString());
+            //Log.d("DEBUG_INDATOS", cliente.toString());
         }
 
         SQLiteDatabase db = conectar.getWritableDatabase();
 
         for (Libros libro : libros) {
             if (!existe(db, libro.getIsbn(), Variables.CAMPOS_TABLAS[0][1], 0)) {
-                Log.d("DEBUG_INDATOS", libro.toString());
+                //Log.d("DEBUG_INDATOS", libro.toString());
                 insertarLibro(db, libro);
             }
         }
 
         for (Clientes cliente : clientes) {
             if (!existe(db, cliente.getRfc(), Variables.CAMPOS_TABLAS[1][2], 1)) {
-                Log.d("DEBUG_INDATOS", cliente.toString());
+                //Log.d("DEBUG_INDATOS", cliente.toString());
                 insertarCliente(db, cliente);
             }
         }
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         valores.put("precio", libro.getPrecio());
 
         db.insert(Variables.NOMBRE_TABLA[0], Variables.CAMPO_IDS[0], valores);
-        Log.d("DEBUX_INSERT", "Tabla "+Variables.NOMBRE_TABLA[0]+": valores - "+valores);
+        //Log.d("DEBUX_INSERT", "Tabla "+Variables.NOMBRE_TABLA[0]+": valores - "+valores);
     }
 
     private void insertarCliente(SQLiteDatabase db, Clientes cliente) {
@@ -114,56 +114,56 @@ public class MainActivity extends AppCompatActivity {
         valores.put("rfc", cliente.getRfc());
 
         db.insert(Variables.NOMBRE_TABLA[1], Variables.CAMPO_IDS[0], valores);
-        Log.d("DEBUX_INSERT", "Tabla "+Variables.NOMBRE_TABLA[1]+": valores - "+valores);
+        //Log.d("DEBUX_INSERT", "Tabla "+Variables.NOMBRE_TABLA[1]+": valores - "+valores);
     }
 
     private boolean existeLibro(SQLiteDatabase db, String isbn) {
-        Log.d("DEBUG_EXL", "Existe Libro...");
+        //Log.d("DEBUG_EXL", "Existe Libro...");
         String[] campos = {Variables.CAMPOS_TABLAS[0][1]};
-        Log.d("DEBUG_EXL", "Campos:" + Arrays.toString(campos));
+        //Log.d("DEBUG_EXL", "Campos:" + Arrays.toString(campos));
         String[] args = {isbn};
-        Log.d("DEBUG_EXL", "Args:" + Arrays.toString(args));
+        //Log.d("DEBUG_EXL", "Args:" + Arrays.toString(args));
         Cursor cursor = db.query(Variables.NOMBRE_TABLA[0], campos, Variables.CAMPOS_TABLAS[0][1] + "=?", args, null, null, null);
-        Log.d("DEBUG_EXL", cursor.toString());
+        //Log.d("DEBUG_EXL", cursor.toString());
         boolean existe = cursor.moveToFirst();
         cursor.close();
-        Log.d("DEBUG_EXL", "Existe?? " + existe + "!!  !!  !!  !!  !!");
+        //Log.d("DEBUG_EXL", "Existe?? " + existe + "!!  !!  !!  !!  !!");
         return existe;
     }
 
     private boolean existe(SQLiteDatabase db, String dato, String campo, Integer i) {
-        Log.d("DEBUG_EXS", "Existe Dato...");
+        //Log.d("DEBUG_EXS", "Existe Dato...");
         String[] campos = {campo};
-        Log.d("DEBUG_EXS", "Campos:" + Arrays.toString(campos));
+        //Log.d("DEBUG_EXS", "Campos:" + Arrays.toString(campos));
         String[] args = {dato};
-        Log.d("DEBUG_EXS", "Args:" + Arrays.toString(args));
+        //Log.d("DEBUG_EXS", "Args:" + Arrays.toString(args));
         Cursor cursor = db.query(Variables.NOMBRE_TABLA[i], campos, Arrays.toString(campos) + "=?", args, null, null, null);
-        Log.d("DEBUG_EXS", cursor.toString());
+        //Log.d("DEBUG_EXS", cursor.toString());
         boolean existe = cursor.moveToFirst();
         cursor.close();
-        Log.d("DEBUG_EXL", "Existe?? " + existe + " !!  !!  !!  !!  !!");
+        //Log.d("DEBUG_EXL", "Existe?? " + existe + " !!  !!  !!  !!  !!");
         return existe;
     }
 
     private boolean existeCliente(SQLiteDatabase db, String rfc) {
-        Log.d("DEBUG_EXC", "Existe Cliente...");
+        //Log.d("DEBUG_EXC", "Existe Cliente...");
         String[] campos = {Variables.CAMPOS_TABLAS[1][2]};
-        Log.d("DEBUG_EXC", "Campos:" + Arrays.toString(campos));
+        //Log.d("DEBUG_EXC", "Campos:" + Arrays.toString(campos));
         String[] args = {rfc};
-        Log.d("DEBUG_EXC", "Args:" + Arrays.toString(args));
+        //Log.d("DEBUG_EXC", "Args:" + Arrays.toString(args));
         Cursor cursor = db.query(Variables.NOMBRE_TABLA[1], campos, Variables.CAMPOS_TABLAS[1][1] + "=?", args, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 int columnIndex = cursor.getColumnIndex(Variables.CAMPOS_TABLAS[1][2]); // Cambia el índice según la columna deseada
                 String rfcValue = cursor.getString(columnIndex);
-                Log.d("DEBUG_EXC", "RFC encontrado en la base de datos: " + rfcValue);
+                //Log.d("DEBUG_EXC", "RFC encontrado en la base de datos: " + rfcValue);
             } while (cursor.moveToNext());
         }
 
         cursor.close();
 
         boolean existe = cursor.getCount() > 0; // Verificar si se encontraron resultados
-        Log.d("DEBUG_EXC", "Existe? " + existe);
+        //Log.d("DEBUG_EXC", "Existe? " + existe);
 
         return existe;
     }

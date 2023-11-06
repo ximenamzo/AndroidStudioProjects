@@ -19,7 +19,6 @@ import com.ximenamzo.examenlibros.db.Variables;
 import com.ximenamzo.examenlibros.modelos.Libros;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class lista_libros_custom extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lista;
@@ -34,10 +33,6 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            /*
-            * i.putExtra("campo", campoDondeBusco);
-              i.putExtra("dato", datoQueBusco);
-            * */
             campo = extras.getString("campo");
             busqueda = extras.getString("dato");
         }

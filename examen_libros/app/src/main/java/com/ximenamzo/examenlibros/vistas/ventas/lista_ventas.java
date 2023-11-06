@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -18,28 +19,35 @@ import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
 import com.ximenamzo.examenlibros.modelos.Clientes;
 import com.ximenamzo.examenlibros.modelos.Libros;
+import com.ximenamzo.examenlibros.modelos.Ventas;
 
 import java.util.ArrayList;
 
 public class lista_ventas extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    ListView lista;
     ArrayList<String> listaventas;
-    ArrayList<Libros> datoslibro;
-    ArrayList<Clientes> datoscliente;
+    ArrayList<Integer> idsventas;
     Connect conectar;
+
     @Override
     protected void onResume() {
         super.onResume();
         mostrar();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
         setTitle("Libros");
 
-        lista = findViewById(R.id.lista);
+        TextView tituloLista = findViewById(R.id.tituloLista);
+        tituloLista.setVisibility(View.VISIBLE);
+        tituloLista.setText("Registros de Ventas");
+
+        ListView lista = findViewById(R.id.lista);
+        idsventas = new ArrayList<>();
         mostrar();
+
         ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listaventas);
         lista.setAdapter(aa);
         lista.setOnItemClickListener(this);
@@ -66,7 +74,8 @@ public class lista_ventas extends AppCompatActivity implements AdapterView.OnIte
                 int ventaId = cursor.getInt(0);
                 String clienteNombre = cursor.getString(1);
                 String libroTitulo = cursor.getString(2);
-                listaventas.add(ventaId + " | " + clienteNombre + " compró " + libroTitulo);
+                listaventas.add(ventaId + " |  " + clienteNombre + " compró: " + libroTitulo);
+                idsventas.add(ventaId);
             } while (cursor.moveToNext());
         } else {
             Toast.makeText(this, "No hay registros de ventas.", Toast.LENGTH_SHORT).show();
@@ -79,11 +88,9 @@ public class lista_ventas extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Libros libro = datoslibro.get(position);
+        Integer idVenta = idsventas.get(position);
         Intent ii = new Intent(this, detalle_venta.class);
-        Bundle b = new Bundle();
-        b.putSerializable("libro", libro); // se empaqueta el objeto con la etiqueta libro
-        ii.putExtras(b);
+        ii.putExtra("idVenta", idVenta);
         startActivityForResult(ii, 1);
     }
 
