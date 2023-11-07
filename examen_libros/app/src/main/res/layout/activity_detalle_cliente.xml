@@ -105,26 +105,39 @@
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="16dp"
                         android:text="Id"
-                        android:textAppearance="?attr/textAppearanceBodyMedium" />
-                    <EditText
-                        android:id="@+id/editNombre"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+                    <!-- app:boxBackgroundColor="#F1FFF3" -->
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Nombre" />
-                    <EditText
-                        android:id="@+id/editRfc"
+                        android:hint="Nombre"
+                        app:endIconMode="clear_text"
+                        style="?attr/textInputFilledStyle" >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editNombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="50"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Rfc" />
+                        android:layout_marginTop="10dp"
+                        android:hint="RFC"
+                        app:endIconMode="clear_text"
+                        style="?attr/textInputFilledStyle" >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editRfc"
+                            android:maxLength="13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
-
             </LinearLayout>
-
-
-
-
-
-
 
 
             <!-- Botoncitos -->

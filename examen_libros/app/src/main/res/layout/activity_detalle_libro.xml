@@ -169,6 +169,7 @@
                             android:id="@+id/editTitulo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLength="40"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -183,6 +184,7 @@
                             android:id="@+id/editAutor"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLength="50"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -196,6 +198,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editEditorial"
                             android:layout_width="match_parent"
+                            android:maxLength="30"
                             android:layout_height="wrap_content"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -211,6 +214,7 @@
                             android:id="@+id/editPaginas"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLength="5"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -225,6 +229,7 @@
                             android:id="@+id/editPrecio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLength="6"
                             android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
 
