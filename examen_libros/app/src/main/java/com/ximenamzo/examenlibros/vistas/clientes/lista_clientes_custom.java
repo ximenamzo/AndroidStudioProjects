@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,9 @@ public class lista_clientes_custom extends AppCompatActivity implements AdapterV
         }
 
         setTitle("Clientes relacionados con '" + busqueda + "'");
+        TextView tituloLista = findViewById(R.id.tituloLista);
+        tituloLista.setVisibility(View.VISIBLE);
+        tituloLista.setText("Clientes relacionados con '" + busqueda + "'");
 
         lista = findViewById(R.id.lista);
 

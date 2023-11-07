@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,9 @@ public class lista_libros_custom extends AppCompatActivity implements AdapterVie
         }
 
         setTitle("Libros relacionados con '" + busqueda + "'");
+        TextView tituloLista = findViewById(R.id.tituloLista);
+        tituloLista.setVisibility(View.VISIBLE);
+        tituloLista.setText("Libros relacionados con '" + busqueda + "'");
 
         lista = findViewById(R.id.lista);
 

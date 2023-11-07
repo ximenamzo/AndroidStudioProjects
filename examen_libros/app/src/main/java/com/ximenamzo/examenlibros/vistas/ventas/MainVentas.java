@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
@@ -164,6 +165,13 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
                 }
             }
         });/**/
+
+        ExtendedFloatingActionButton extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.setOnClickListener(view -> {
+            Intent resultIntent = new Intent();
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        });
     }
 
     @Override
@@ -406,44 +414,59 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
     }
 
     private void buscarData(SQLiteDatabase db, String dbVariable, String dato) {
-        String consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE LOWER(" + dbVariable + ") LIKE LOWER (?)";
+        String consultaClientes = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE LOWER(" + dbVariable + ") LIKE LOWER (?)";
         try {
-            Cursor cursor = db.rawQuery(consulta, new String[]{"%" + dato.toLowerCase() + "%"});
-            Log.d("DEBUG_412", "Variable en la DB: " + dbVariable);
-            Log.d("DEBUG_413", "Dato: " + dato);
-            Log.d("DEBUG_414", "Consulta: " + consulta);
-            int count = cursor.getCount();
+            Cursor cursorClientes = db.rawQuery(consultaClientes, new String[]{"%" + dato.toLowerCase() + "%"});
+            Log.d("DEBUG_412", "Variable en la DB: "+dbVariable+", Dato: "+dato+", Consulta: " + consultaClientes);
+            int count = cursorClientes.getCount();
 
             if (count > 0) {
-                Log.d("DEBUG_418", "SI se encontró al cliente.");
-                cursor.moveToFirst();
-                String idCliente = cursor.getString(cursor.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
-                cursor.close();
-                consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[2] + " WHERE " + Variables.CAMPO_IDS[2] + " LIKE ?";
-                cursor = db.rawQuery(consulta, new String[]{"%" + idCliente + "%"});
-                count = cursor.getCount();
+                Log.d("DEBUG_416", "SI se encontraron clientes.");
+                ArrayList<String> idClientesEncontrados = new ArrayList<>();
 
-                if (count > 1) {
-                    Log.d("DEBUG_427", "Contador de más de 1. Yendo a lista custom...");
-                    cursor.close();
-                    i = new Intent(MainVentas.this, lista_ventas_custom.class);
-                    i.putExtra("campo", Variables.CAMPO_IDS[2]);
-                    i.putExtra("dato", idCliente);
-                    startActivity(i);
-                } else if (count == 1) {
-                    Log.d("DEBUG_434", "Contador de sólo 1. Yendo a datos...");
-                    cursor.moveToFirst();
-                    String idVenta = cursor.getString(cursor.getInt(0));
-                    cursor.close();
+                if (cursorClientes.moveToFirst()) {
+                    do {
+                        String idCliente = cursorClientes.getString(cursorClientes.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
+                        idClientesEncontrados.add(idCliente);
+                    } while (cursorClientes.moveToNext());
+                }
+                cursorClientes.close();
+
+                ArrayList<String> idVentasEncontradas = new ArrayList<>();
+                for (String idCliente : idClientesEncontrados) {
+                    String consultaVentas = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[2] + " WHERE " + Variables.CAMPO_IDS[2] + " LIKE ?";
+                    Cursor cursorVentas = db.rawQuery(consultaVentas, new String[]{"%" + idCliente + "%"});
+                    int countVentas = cursorVentas.getCount();
+                    if (countVentas > 0) {
+                        if (countVentas == 1) {
+                            cursorVentas.moveToFirst();
+                            String idVenta = cursorVentas.getString(cursorVentas.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
+                            idVentasEncontradas.add(idVenta);
+                        } else {
+                            while (cursorVentas.moveToNext()) {
+                                String idVenta = cursorVentas.getString(cursorVentas.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
+                                idVentasEncontradas.add(idVenta);
+                            }
+                        }
+                    }
+
+                    cursorVentas.close();
+                }
+
+                if (idVentasEncontradas.size() == 1) {
+                    Log.d("DEBUG_449", "Contador de solo 1. Yendo a datos...");
                     i = new Intent(MainVentas.this, detalle_venta.class);
-                    i.putExtra("idVenta", idVenta);
+                    i.putExtra("idVenta", idVentasEncontradas.get(0));
                     startActivity(i);
-                } else {
-                    Log.d("DEBUG_442", "El cliente no ha realizado compras.");
-                    Toast.makeText(this, "No hay compras relacionadas con '"+dato+"'", Toast.LENGTH_SHORT).show();
+                } else if (idVentasEncontradas.size() > 1) {
+                    Log.d("DEBUG_454", "Contador de más de 1. Yendo a lista custom...");
+                    i.putExtra("campo", Variables.CAMPO_IDS[2]);
+                    i.putExtra("dato", idClientesEncontrados.toArray(new String[0]));
+                    i.putExtra("idVentas", idVentasEncontradas.toArray(new String[0]));
+                    startActivity(i);
                 }
             } else {
-                Log.d("DEBUG_444", "No se encontró el cliente.");
+                Log.d("DEBUG_444", "No se encontraron clientes.");
                 Toast.makeText(this, "No hay datos disponibles para el " + dbVariable + " '" + dato + "'.", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
@@ -48,6 +49,13 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
         searchAutor.setOnClickListener(this);
         ver.setOnClickListener(this);
         limpiar.setOnClickListener(this);
+
+        ExtendedFloatingActionButton extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.setOnClickListener(view -> {
+            Intent resultIntent = new Intent();
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        });
 
         conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
     }

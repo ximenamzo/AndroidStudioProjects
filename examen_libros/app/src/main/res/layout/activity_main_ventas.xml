@@ -331,7 +331,6 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="30dp"
         android:paddingTop="10dp"
-        android:paddingBottom="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="20dp"
@@ -345,6 +344,19 @@
             android:text="Ver registro de todas las ventas"
             android:textSize="15.5sp"/>
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extended_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="291dp"
+        android:contentDescription="Volver al inicio."
+        android:text="Volver al Menú"
+        app:layout_constraintTop_toBottomOf="@id/grupo3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 

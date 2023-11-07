@@ -26,6 +26,7 @@ public class lista_ventas_custom extends AppCompatActivity implements AdapterVie
     ArrayList<String> listaventas;
     ArrayList<Integer> idsventas;
     Connect conectar;
+    private String[] idVentas;
     private String busqueda = "", campo = "";
     
     @Override
@@ -40,9 +41,13 @@ public class lista_ventas_custom extends AppCompatActivity implements AdapterVie
             campo = extras.getString("campo");
             busqueda = extras.getString("dato");
         }
+        idVentas = getIntent().getStringArrayExtra("idVentas");
 
         Log.d("DEBUG_43", "Campo: "+campo+", Dato: "+busqueda);
         setTitle("Ventas relacionados con '" + busqueda + "'");
+        TextView tituloLista = findViewById(R.id.tituloLista);
+        tituloLista.setVisibility(View.VISIBLE);
+        tituloLista.setText("Ventas relacionados con '" + busqueda + "'");
 
         lista = findViewById(R.id.lista);
 
@@ -77,14 +82,10 @@ public class lista_ventas_custom extends AppCompatActivity implements AdapterVie
             Cursor cursor = bd.rawQuery(consulta, new String[]{String.valueOf(dato)});
             char c = 'a';
             if (cursor.moveToFirst()) {
-                do {
-                    int ventaId = cursor.getInt(0);
-                    String clienteNombre = cursor.getString(1);
-                    String libroTitulo = cursor.getString(2);
-                    listaventas.add(c + " |  " + clienteNombre + " compró: " + libroTitulo);
-                    idsventas.add(ventaId);
+                for (String idVenta : idVentas) {
+                    listaventas.add(c + " |  " + idVenta);
                     c++;
-                } while (cursor.moveToNext());
+                }
             } else {
                 Toast.makeText(this, "No hay registros de ventas.", Toast.LENGTH_SHORT).show();
                 listaventas = new ArrayList<>();

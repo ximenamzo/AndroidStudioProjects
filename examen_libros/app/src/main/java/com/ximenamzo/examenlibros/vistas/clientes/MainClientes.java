@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
@@ -46,6 +47,13 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
         ver.setOnClickListener(this);
         limpiar.setOnClickListener(this);
 
+        ExtendedFloatingActionButton extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.setOnClickListener(view -> {
+            Intent resultIntent = new Intent();
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        });
+
         conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
     }
 
@@ -71,18 +79,25 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        String nombre = in_nombre.getText().toString();
-        String rfc = in_rfc.getText().toString();
+        String nombre;
+        String rfc;
 
         if (v == insert) {
+            nombre = in_nombre.getText().toString();
+            rfc = in_rfc.getText().toString();
             if (!nombre.isEmpty() && !rfc.isEmpty()) {
-                insertar();
+                if (rfcExiste(rfc)) {
+                    Toast.makeText(this, "RFC ya registrado.", Toast.LENGTH_LONG).show();
+                } else {
+                    insertar(nombre, rfc);
+                }
             } else {
                 Toast.makeText(this, "Ingrese los datos restantes.", Toast.LENGTH_LONG).show();
             }
         }
 
         if(v == searchNombre){
+            nombre = in_nombre.getText().toString();
             if(!nombre.isEmpty()) {
                 DB.buscar(this, in_nombre.getText().toString(),Variables.NOMBRE_TABLA[1],Variables.CAMPO_PERSONA[1]);
             } else {
@@ -91,6 +106,7 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
         }
 
         if(v == searchRfc){
+            rfc = in_rfc.getText().toString();
             if(!rfc.isEmpty()) {
                 DB.buscar(this, in_rfc.getText().toString(),Variables.NOMBRE_TABLA[1],Variables.CAMPO_ID2[1]);
             } else {
@@ -99,32 +115,30 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void insertar() {
+    private void insertar(String nombre, String rfc) {
+        Log.d("DEBUG_111", "Insertando...");
         SQLiteDatabase db = conectar.getWritableDatabase();
-        String rfc = in_nombre.getText().toString();
-
-        if (rfcExiste(db, rfc)) {
-            Toast.makeText(this, "RFC ya registrado.", Toast.LENGTH_LONG).show();
+        ContentValues valores = new ContentValues();
+        valores.put(Variables.CAMPO_PERSONA[1], nombre);
+        valores.put(Variables.CAMPO_ID2[1], rfc);
+        long id = db.insert(Variables.NOMBRE_TABLA[1], Variables.CAMPO_IDS[0], valores);
+        if (id != -1) {
+            Toast.makeText(this, "Registro exitoso con id "+id, Toast.LENGTH_SHORT).show();
         } else {
-            ContentValues valores = new ContentValues();
-            valores.put(Variables.CAMPO_PERSONA[1], in_nombre.getText().toString()); // nombre
-            valores.put(Variables.CAMPO_ID2[1], in_rfc.getText().toString()); //rfc
-            long id = db.insert(Variables.NOMBRE_TABLA[1], Variables.CAMPO_IDS[0],valores);
-            if (id != -1) {
-                Toast.makeText(this, "Registro exitoso con id "+id, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Ocurrió un error al registrar los datos.", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(this, "Ocurrió un error al registrar los datos.", Toast.LENGTH_SHORT).show();
         }
         db.close();
     }
 
-    private boolean rfcExiste(SQLiteDatabase db, String rfc) {
+    private boolean rfcExiste(String rfc) {
+        SQLiteDatabase db = conectar.getWritableDatabase();
+        String[] campos = {Variables.CAMPO_IDS[0]};
         String[] parametros = {rfc};
-        String[] campos = {Variables.CAMPO_ID2[0]};
         Cursor cursor = db.query(Variables.NOMBRE_TABLA[1], campos, Variables.CAMPO_ID2[1] + "=?", parametros, null, null, null);
         boolean existe = cursor.getCount() > 0;
         cursor.close();
+        Log.d("DEBUG_128", "Existe el rfc? "+existe);
+        db.close();
         return existe;
     }
 }

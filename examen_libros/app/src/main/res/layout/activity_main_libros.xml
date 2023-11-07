@@ -107,55 +107,64 @@
                 android:maxLength="6" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnlimpiar"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Limpiar campos"
-            android:layout_gravity="end"/>
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
 
+                <Button
+                    android:id="@+id/btnlimpiar"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginVertical="5dp"
+                    android:text="Limpiar\ncampos"
+                    app:icon="@drawable/baseline_delete_24"
+                    app:iconTint="#D01676" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3"
+                android:gravity="right|center_vertical">
+
+                <Button
+                    android:id="@+id/btninsertar1"
+                    style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#673AB7"
+                    android:text="Añadir Libro"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:icon="@drawable/baseline_add_24"
+                    app:iconSize="60px"
+                    app:iconTint="#FFFFFF" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/grupo1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="30dp"
-        android:paddingBottom="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ly1"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/btninsertar1"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:text="Añadir"
-            android:backgroundTint="#673AB7"
-            android:textColor="@color/white"
-            app:icon="@drawable/baseline_add_24"
-            app:iconTint="#FFFFFF"
-            android:textSize="20sp" />
-
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/grupo2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="30dp"
-        android:paddingBottom="15dp"
+        android:layout_marginVertical="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/grupo1" >
+        app:layout_constraintTop_toBottomOf="@id/ly1" >
 
         <Button
             android:id="@+id/btnbuscar1"
@@ -180,21 +189,31 @@
         android:id="@+id/grupo3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="30dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/grupo2" >
 
         <Button
             android:id="@+id/btnver"
-            style="@style/Widget.Material3.Button.TonalButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ver registro de todos los libros"
-            android:backgroundTint="#351966"
-            android:textColor="@color/white"
             android:textSize="15.5sp"/>
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extended_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="291dp"
+        android:contentDescription="Volver al inicio."
+        android:text="Volver al Menú"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
