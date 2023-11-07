@@ -30,6 +30,7 @@ public class detalle_venta extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_detalle_venta);
+        Log.d("DEBUG_33", "Entrando a detalle_venta.java...");
         setTitle("Detalles del Libro");
 
         out_id = findViewById(R.id.txtid);

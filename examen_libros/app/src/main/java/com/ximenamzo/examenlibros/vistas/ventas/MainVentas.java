@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,9 +28,7 @@ import com.ximenamzo.examenlibros.db.Variables;
 import com.ximenamzo.examenlibros.modelos.Libros;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class MainVentas extends AppCompatActivity implements View.OnClickListener {
     TextView out_costotal;
@@ -41,6 +40,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
     Intent i;
     Integer cantidad, idCliente, idLibro;
     Double precio, costotal, cero = 0.00;
+    private static final DecimalFormat decfor = new DecimalFormat("0.00");
     boolean isEditingRFC = false, isEditingNombre = false, isEditingISBN = false, isEditingTitulo = false, isEditingAutor = false;
 
     @Override
@@ -154,13 +154,16 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override public void afterTextChanged(Editable editable) {
-                int cant = Integer.parseInt(editable.toString());
-                if (cant < 1) {
-                    campoCantidad.setText("1");
-                    Toast.makeText(getApplicationContext(), "La cantidad mínima de compra es 1 libro. No es posible comprar 0 libros.", Toast.LENGTH_LONG).show();
+                String cant = editable.toString();
+                if (!cant.isEmpty()) {
+                    int cantInt = Integer.parseInt(cant);
+                    if (cantInt >= 1) {
+                        double total = Double.parseDouble(campoPrecio.getText().toString()) * cantInt;
+                        out_costotal.setText(String.format("%s", decfor.format(total)));
+                    }
                 }
             }
-        });
+        });/**/
     }
 
     @Override
@@ -172,7 +175,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             campoTitulo.setText("");
             campoAutor.setText("");
             campoPrecio.setText("");
-            campoCantidad.setText("");
+            campoCantidad.setText("0");
             out_costotal.setText(String.valueOf(cero));
         }
         if (v == ver) {
@@ -194,10 +197,14 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         String rfc = campoRfc.getText().toString();
         String nombre = campoNombre.getText().toString();
         String isbn = campoRfc.getText().toString();
+        String cant = campoCantidad.getText().toString();
 
         if (v == venta) {
             if (!isbn.isEmpty() && !rfc.isEmpty()) {
-                insertar();
+                int cantInt = Integer.parseInt(cant);
+                if (!cant.equals(".") && !cant.isEmpty() && cantInt >= 1) {
+                    insertar();
+                }
             } else {
                 Toast.makeText(this, "Cliente o Libro no encontrados. Modifique sus datos para continuar con la Venta.", Toast.LENGTH_LONG).show();
             }
@@ -218,7 +225,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
                     cantidad--;
                     campoCantidad.setText(String.valueOf(cantidad));
                     double total = Double.parseDouble(campoPrecio.getText().toString()) * cantidad;
-                    out_costotal.setText(String.valueOf(total));
+                    out_costotal.setText(String.format("%s", decfor.format(total)));
                 }
             }
 
@@ -226,7 +233,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
                 cantidad++;
                 campoCantidad.setText(String.valueOf(cantidad));
                 double total = Double.parseDouble(campoPrecio.getText().toString()) * cantidad;
-                out_costotal.setText(String.valueOf(total));
+                out_costotal.setText(String.format("%s", decfor.format(total)));
             }
         }
     }
@@ -238,18 +245,13 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         List<String> listaRFCNombre = new ArrayList<>(); // orden RFC - Nombre
         List<String> listaNombreRFC = new ArrayList<>(); // orden Nombre - RFC
         if (cursor.moveToFirst()) {
-            String[] columnNames = cursor.getColumnNames();
-            for (String columnName : columnNames) {
-                Log.d("Depuracion", "Nombre de columna: " + columnName);
-            }
+            //String[] columnNames = cursor.getColumnNames(); for (String columnName : columnNames) { Log.d("Depuracion", "Nombre de columna: " + columnName); }
             do {
-                @SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex(Variables.CAMPO_IDS[0]));
+                //@SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex(Variables.CAMPO_IDS[0]));
                 @SuppressLint("Range") String nombre = cursor.getString(cursor.getColumnIndex(Variables.CAMPO_PERSONA[1]));
                 @SuppressLint("Range") String rfc = cursor.getString(cursor.getColumnIndex(Variables.CAMPO_ID2[1]));
 
-                Log.d("Depuracion", "ID: " + id);
-                Log.d("Depuracion", "Nombre: " + nombre);
-                Log.d("Depuracion", "RFC: " + rfc);
+                //Log.d("Depuracion", "ID: " + id + ", Nombre: " + nombre + ", RFC: " + rfc);
 
                 String datoCompletoRFCNombre = rfc + " - " + nombre;
                 String datoCompletoNombreRFC = nombre + " - " + rfc;
@@ -314,18 +316,14 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         db.close();
 
         List<String> listaLibros = new ArrayList<>();
-        Set<String> setLibros = new HashSet<>();
 
         for (Libros libroItem : datoslibro) {
             if (campo == campoIsbn) {
                 listaLibros.add(libroItem.getIsbn() + " - " + libroItem.getTitulo());
-                setLibros.add(libroItem.getIsbn() + " - " + libroItem.getTitulo());
             } else if (campo == campoTitulo) {
                 listaLibros.add(libroItem.getTitulo() + " - " + libroItem.getAutor());
-                setLibros.add(libroItem.getTitulo() + " - " + libroItem.getAutor());
             } else if (campo == campoAutor) {
                 listaLibros.add(libroItem.getAutor() + " - " + libroItem.getTitulo());
-                setLibros.add(libroItem.getAutor() + " - " + libroItem.getTitulo());
             }
         }
 
@@ -340,7 +338,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             campoAutor.setText(itemLibro.getAutor());
             campoPrecio.setText(String.valueOf(itemLibro.getPrecio()));
             campoCantidad.setText("1");
-            out_costotal.setText(String.valueOf(itemLibro.getPrecio()));
+            out_costotal.setText(String.format("%s", decfor.format(itemLibro.getPrecio())));
         });
     }
 
@@ -358,15 +356,12 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             cantidad = Integer.parseInt(campoCantidad.getText().toString());
             precio = Double.parseDouble(campoPrecio.getText().toString());
             costotal = precio * cantidad;
-
-            Log.d("DEBUG_XX", "Libros("+cantidad+") * $"+precio+" = $"+costotal);
-
-            //SQLiteDatabase db = conectar.getWritableDatabase();
+            //Log.d("DEBUG_XX", "Libros("+cantidad+") * $"+precio+" = $"+costotal);
             ContentValues valores = new ContentValues();
             valores.put(Variables.CAMPO_IDS[1], idLibro); // id del libro
             valores.put(Variables.CAMPO_IDS[2], idCliente); // id del cliente
             valores.put(Variables.CAMPO_CANTIDADES[1], cantidad); // cantidad de libros a comprar
-            valores.put(Variables.CAMPO_DINERO[1], costotal); // total a pagar
+            valores.put(Variables.CAMPO_DINERO[1], decfor.format(costotal)); // total a pagar
             long id = db.insert(Variables.NOMBRE_TABLA[2], null, valores);
             if (id != -1) {
                 Toast.makeText(this, "Registro exitoso con id "+id, Toast.LENGTH_SHORT).show();
@@ -405,31 +400,50 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
             cursor.moveToFirst();
             id = cursor.getInt(0);
         }
-        Log.d("DEBUG_XX", "Id del objeto "+x+": "+cursor.getInt(0));
+        //Log.d("DEBUG_XX", "Id del objeto "+x+": "+cursor.getInt(0));
         cursor.close();
         return id;
     }
 
     private void buscarData(SQLiteDatabase db, String dbVariable, String dato) {
-        String consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE " + dbVariable + " LIKE ?";
+        String consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE LOWER(" + dbVariable + ") LIKE LOWER (?)";
         try {
-            Cursor cursor = db.rawQuery(consulta, new String[]{"%" + dato + "%"});
-
+            Cursor cursor = db.rawQuery(consulta, new String[]{"%" + dato.toLowerCase() + "%"});
+            Log.d("DEBUG_412", "Variable en la DB: " + dbVariable);
+            Log.d("DEBUG_413", "Dato: " + dato);
+            Log.d("DEBUG_414", "Consulta: " + consulta);
             int count = cursor.getCount();
-            if (count > 1) {
-                cursor.close();
-                i = new Intent(MainVentas.this, lista_ventas_custom.class);
-                i.putExtra("campo", dbVariable);
-                i.putExtra("dato", dato);
-                startActivity(i);
-            } else if (count == 1) {
+
+            if (count > 0) {
+                Log.d("DEBUG_418", "SI se encontró al cliente.");
                 cursor.moveToFirst();
-                String idc = cursor.getString(0);
+                String idCliente = cursor.getString(cursor.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
                 cursor.close();
-                i = new Intent(MainVentas.this, detalle_venta.class);
-                i.putExtra("idCliente", idc);
-                startActivity(i);
+                consulta = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[2] + " WHERE " + Variables.CAMPO_IDS[2] + " LIKE ?";
+                cursor = db.rawQuery(consulta, new String[]{"%" + idCliente + "%"});
+                count = cursor.getCount();
+
+                if (count > 1) {
+                    Log.d("DEBUG_427", "Contador de más de 1. Yendo a lista custom...");
+                    cursor.close();
+                    i = new Intent(MainVentas.this, lista_ventas_custom.class);
+                    i.putExtra("campo", Variables.CAMPO_IDS[2]);
+                    i.putExtra("dato", idCliente);
+                    startActivity(i);
+                } else if (count == 1) {
+                    Log.d("DEBUG_434", "Contador de sólo 1. Yendo a datos...");
+                    cursor.moveToFirst();
+                    String idVenta = cursor.getString(cursor.getInt(0));
+                    cursor.close();
+                    i = new Intent(MainVentas.this, detalle_venta.class);
+                    i.putExtra("idVenta", idVenta);
+                    startActivity(i);
+                } else {
+                    Log.d("DEBUG_442", "El cliente no ha realizado compras.");
+                    Toast.makeText(this, "No hay compras relacionadas con '"+dato+"'", Toast.LENGTH_SHORT).show();
+                }
             } else {
+                Log.d("DEBUG_444", "No se encontró el cliente.");
                 Toast.makeText(this, "No hay datos disponibles para el " + dbVariable + " '" + dato + "'.", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
