@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         insertarDatos();
         imprimirLogTabla(0);
         imprimirLogTabla(1);
+        imprimirLogTabla(2);
     }
 
     private void processIntent(Class<?> activityClass){

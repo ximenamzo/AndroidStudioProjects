@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,12 +24,12 @@ import java.util.ArrayList;
 
 public class lista_ventas_custom extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lista;
+    ArrayAdapter<String> adapter;
     ArrayList<String> listaventas;
     ArrayList<Integer> idsventas;
+    ArrayList<String> idsVentas;
     Connect conectar;
-    private String[] idVentas;
-    private String busqueda = "", campo = "";
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,68 +37,65 @@ public class lista_ventas_custom extends AppCompatActivity implements AdapterVie
 
         Log.d("DEBUG_35", "Entrando a listas_ventas_custom.java...");
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            campo = extras.getString("campo");
-            busqueda = extras.getString("dato");
-        }
-        idVentas = getIntent().getStringArrayExtra("idVentas");
+        Intent intent = getIntent();
+        String campo = intent.getStringExtra("campo");
+        String dato = intent.getStringExtra("dato");
+        idsVentas = intent.getStringArrayListExtra("idsVentas");
 
-        Log.d("DEBUG_43", "Campo: "+campo+", Dato: "+busqueda);
-        setTitle("Ventas relacionados con '" + busqueda + "'");
+
+        Log.d("DEBUG_43", "Campo: "+ campo +", Dato: "+ dato);
+        setTitle("Ventas relacionados con '" + dato + "'");
         TextView tituloLista = findViewById(R.id.tituloLista);
         tituloLista.setVisibility(View.VISIBLE);
-        tituloLista.setText("Ventas relacionados con '" + busqueda + "'");
+        tituloLista.setText(String.format("Ventas relacionadas con '%s'", dato));
 
         lista = findViewById(R.id.lista);
 
         listaventas = new ArrayList<>();
         idsventas = new ArrayList<>();
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listaventas);
-        lista.setAdapter(aa);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listaventas);
+        lista.setAdapter(adapter);
         lista.setOnItemClickListener(this);
 
         ExtendedFloatingActionButton extendedFab = findViewById(R.id.extended_fab);
         extendedFab.setOnClickListener(view -> finish());
 
-        mostrar(busqueda, campo);
+        if (idsVentas != null) {
+            mostrar(idsVentas);
+        }
     }
 
-    private void mostrar(String dato, String campo) {
+    private void mostrar(ArrayList<String> idsVentas) {
         conectar = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
         SQLiteDatabase bd = conectar.getReadableDatabase();
         listaventas.clear();
         idsventas.clear();
 
-        String consulta = "SELECT "+Variables.NOMBRE_TABLA[2]+"."+Variables.CAMPO_IDS[0]+" AS VentaId, " +
-                Variables.NOMBRE_TABLA[1]+"."+Variables.CAMPO_PERSONA[1]+" AS ClienteNombre, " +
-                Variables.NOMBRE_TABLA[0]+"."+Variables.CAMPO_TITULO+" AS LibroTitulo " +
-                    "FROM "+Variables.NOMBRE_TABLA[2] +
-                        " INNER JOIN "+Variables.NOMBRE_TABLA[1]+" ON "+Variables.NOMBRE_TABLA[2]+"."+Variables.CAMPO_IDS[2]+" = "+Variables.NOMBRE_TABLA[1]+"."+Variables.CAMPO_IDS[0]+
-                            " INNER JOIN "+Variables.NOMBRE_TABLA[0]+" ON "+Variables.NOMBRE_TABLA[2]+"."+Variables.CAMPO_IDS[1]+" = "+Variables.NOMBRE_TABLA[0]+"."+Variables.CAMPO_IDS[0]+
-                                " WHERE "+Variables.NOMBRE_TABLA[2]+"."+Variables.CAMPO_IDS[2]+" = ?";
-        Log.d("DEBUG_70", "Consulta: "+consulta);
+        String listaIds = TextUtils.join(",", idsVentas);
 
-        try {
-            Cursor cursor = bd.rawQuery(consulta, new String[]{String.valueOf(dato)});
-            char c = 'a';
-            if (cursor.moveToFirst()) {
-                for (String idVenta : idVentas) {
-                    listaventas.add(c + " |  " + idVenta);
-                    c++;
-                }
-            } else {
-                Toast.makeText(this, "No hay registros de ventas.", Toast.LENGTH_SHORT).show();
-                listaventas = new ArrayList<>();
-                listaventas.add("Sin registros.");
-            }
-            cursor.close();
-        } catch (Exception e) {
-            Toast.makeText(this, "Error al acceder a la BD.", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+        String consulta = "SELECT ventas.id AS VentaId, " +
+                "clientes.nombre AS ClienteNombre, " +
+                "libros.titulo AS LibroTitulo " +
+                "FROM ventas " +
+                "INNER JOIN clientes ON ventas.id_cliente = clientes.id " +
+                "INNER JOIN libros ON ventas.id_libro = libros.id " +
+                "WHERE ventas.id IN (" + listaIds + ")";
+        Cursor cursor = bd.rawQuery(consulta, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int ventaId = cursor.getInt(0);
+                String clienteNombre = cursor.getString(1);
+                String libroTitulo = cursor.getString(2);
+                listaventas.add(ventaId + " |  " + clienteNombre + " compró: " + libroTitulo);
+                idsventas.add(ventaId);
+            } while (cursor.moveToNext());
+        } else {
+            Toast.makeText(this, "No hay registros de ventas.", Toast.LENGTH_SHORT).show();
+            listaventas.add("Sin registros.");
         }
+        cursor.close();
         bd.close();
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) lista.getAdapter();
         adapter.notifyDataSetChanged();
     }
 
@@ -106,6 +104,7 @@ public class lista_ventas_custom extends AppCompatActivity implements AdapterVie
         Integer idVenta = idsventas.get(position);
         Intent ii = new Intent(this, detalle_venta.class);
         ii.putExtra("idVenta", idVenta);
+        //noinspection deprecation
         startActivityForResult(ii, 1);
     }
 
@@ -113,7 +112,7 @@ public class lista_ventas_custom extends AppCompatActivity implements AdapterVie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if (resultCode == RESULT_OK) mostrar(busqueda, campo);
+            if (resultCode == RESULT_OK) mostrar(idsVentas);
         }
     }
 }

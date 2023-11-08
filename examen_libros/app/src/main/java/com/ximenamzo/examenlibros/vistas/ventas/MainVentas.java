@@ -383,19 +383,18 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
     }
 
     private void buscarPorCliente() {
-        SQLiteDatabase bd = conectar.getReadableDatabase();
         String rfc, nombre;
         rfc = campoRfc.getText().toString();
         nombre = campoNombre.getText().toString();
+        boolean exact = true;
 
         if (!rfc.isEmpty()) {
-            buscarData(bd, Variables.CAMPO_ID2[1], rfc);
+            buscarData(Variables.CAMPO_ID2[1], rfc, exact);
         } else if (!nombre.isEmpty()) {
-            buscarData(bd, Variables.CAMPO_PERSONA[1],nombre);
+            buscarData(Variables.CAMPO_PERSONA[1], nombre, !exact);
         } else {
             Toast.makeText(this, "Error en la búsqueda.", Toast.LENGTH_SHORT).show();
         }
-        bd.close();
     }
 
     private int getObjectId(@NonNull SQLiteDatabase db, String dato, Integer x) {
@@ -413,65 +412,95 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         return id;
     }
 
-    private void buscarData(SQLiteDatabase db, String dbVariable, String dato) {
+    private void buscarData(String dbVariable, String dato, boolean exact) {
+        SQLiteDatabase db = conectar.getReadableDatabase();
         String consultaClientes = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[1] + " WHERE LOWER(" + dbVariable + ") LIKE LOWER (?)";
+
         try {
             Cursor cursorClientes = db.rawQuery(consultaClientes, new String[]{"%" + dato.toLowerCase() + "%"});
-            Log.d("DEBUG_412", "Variable en la DB: "+dbVariable+", Dato: "+dato+", Consulta: " + consultaClientes);
+            Log.d("DEBUG_420", "Variable en la DB: "+dbVariable+", Dato: "+dato+", Exacto: "+exact+", Consulta: " + consultaClientes);
+            cursorClientes.moveToFirst();
             int count = cursorClientes.getCount();
-
+            Log.d("DEBUG_424", "Cuenta del cursor clientes = " + count);
             if (count > 0) {
-                Log.d("DEBUG_416", "SI se encontraron clientes.");
+                Log.d("DEBUG_426", "SI se encontraron clientes.");
                 ArrayList<String> idClientesEncontrados = new ArrayList<>();
-
-                if (cursorClientes.moveToFirst()) {
-                    do {
-                        String idCliente = cursorClientes.getString(cursorClientes.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
-                        idClientesEncontrados.add(idCliente);
-                    } while (cursorClientes.moveToNext());
-                }
+                int a=1;
+                do {
+                    Log.d("DEBUG_429", "Iteracion C " + a);
+                    String idCliente = cursorClientes.getString(cursorClientes.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
+                    idClientesEncontrados.add(idCliente);
+                    Log.d("DEBUG_433", "idCliente " + idCliente);
+                    a++;
+                } while (cursorClientes.moveToNext());
                 cursorClientes.close();
+                Log.d("DEBUG_437", "Array con los idClientesEncontrados " + idClientesEncontrados);
 
                 ArrayList<String> idVentasEncontradas = new ArrayList<>();
+                int b=1;
+
+                Log.d("DEBUG_441", "Entrando al for...");
                 for (String idCliente : idClientesEncontrados) {
+                    Log.d("DEBUG_443", "Iteracion B " + b +" para el idCliente: " + idCliente);
+
                     String consultaVentas = "SELECT " + Variables.CAMPO_IDS[0] + " FROM " + Variables.NOMBRE_TABLA[2] + " WHERE " + Variables.CAMPO_IDS[2] + " LIKE ?";
-                    Cursor cursorVentas = db.rawQuery(consultaVentas, new String[]{"%" + idCliente + "%"});
-                    int countVentas = cursorVentas.getCount();
-                    if (countVentas > 0) {
-                        if (countVentas == 1) {
-                            cursorVentas.moveToFirst();
+
+                    String value;
+                    if (exact) { value = idCliente; } else {value = "%" + idCliente + "%"; }
+
+                    Cursor cursorVentas = db.rawQuery(consultaVentas, new String[]{value});
+                    Log.d("DEBUG_446", "Consulta Ventas " + consultaVentas);
+
+                    int cuenta = cursorVentas.getCount();
+                    Log.d("DEBUG_449", "Count del cursor " + cuenta);
+
+                    if (cuenta > 0) {
+                        cursorVentas.moveToFirst();
+                        int c = 1;
+                        do {
+                            Log.d("DEBUG_450", "Iteración C " + c);
                             String idVenta = cursorVentas.getString(cursorVentas.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
                             idVentasEncontradas.add(idVenta);
-                        } else {
-                            while (cursorVentas.moveToNext()) {
-                                String idVenta = cursorVentas.getString(cursorVentas.getColumnIndexOrThrow(Variables.CAMPO_IDS[0]));
-                                idVentasEncontradas.add(idVenta);
-                            }
-                        }
+                            Log.d("DEBUG_455", "idVenta " + idVenta);
+                            c++;
+                        } while (cursorVentas.moveToNext());
+                    } else {
+                        Log.d("DEBUG_461", "No hay ventas para el cliente con ID " + idCliente);
                     }
-
                     cursorVentas.close();
-                }
+                    b++;
+                } // fin del for
 
-                if (idVentasEncontradas.size() == 1) {
+                Log.d("DEBUG_468", "Array con los id_Ventas_Encontradas " + idVentasEncontradas);
+                int tamIdVenEn = idVentasEncontradas.size();
+                Log.d("DEBUG_470", "Tamaño del array id_Ventas_Encontradas " + tamIdVenEn);
+
+                if (tamIdVenEn == 1) {
                     Log.d("DEBUG_449", "Contador de solo 1. Yendo a datos...");
-                    i = new Intent(MainVentas.this, detalle_venta.class);
-                    i.putExtra("idVenta", idVentasEncontradas.get(0));
+                    i = new Intent(this, detalle_venta.class);
+                    i.putExtra("idVenta", Integer.parseInt(idVentasEncontradas.get(0)));
                     startActivity(i);
-                } else if (idVentasEncontradas.size() > 1) {
-                    Log.d("DEBUG_454", "Contador de más de 1. Yendo a lista custom...");
-                    i.putExtra("campo", Variables.CAMPO_IDS[2]);
-                    i.putExtra("dato", idClientesEncontrados.toArray(new String[0]));
-                    i.putExtra("idVentas", idVentasEncontradas.toArray(new String[0]));
+
+                } else if (tamIdVenEn > 1) {
+                    Log.d("DEBUG_479", "Contador de más de 1. Yendo a lista custom enviando: Campo " + Variables.CAMPO_IDS[2] +
+                            ", Dato" + idClientesEncontrados + ", idVentas: " + idVentasEncontradas + " && ...");
+                    i = new Intent(this, lista_ventas_custom.class);
+                    i.putExtra("campo", dbVariable);
+                    i.putExtra("dato", dato);
+                    i.putStringArrayListExtra("idsVentas", idVentasEncontradas);
                     startActivity(i);
+                } else {
+                    Log.d("DEBUG_488", "Este usuario no ha comprado.");
                 }
+                // abajo cierra el if de que si hay más de 0 countde clientes
             } else {
-                Log.d("DEBUG_444", "No se encontraron clientes.");
+                Log.d("DEBUG_492", "No se encontraron clientes.");
                 Toast.makeText(this, "No hay datos disponibles para el " + dbVariable + " '" + dato + "'.", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             Toast.makeText(this, "Error al buscar: " + e.getMessage(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+        db.close();
     }
 }

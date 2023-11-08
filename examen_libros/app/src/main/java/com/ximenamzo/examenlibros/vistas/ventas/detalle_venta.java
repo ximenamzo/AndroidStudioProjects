@@ -91,9 +91,12 @@ public class detalle_venta extends AppCompatActivity {
         SQLiteDatabase bd = conectar.getReadableDatabase();
 
         String[] campos = { Variables.NOMBRE_TABLA[2]+"."+Variables.CAMPO_IDS[0]+" AS VentaId",
+
+                Variables.NOMBRE_TABLA[1]+"."+Variables.CAMPO_IDS[0]+" AS ClienteID",
                 Variables.NOMBRE_TABLA[1]+"."+Variables.CAMPO_PERSONA[1]+" AS ClienteNombre",
                 Variables.NOMBRE_TABLA[1]+"."+Variables.CAMPO_ID2[1]+" AS ClienteRFC",
 
+                Variables.NOMBRE_TABLA[0]+"."+Variables.CAMPO_IDS[0]+" AS LibroID",
                 Variables.NOMBRE_TABLA[0]+"."+Variables.CAMPO_TITULO+" AS LibroTitulo",
                 Variables.NOMBRE_TABLA[0]+"."+Variables.CAMPO_PERSONA[0]+" AS LibroAutor",
                 Variables.NOMBRE_TABLA[0]+"."+Variables.CAMPO_ID2[0]+" AS LibroISBN",
@@ -115,19 +118,21 @@ public class detalle_venta extends AppCompatActivity {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             idVenta = cursor.getInt(0);
-            String nombreCliente = cursor.getString(1);
-            String rfcCliente = cursor.getString(2);
-            String tituloLibro = cursor.getString(3);
-            String autorLibro = cursor.getString(4);
-            String isbnLibro = cursor.getString(5);
-            double precioLibro = cursor.getDouble(6);
-            int cantidadVenta = cursor.getInt(7);
-            double costoTotalVenta = cursor.getDouble(8);
+            int idCliente = cursor.getInt(1);
+            String nombreCliente = cursor.getString(2);
+            String rfcCliente = cursor.getString(3);
+            int idLibro = cursor.getInt(4);
+            String tituloLibro = cursor.getString(5);
+            String autorLibro = cursor.getString(6);
+            String isbnLibro = cursor.getString(7);
+            double precioLibro = cursor.getDouble(8);
+            int cantidadVenta = cursor.getInt(9);
+            double costoTotalVenta = cursor.getDouble(10);
 
             out_id.setText("Venta #" + idVenta);
-            out_nombre.setText("Cliente: " + nombreCliente);
+            out_nombre.setText("Cliente #"+idCliente+": " + nombreCliente);
             out_rfc.setText("RFC: " + rfcCliente);
-            out_titulo.setText("Libro: " + tituloLibro);
+            out_titulo.setText("Libro #"+idLibro+": " + tituloLibro);
             out_autor.setText("Autor: " + autorLibro);
             out_isbn.setText("ISBN: " + isbnLibro);
             out_precio.setText("Precio del Libro: $" + precioLibro);
