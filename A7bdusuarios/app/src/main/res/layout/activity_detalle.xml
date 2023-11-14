@@ -161,13 +161,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Eliminar"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:textColor="@color/design_default_color_error"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEditar"
                     style="?attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:text="Editar" />
 

@@ -111,7 +111,7 @@ public class lista extends AppCompatActivity implements AdapterView.OnItemClickL
         cursor.close();
         bd.close();
 
-        Log.d("DEBUG_XX", "Orden: " + orden);
+        Log.d("DEBUG_LISTA114", "Orden: " + orden);
         if ("apellido".equals(orden)) {
             agregarLista(1);
         } else {
@@ -119,7 +119,7 @@ public class lista extends AppCompatActivity implements AdapterView.OnItemClickL
         }
         ArrayAdapter<String> aa = new ArrayAdapter<>(this, R.layout.item_lista, listausuarios);
         lista.setAdapter(aa);
-        Log.d("DEBUG_XX", "Lista: " + lista.toString());
+        Log.d("DEBUG_LISTA122", "Lista: " + lista.toString());
     }
 
 
@@ -130,14 +130,14 @@ public class lista extends AppCompatActivity implements AdapterView.OnItemClickL
                 listausuarios.add(datosusuario.get(i).getNombre() + " " + datosusuario.get(i).getApellido() + "\n" +
                         datosusuario.get(i).getSexo() + ", " + datosusuario.get(i).getEdad() + " años, " +
                         datosusuario.get(i).getEstatura() + " cm.\n" + datosusuario.get(i).getTelefono());
-                Log.d("DEBUG_XX", "ListaUsuario: " + listausuarios.toString());
+                Log.d("DEBUG_LISTA133", "ListaUsuario: " + listausuarios.toString());
             }
         } else {
             for(int i = 0; i< datosusuario.size(); i++){
                 listausuarios.add(datosusuario.get(i).getApellido() + " " + datosusuario.get(i).getNombre() + "\n" +
                         datosusuario.get(i).getSexo() + ", " + datosusuario.get(i).getEdad() + " años, " +
                         datosusuario.get(i).getEstatura() + " cm.\n" + datosusuario.get(i).getTelefono());
-                Log.d("DEBUG_XX", "ListaUsuario: " + listausuarios.toString());
+                Log.d("DEBUG_LISTA140", "ListaUsuario: " + listausuarios.toString());
             }
         }
     }

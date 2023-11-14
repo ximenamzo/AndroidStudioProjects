@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText e1, e2;
@@ -23,8 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        e1 = findViewById(R.id.etxNombre);
-        e2 = findViewById(R.id.etxApellido);
+        e1 = (EditText) findViewById(R.id.etxNombre);
+        e2 = (EditText) findViewById(R.id.etxApellido);
         b1 = findViewById(R.id.btn);
         registerForContextMenu(e1);
         registerForContextMenu(e2);
@@ -58,14 +61,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         int id = v.getId();
-        if (id == R.id.nombre) {
+        if (id == R.id.etxNombre) {
             getMenuInflater().inflate(R.menu.menu_nombre, menu);
-        } else if (id == R.id.apellido) {
+        } else if (id == R.id.etxApellido) {
             getMenuInflater().inflate(R.menu.menu_apellido, menu);
         } else if (id == R.id.btn) {
             getMenuInflater().inflate(R.menu.menu_boton, menu);
         } else {
-            throw new IllegalStateException("Unexpected value: " + v.getId());
+            super.onCreateContextMenu(menu, v, menuInfo);
         }
     }
 

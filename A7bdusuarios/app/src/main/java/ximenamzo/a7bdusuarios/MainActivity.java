@@ -1,5 +1,6 @@
 package ximenamzo.a7bdusuarios;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -8,6 +9,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,6 +23,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String sexo;
     Connect conexion;
     Intent i;
+    Integer favorito = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +48,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         setTitle("Agenda");
 
-        in_nombre = (EditText) findViewById(R.id.etxnombre);
-        in_apellido = (EditText) findViewById(R.id.etxapellido);
-        in_edad = (EditText) findViewById(R.id.etxedad);
-        in_telefono = (EditText) findViewById(R.id.etxtelefono);
-        in_estatura = (EditText) findViewById(R.id.etxestatura);
-        in_cumple = (EditText) findViewById(R.id.etxfenac);
-        ins1 = (Button) findViewById(R.id.btninsertar1);
-        ver = (Button) findViewById(R.id.btnver);
-        limpiar = (Button) findViewById(R.id.btnlimpiar);
-        buscar = (Button) findViewById(R.id.btnbuscar);
+        in_nombre = findViewById(R.id.etxnombre);
+        in_apellido = findViewById(R.id.etxapellido);
+        in_edad = findViewById(R.id.etxedad);
+        in_telefono = findViewById(R.id.etxtelefono);
+        in_estatura = findViewById(R.id.etxestatura);
+        in_cumple = findViewById(R.id.etxfenac);
+        ins1 = findViewById(R.id.btninsertar1);
+        ver = findViewById(R.id.btnver);
+        limpiar = findViewById(R.id.btnlimpiar);
+        buscar = findViewById(R.id.btnbuscar);
         MaterialButton button = findViewById(R.id.btncalendario);
 
         ins1.setOnClickListener(this);
@@ -82,6 +87,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("DEBUGXX", "Sexo seleccionado: "+sexo);
 
         conexion = new Connect(this, Variables.NOMBRE_BD, null, Connect.APPVERSION);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.itemConf) {
+            Toast.makeText(this, "Opción configuración", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.itemInfo) {
+            Toast.makeText(this, "Creado por Ximena Manzo", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.itemReporte) {
+            Toast.makeText(this, "No puedes reportar la app lero lero", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.itemFav) {
+            favorito++;
+            Toast.makeText(this, "Haz dado "+favorito+" likes", Toast.LENGTH_SHORT).show();
+        } else {
+            throw new IllegalStateException("Unexpected value: " + item.getItemId());
+        }
+        return true;
     }
 
     @Override
@@ -128,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (v == buscar) {
+            Log.d("DEBUG_MAIN159", "Click en buscar");
             nombre = in_nombre.getText().toString();
             apellido = in_apellido.getText().toString();
             edad = in_edad.getText().toString();
@@ -136,20 +166,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fenac = in_cumple.getText().toString();
 
             if (nombre != null && !nombre.isEmpty()) {
+                Log.d("DEBUG_MAIN168", "Buscando por nombre");
                 busqueda(nombre, 1);
             } else if (apellido != null && !apellido.isEmpty()) {
+                Log.d("DEBUG_MAIN171", "Buscando por apellido");
                 busqueda(apellido, 2);
             } else if (sexo != null && !sexo.isEmpty()) {
+                Log.d("DEBUG_MAIN174", "Buscando por sexo");
                 busqueda(sexo, 4);
             } else if (edad != null && !edad.isEmpty()) {
+                Log.d("DEBUG_MAIN177", "Buscando por edad");
                 busqueda(edad, 3);
             } else if (fenac != null && !fenac.isEmpty()) {
+                Log.d("DEBUG_MAIN180", "Buscando por fecha de nacimiento");
                 String[] partes = fenac.split("-");
                 String mes = partes[1];
                 busqueda(mes, 5);
             } else if (telefono != null && !telefono.isEmpty()) {
+                Log.d("DEBUG_MAIN185", "Buscando por telefono");
                 busqueda(telefono, 7);
             } else if (estatura != null && !estatura.isEmpty()) {
+                Log.d("DEBUG_MAIN188", "Buscando por estatura");
                 busqueda(estatura, 6);
             } else {
                 Toast.makeText(this, "Ingresa un campo para buscar!!", Toast.LENGTH_SHORT).show();
@@ -174,22 +211,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void busqueda(String datoQueBusco, Integer campo) {
-        nombre = in_nombre.getText().toString();
-        apellido = in_apellido.getText().toString();
-        edad = in_edad.getText().toString();
-        telefono = in_telefono.getText().toString();
-        estatura = in_estatura.getText().toString();
-        fenac = in_cumple.getText().toString();
-        String[] partes = fenac.split("-");
-        String mes = partes[1];
+        Log.d("DEBUG_MAIN214", "Llegando a busqueda() con el datoQueBusco("+datoQueBusco+") y el campo"+campo+"("+Variables.CAMPO_AUX[campo]+")");
 
+        String consulta = "SELECT " + Variables.CAMPO_ID + " FROM " + Variables.NOMBRE_TABLA + " WHERE " + Variables.CAMPO_AUX[campo] + " LIKE ?";
         SQLiteDatabase bd = conexion.getReadableDatabase();
-        String consulta = "SELECT " + Variables.CAMPO_ID + " FROM " + Variables.NOMBRE_TABLA + " WHERE " + Variables.CAMPO_AUX[campo] + " COLLATE NOCASE LIKE ?";
+        Log.d("DEBUG_MAIN218", "DATABASE "+bd.isOpen());
 
         try {
             Cursor cursor = bd.rawQuery(consulta, new String[]{"%" + datoQueBusco + "%"});
 
-            Log.d("DEBUG_XX", "Consulta SQL: " + consulta + datoQueBusco);
+            Log.d("DEBUG_XX", "Consulta SQL: " + consulta +" "+ datoQueBusco);
             Log.d("DEBUG_XX", "Número de resultados: " + cursor.getCount());
 
             if (cursor.getCount() > 0) {

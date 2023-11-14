@@ -1,5 +1,6 @@
 package ximenamzo.a7bdusuarios;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import java.time.LocalTime;
 
 import ximenamzo.a7bdusuarios.bd.Connect;
 import ximenamzo.a7bdusuarios.bd.Variables;
@@ -30,6 +37,9 @@ public class detalle extends AppCompatActivity {
     Connect conexion;
     Integer id;
     LinearLayout editlayout, textlayout;
+    private Menu menuDetalle;
+    private Menu menuDetalle2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,29 +47,31 @@ public class detalle extends AppCompatActivity {
         setContentView(R.layout.activity_detalle);
         setTitle("Detalles del Usuario");
 
-        editlayout = (LinearLayout) findViewById(R.id.editLayout);
-        textlayout = (LinearLayout) findViewById(R.id.textLayout);
+        editlayout = findViewById(R.id.editLayout);
+        textlayout = findViewById(R.id.textLayout);
+        MaterialCardView cardView = findViewById(R.id.card);
+        registerForContextMenu(cardView);
 
-        txtid = (TextView) findViewById(R.id.txtid);
-        out_nombre = (TextView) findViewById(R.id.txtnombre);
-        out_sexo = (TextView) findViewById(R.id.txtsexo);
-        out_edad = (TextView) findViewById(R.id.txtedad);
-        out_fenac = (TextView) findViewById(R.id.txtfenac);
-        out_estatura = (TextView) findViewById(R.id.txtestatura);
-        out_telefono = (TextView) findViewById(R.id.txttelefono);
+        txtid = findViewById(R.id.txtid);
+        out_nombre = findViewById(R.id.txtnombre);
+        out_sexo = findViewById(R.id.txtsexo);
+        out_edad = findViewById(R.id.txtedad);
+        out_fenac = findViewById(R.id.txtfenac);
+        out_estatura = findViewById(R.id.txtestatura);
+        out_telefono = findViewById(R.id.txttelefono);
 
-        edit_nombre = (EditText) findViewById(R.id.editNombre);
-        edit_apellido = (EditText) findViewById(R.id.editApellido);
-        edit_sexo = (EditText) findViewById(R.id.editSexo);
-        edit_edad = (EditText) findViewById(R.id.editEdad);
-        edit_fenac = (EditText) findViewById(R.id.editFenac);
-        edit_estatura = (EditText) findViewById(R.id.editEstatura);
-        edit_telefono = (EditText) findViewById(R.id.editTelefono);
+        edit_nombre = findViewById(R.id.editNombre);
+        edit_apellido = findViewById(R.id.editApellido);
+        edit_sexo = findViewById(R.id.editSexo);
+        edit_edad = findViewById(R.id.editEdad);
+        edit_fenac = findViewById(R.id.editFenac);
+        edit_estatura = findViewById(R.id.editEstatura);
+        edit_telefono = findViewById(R.id.editTelefono);
 
-        btneliminar = (Button) findViewById(R.id.btnEliminar);
-        btneditar = (Button) findViewById(R.id.btnEditar);
-        btncancelar = (Button) findViewById(R.id.btnCancelar);
-        btnguardar = (Button) findViewById(R.id.btnGuardar);
+        btneliminar = findViewById(R.id.btnEliminar);
+        btneditar = findViewById(R.id.btnEditar);
+        btncancelar = findViewById(R.id.btnCancelar);
+        btnguardar = findViewById(R.id.btnGuardar);
 
         conexion = new Connect(this, Variables.NOMBRE_BD, null, 1);
 
@@ -70,16 +82,16 @@ public class detalle extends AppCompatActivity {
             usuario = (Usuarios) objeto.getSerializable("usuario");
 
             if (usuario != null) {
-                Log.d("DEBUG_XX", "Detalles de todo el objeto: " + usuario.toString());
+                Log.d("DEBUG_XX", "Detalles de todo el objeto: " + usuario);
                 mostrarDatos();
             } else {
                 //int id = objeto.getInt("id");
                 int id = getIntent().getIntExtra("id", 0);
                 Log.d("DEBUG_XX", "ID que estare buscando en detalle: "+id);
                 buscarId(id);
-            };
+            }
 
-            btneditar.setOnClickListener(v -> editar());
+            //btneditar.setOnClickListener(v -> editar());
             btnguardar.setOnClickListener(v -> guardarCambios());
             btncancelar.setOnClickListener(v -> cancelarEdicion());
 
@@ -105,15 +117,76 @@ public class detalle extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detalle, menu);
+        menuDetalle = menu;
+        return true;
+    }
+
+    private void inflarMenuDetalle2() {
+        getMenuInflater().inflate(R.menu.detalle2, menuDetalle2);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.itemEdit) {
+            Toast.makeText(this, "Opciones de edición", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.itemEditar) {
+            Toast.makeText(this, "Opción para editar", Toast.LENGTH_SHORT).show();
+            editar();
+            if (menuDetalle2 == null) {
+                menuDetalle2 = menuDetalle;
+                inflarMenuDetalle2();
+            }
+            return true;
+        } else if (itemId == R.id.itemEliminar) {
+            Toast.makeText(this, "Opción para eliminar registro", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(detalle.this)
+                    .setTitle("Confirmar Eliminación")
+                    .setMessage("¿Estás seguro de que deseas eliminar este usuario?")
+                    .setPositiveButton("Sí", (dialog, which) -> eliminarUsuario())
+                    .setNegativeButton("No", (dialog, which) -> {
+                        dialog.dismiss(); // esto no hacer nada, cierra el cuadro de diálogo
+                    }).show();
+        } else {
+            throw new IllegalStateException("Unexpected value: " + item.getItemId());
+        }
+        return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.card, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.itemHora) {
+            LocalTime horaActual = LocalTime.now();
+            String horaFormateada = horaActual.toString();
+            Toast.makeText(this, "Hora: "+horaFormateada, Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.itemGrita) {
+            Toast.makeText(this, "HOLAAA "+usuario.getNombre().toUpperCase(), Toast.LENGTH_SHORT).show();
+            return true;
+        } else {
+            throw new IllegalStateException("Unexpected value: " + item.getItemId());
+        }
+        return true;
+    }
+
     private void mostrarDatos() {
         editlayout.setVisibility(View.GONE);
         textlayout.setVisibility(View.VISIBLE);
         if (usuario != null) {
             out_nombre.setText(usuario.getNombre() + " " + usuario.getApellido());
             out_sexo.setText(usuario.getSexo());
-            out_edad.setText("Edad: " + String.valueOf(usuario.getEdad()) + " años.");
+            out_edad.setText("Edad: " + usuario.getEdad() + " años.");
             out_fenac.setText(usuario.getFenac());
-            out_estatura.setText("Altura: " + String.valueOf(usuario.getEstatura()) + " centímetros.");
+            out_estatura.setText("Altura: " + usuario.getEstatura() + " centímetros.");
             out_telefono.setText("Teléfono: " + usuario.getTelefono());
         } else {
             // Oculta editText y sus botones Guardar y Cancelar
@@ -133,13 +206,13 @@ public class detalle extends AppCompatActivity {
         out_fenac.setVisibility(View.VISIBLE);
         out_estatura.setVisibility(View.VISIBLE);
         out_telefono.setVisibility(View.VISIBLE);
-        btneliminar.setVisibility(View.VISIBLE);
-        btneditar.setVisibility(View.VISIBLE);
+        //btneliminar.setVisibility(View.VISIBLE);
+        //btneditar.setVisibility(View.VISIBLE);
     }
 
     private void editar() {
         // copia los datos a los editText
-        txtid.setText("Id del usuario: " + String.valueOf(usuario.getId()));
+        txtid.setText("Id del usuario: " + usuario.getId());
         edit_nombre.setText(usuario.getNombre());
         edit_apellido.setText(usuario.getApellido());
         edit_sexo.setText(usuario.getSexo());
@@ -201,6 +274,11 @@ public class detalle extends AppCompatActivity {
         btnguardar.setVisibility(View.GONE);
         btncancelar.setVisibility(View.GONE);
         textlayout.setVisibility(View.VISIBLE);
+        if (menuDetalle2 != null) {
+            menuDetalle2.clear();
+            getMenuInflater().inflate(R.menu.detalle, menuDetalle2);
+            menuDetalle2 = null;
+        }
         mostrarDatos();
     }
 
