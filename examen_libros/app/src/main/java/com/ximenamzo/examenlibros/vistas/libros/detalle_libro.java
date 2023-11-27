@@ -28,7 +28,7 @@ public class detalle_libro extends AppCompatActivity {
     Button btneliminar, btneditar, btncancelar, btnguardar;
     private Libros libro;
     Connect conectar;
-    String isbnSolo;
+    String isbnSolo, id;
     LinearLayout infolayout, editlayout, textlayout;
 
     @Override
@@ -67,12 +67,15 @@ public class detalle_libro extends AppCompatActivity {
         if (objeto != null) {
             libro = (Libros) objeto.getSerializable("libro");
             isbnSolo = objeto.getString("isbn");
+            id = objeto.getString("id");
 
             if (libro != null) {
-                Log.d("DEBUG_XX", libro.toString());
+                Log.d("DEBUG_DETALLELIBRO", "Libro: " + libro.toString());
                 mostrarDatos();
             } else if (isbnSolo != null) {
-                buscarPorIsbn(isbnSolo);
+                traerLibro(isbnSolo, Variables.CAMPO_ID2[0]);
+            } else if (id != null) {
+                traerLibro(id, Variables.CAMPO_IDS[0]);
             }
 
             btneditar.setOnClickListener(v -> editar());
@@ -167,37 +170,44 @@ public class detalle_libro extends AppCompatActivity {
     }
 
     private void guardarCambios() {
-        // Actualiza el libro con los datos editados
-        libro.setIsbn(edit_isbn.getText().toString());
-        libro.setTitulo(edit_titulo.getText().toString());
-        libro.setAutor(edit_autor.getText().toString());
-        libro.setEditorial(edit_editorial.getText().toString());
-        libro.setPaginas(Integer.parseInt(edit_paginas.getText().toString()));
-        libro.setPrecio(Double.parseDouble(edit_precio.getText().toString()));
+        if (edit_isbn.getText().toString().length() == 10 && !edit_titulo.getText().toString().isEmpty() &&
+            !edit_autor.getText().toString().isEmpty() && !edit_editorial.getText().toString().isEmpty() &&
+            !edit_paginas.getText().toString().isEmpty() && !edit_precio.getText().toString().isEmpty()) {
 
-        // BD aquí
-        SQLiteDatabase bd = conectar.getWritableDatabase();
-        String[] parametros = {String.valueOf(libro.getId())};
-        //String[] campos = {Variables.CAMPO_ID, Variables.CAMPO_ISBN, Variables.CAMPO_TITULO, Variables.CAMPO_AUTOR, Variables.CAMPO_EDITORIAL, Variables.CAMPO_PAGINAS};
-        ContentValues valores = new ContentValues();
-        valores.put(Variables.CAMPO_ID2[0], libro.getIsbn());
-        valores.put(Variables.CAMPO_TITULO, libro.getTitulo());
-        valores.put(Variables.CAMPO_PERSONA[0], libro.getAutor());
-        valores.put(Variables.CAMPO_EDITORIAL, libro.getEditorial());
-        valores.put(Variables.CAMPO_CANTIDADES[0], libro.getPaginas());
-        valores.put(Variables.CAMPO_DINERO[0], libro.getPrecio());
+                // Actualiza el libro con los datos editados
+            libro.setIsbn(edit_isbn.getText().toString());
+            libro.setTitulo(edit_titulo.getText().toString());
+            libro.setAutor(edit_autor.getText().toString());
+            libro.setEditorial(edit_editorial.getText().toString());
+            libro.setPaginas(Integer.parseInt(edit_paginas.getText().toString()));
+            libro.setPrecio(Double.parseDouble(edit_precio.getText().toString()));
 
-        bd.update(Variables.NOMBRE_TABLA[0], valores, Variables.CAMPO_IDS[0] + "=?", parametros);
-        Toast.makeText(this, "Registro actualizado.", Toast.LENGTH_LONG).show();
-        bd.close();
+            // BD aquí
+            SQLiteDatabase bd = conectar.getWritableDatabase();
+            String[] parametros = {String.valueOf(libro.getId())};
+            //String[] campos = {Variables.CAMPO_ID, Variables.CAMPO_ISBN, Variables.CAMPO_TITULO, Variables.CAMPO_AUTOR, Variables.CAMPO_EDITORIAL, Variables.CAMPO_PAGINAS};
+            ContentValues valores = new ContentValues();
+            valores.put(Variables.CAMPO_ID2[0], libro.getIsbn());
+            valores.put(Variables.CAMPO_TITULO, libro.getTitulo());
+            valores.put(Variables.CAMPO_PERSONA[0], libro.getAutor());
+            valores.put(Variables.CAMPO_EDITORIAL, libro.getEditorial());
+            valores.put(Variables.CAMPO_CANTIDADES[0], libro.getPaginas());
+            valores.put(Variables.CAMPO_DINERO[0], libro.getPrecio());
 
-        // Muestra los datos actualizados y regresa a la "vista" de detalles
-        editlayout.setVisibility(View.GONE);
-        btnguardar.setVisibility(View.GONE);
-        btncancelar.setVisibility(View.GONE);
-        textlayout.setVisibility(View.VISIBLE);
-        infolayout.setVisibility(View.VISIBLE);
-        mostrarDatos();
+            bd.update(Variables.NOMBRE_TABLA[0], valores, Variables.CAMPO_IDS[0] + "=?", parametros);
+            Toast.makeText(this, "Registro actualizado.", Toast.LENGTH_LONG).show();
+            bd.close();
+
+            // Muestra los datos actualizados y regresa a la "vista" de detalles
+            editlayout.setVisibility(View.GONE);
+            btnguardar.setVisibility(View.GONE);
+            btncancelar.setVisibility(View.GONE);
+            textlayout.setVisibility(View.VISIBLE);
+            infolayout.setVisibility(View.VISIBLE);
+            mostrarDatos();
+        } else {
+            Toast.makeText(this, "Asegúrese de no dejar campos vacíos. El ISBN debe tener exactamente 10 dígitos.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void cancelarEdicion() {
@@ -218,17 +228,17 @@ public class detalle_libro extends AppCompatActivity {
         finish();
     }
 
-    private void buscarPorIsbn(String isbn) {
+    private void traerLibro(String dato, String campo) {
         if (libro == null) libro = new Libros();
         SQLiteDatabase bd = conectar.getReadableDatabase();
-        String[] parametros = {isbn};
+        String[] parametros = {dato};
         String[] campos = Variables.CAMPOS_TABLAS[0];
 
         try {
-            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[0], campos, Variables.CAMPO_ID2[0] + " =?", parametros, null, null, null);
+            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[0], campos, campo + " =?", parametros, null, null, null);
             if (cursor.getCount() > 0){
                 cursor.moveToFirst();
-                Log.d("DEBUGXX", "ISBN encontrado: "+ cursor.getString(0) + ". Con el ID: "+ cursor.getString(1)+".");
+                Log.d("DEBUG_DETLIB.234", campo.toUpperCase()+" encontrado: "+ cursor.getString(0) + ". Con el ID: "+ cursor.getString(1)+".");
                 libro.setId(Integer.valueOf(cursor.getString(0)));
                 libro.setIsbn(cursor.getString(1));
                 libro.setTitulo(cursor.getString(2));
@@ -238,7 +248,7 @@ public class detalle_libro extends AppCompatActivity {
                 libro.setPrecio(Double.valueOf(cursor.getString(5)));
                 cursor.close();
             } else {
-                Toast.makeText(this, "No se encontraron datos para ISBN: " + isbn, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No se encontraron datos para "+campo.toUpperCase()+": " + dato, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             Toast.makeText(this,"Error al obtener datos.", Toast.LENGTH_LONG).show();

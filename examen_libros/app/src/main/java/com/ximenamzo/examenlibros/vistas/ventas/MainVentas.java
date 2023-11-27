@@ -358,7 +358,7 @@ public class MainVentas extends AppCompatActivity implements View.OnClickListene
         String rfc = campoRfc.getText().toString();
         idLibro = getObjectId(db, isbn, 0);
         idCliente = getObjectId(db, rfc, 1);
-        Log.d("DEBUG_XX", "IDs del Libro es "+idLibro+" y Cliente "+idCliente);
+        Log.d("DEBUG_MAINVENTAS", "IDs del Libro es "+idLibro+" y Cliente "+idCliente);
 
         if (idLibro!=0 && idCliente!=0) {
             cantidad = Integer.parseInt(campoCantidad.getText().toString());

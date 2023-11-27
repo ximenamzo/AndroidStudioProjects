@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.ximenamzo.examenlibros.MainActivity;
 import com.ximenamzo.examenlibros.R;
 import com.ximenamzo.examenlibros.db.Connect;
 import com.ximenamzo.examenlibros.db.Variables;
@@ -34,6 +36,9 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
 
         in_nombre = findViewById(R.id.etxnombre);
         in_rfc = findViewById(R.id.etxrfc);
+
+        InputFilter lengthFilterRFC = new InputFilter.LengthFilter(13);
+        in_rfc.setFilters(new InputFilter[]{lengthFilterRFC});
 
         insert = findViewById(R.id.btninsertar1);
         searchNombre = findViewById(R.id.btnbuscar1);
@@ -85,14 +90,14 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
         if (v == insert) {
             nombre = in_nombre.getText().toString();
             rfc = in_rfc.getText().toString();
-            if (!nombre.isEmpty() && !rfc.isEmpty()) {
+            if (!nombre.isEmpty() && rfc.length() == 13) {
                 if (rfcExiste(rfc)) {
                     Toast.makeText(this, "RFC ya registrado.", Toast.LENGTH_LONG).show();
                 } else {
                     insertar(nombre, rfc);
                 }
             } else {
-                Toast.makeText(this, "Ingrese los datos restantes.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Ingrese un nombre y asegúrese de que el RFC tenga exactamente 13 caracteres.", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -108,6 +113,8 @@ public class MainClientes extends AppCompatActivity implements View.OnClickListe
         if(v == searchRfc){
             rfc = in_rfc.getText().toString();
             if(!rfc.isEmpty()) {
+                Log.d("DEBUG_MAINCLIENTES.112", "DB.buscar(this, in_rfc.getText().toString(),Variables.NOMBRE_TABLA[1],Variables.CAMPO_ID2[1]);");
+                Log.d("DEBUG_MAINCLIENTES.113", "DB.buscar("+this+", "+in_rfc.getText().toString()+", "+Variables.NOMBRE_TABLA[1]+", "+Variables.CAMPO_ID2[1]+");");
                 DB.buscar(this, in_rfc.getText().toString(),Variables.NOMBRE_TABLA[1],Variables.CAMPO_ID2[1]);
             } else {
                 Toast.makeText(this, "Ingrese un RFC para buscar.", Toast.LENGTH_SHORT).show();

@@ -94,11 +94,11 @@ public class MainLibros extends AppCompatActivity implements View.OnClickListene
         String precio = in_precio.getText().toString();
 
         if (v == insert) {
-            if (!isbn.isEmpty() && !titulo.isEmpty() && !autor.isEmpty() &&
+            if (isbn.length() == 10 && !titulo.isEmpty() && !autor.isEmpty() &&
                     !editorial.isEmpty() && !paginas.isEmpty() && !precio.isEmpty()) {
                 insertar();
             } else {
-                Toast.makeText(this, "Ingrese los datos restantes.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Ingrese los datos restantes. Asegúrese de que el ISBN tenga exactamente 10 caracteres.", Toast.LENGTH_LONG).show();
             }
         }
 

@@ -118,7 +118,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_weight="4">
 
                 <Button
                     android:id="@+id/btnlimpiar"
@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="3"
+                android:layout_weight="5"
                 android:gravity="right|center_vertical">
 
                 <Button
@@ -147,7 +147,7 @@
                     android:backgroundTint="#673AB7"
                     android:text="Añadir Libro"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:icon="@drawable/baseline_add_24"
                     app:iconSize="60px"
                     app:iconTint="#FFFFFF" />

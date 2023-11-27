@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,8 +41,13 @@ public class lista_clientes_custom extends AppCompatActivity implements AdapterV
             } else if (extras.containsKey("autor")) {
                 busqueda = extras.getString("autor");
                 campo = Variables.CAMPO_PERSONA[0];
+            } else if (extras.containsKey("id")) {
+                busqueda = extras.getString("id");
+                campo = Variables.CAMPO_PERSONA[0];
             }
         }
+
+        Log.d("DEBUG_CLICUS.50","Campo: "+campo+", Busqueda: "+busqueda);
 
         setTitle("Clientes relacionados con '" + busqueda + "'");
         TextView tituloLista = findViewById(R.id.tituloLista);
@@ -66,8 +72,9 @@ public class lista_clientes_custom extends AppCompatActivity implements AdapterV
         SQLiteDatabase bd = conectar.getReadableDatabase();
         Clientes cliente;
         datoscliente = new ArrayList<>();
-        String[] campos = {Variables.CAMPO_IDS[0], Variables.CAMPO_PERSONA[1], Variables.CAMPO_ID2[1]};
-        String whereLike = campo + " LIKE ?";
+        String[] campos = Variables.CAMPOS_TABLAS[1];
+        String whereLike = campo + " LIKE ? ";
+        Log.d("DEBUG_CLICUS77","Campo: "+campo+", Busqueda: "+busqueda);
 
         try {
             Cursor cursor = bd.query(Variables.NOMBRE_TABLA[1], campos, whereLike, new String[]{"%" + busqueda + "%"}, null, null, null);

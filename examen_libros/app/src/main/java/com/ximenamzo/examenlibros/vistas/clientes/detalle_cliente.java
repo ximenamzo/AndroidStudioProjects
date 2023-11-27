@@ -58,11 +58,11 @@ public class detalle_cliente extends AppCompatActivity {
             cliente = (Clientes) objeto.getSerializable("cliente");
 
             if (cliente != null) {
-                Log.d("DEBUG_XX", cliente.toString());
+                Log.d("DEBUG_DETALLECLIENTE", cliente.toString());
                 mostrarDatos();
             } else {
                 String id = getIntent().getExtras().getString("id");
-                Log.d("DEBUG_XX", "ID que estare buscando en detalle: "+id);
+                Log.d("DEBUG_DETALLECLIENTE", "ID que estare buscando en detalle: "+id);
                 buscarPorId(id);
             }
 
@@ -133,27 +133,28 @@ public class detalle_cliente extends AppCompatActivity {
     }
 
     private void guardarCambios() {
-        // Actualiza el cliente con los datos editados
-        cliente.setNombre(edit_nombre.getText().toString());
-        cliente.setRfc(edit_rfc.getText().toString());
+        if (!edit_nombre.getText().toString().isEmpty() && edit_rfc.getText().toString().length() == 13) {
+            cliente.setNombre(edit_nombre.getText().toString());
+            cliente.setRfc(edit_rfc.getText().toString());
 
-        // BD aquí
-        SQLiteDatabase bd = conectar.getWritableDatabase();
-        String[] parametros = {String.valueOf(cliente.getId())};
-        //String[] campos = {Variables.CAMPO_ID, Variables.CAMPO_ISBN, Variables.CAMPO_TITULO, Variables.CAMPO_AUTOR, Variables.CAMPO_EDITORIAL, Variables.CAMPO_PAGINAS};
-        ContentValues valores = new ContentValues();
-        valores.put(Variables.CAMPO_PERSONA[1], edit_nombre.getText().toString());
-        valores.put(Variables.CAMPO_ID2[1], edit_rfc.getText().toString());
-        bd.update(Variables.NOMBRE_TABLA[1], valores, Variables.CAMPO_IDS[0] + "=?", parametros);
-        Toast.makeText(this, "Registro actualizado.", Toast.LENGTH_LONG).show();
-        bd.close();
+            // BD aquí
+            SQLiteDatabase bd = conectar.getWritableDatabase();
+            String[] parametros = {String.valueOf(cliente.getId())};
+            ContentValues valores = new ContentValues();
+            valores.put(Variables.CAMPO_PERSONA[1], edit_nombre.getText().toString());
+            valores.put(Variables.CAMPO_ID2[1], edit_rfc.getText().toString());
+            bd.update(Variables.NOMBRE_TABLA[1], valores, Variables.CAMPO_IDS[0] + "=?", parametros);
+            Toast.makeText(this, "Registro actualizado.", Toast.LENGTH_LONG).show();
+            bd.close();
 
-        // Muestra los datos actualizados y regresa a la "vista" de detalles
-        editlayout.setVisibility(View.GONE);
-        btnguardar.setVisibility(View.GONE);
-        btncancelar.setVisibility(View.GONE);
-        textlayout.setVisibility(View.VISIBLE);
-        mostrarDatos();
+            editlayout.setVisibility(View.GONE);
+            btnguardar.setVisibility(View.GONE);
+            btncancelar.setVisibility(View.GONE);
+            textlayout.setVisibility(View.VISIBLE);
+            mostrarDatos();
+        } else {
+            Toast.makeText(this, "RFC debe tener exactamente 13 caracteres.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void cancelarEdicion() {
@@ -175,6 +176,7 @@ public class detalle_cliente extends AppCompatActivity {
     }
 
     private void buscarPorId(String id) {
+        Log.d("DEBUG_DETALLECLIENTE.178", "Buscando por id...");
         if (cliente == null) cliente = new Clientes();
         SQLiteDatabase bd = conectar.getReadableDatabase();
         String[] parametros = {id};
@@ -182,10 +184,10 @@ public class detalle_cliente extends AppCompatActivity {
         String[] campos = Variables.CAMPOS_TABLAS[1];
 
         try {
-            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[1], campos, Variables.CAMPO_ID2[0] + " =?", parametros, null, null, null);
+            Cursor cursor = bd.query(Variables.NOMBRE_TABLA[1], campos, Variables.CAMPO_IDS[0] + " =?", parametros, null, null, null);
             if (cursor.getCount() > 0){
                 cursor.moveToFirst();
-                Log.d("DEBUGXX", "ID encontrado: "+ cursor.getString(0));
+                Log.d("DEBUG_DETCLIENTE", "ID encontrado: "+ cursor.getString(0));
                 cliente.setId(Integer.valueOf(cursor.getString(0)));
                 cliente.setNombre(cursor.getString(1));
                 cliente.setRfc(cursor.getString(2));

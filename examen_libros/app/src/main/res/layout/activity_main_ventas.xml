@@ -32,18 +32,19 @@
             android:layout_height="wrap_content"
 
             android:hint="RFC del Cliente"
-            app:boxBackgroundColor="#FDFDFD"
+            app:boxBackgroundColor="?attr/colorOnSurfaceInverse"
+            android:textColorHint="?attr/colorSurfaceInverse"
+            app:startIconTint="?attr/colorSurfaceInverse"
 
             app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_qr_code_24">
+            app:startIconDrawable="@drawable/baseline_qr_code_24" >
 
             <AutoCompleteTextView
                 android:id="@+id/campoRfc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="13"
-                app:dropDownBackgroundTint="#F6F6F6" />
+                android:maxLength="13"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -61,10 +62,12 @@
 
             android:layout_marginVertical="5dp"
             android:layout_marginStart="20dp"
-            app:boxBackgroundColor="#FDFDFD"
 
+            app:boxBackgroundColor="?attr/colorOnSurfaceInverse"
+            android:textColorHint="?attr/colorSurfaceInverse"
+            app:startIconTint="?attr/colorSurfaceInverse"
             android:hint="Nombre"
-            app:hintTextColor="#767676"
+
 
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_person_24">
@@ -74,18 +77,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="50"
-                android:textColor="#767676" />
+                android:maxLength="50"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="30dp"
-            app:boxBackgroundColor="#FDFDFD"
 
+            app:boxBackgroundColor="?attr/colorOnSurfaceInverse"
+            android:textColorHint="?attr/colorSurfaceInverse"
+            app:startIconTint="?attr/colorSurfaceInverse"
             android:hint="ISBN del Libro"
+
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/round_library_books_24">
 
@@ -111,10 +115,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            app:boxBackgroundColor="#FDFDFD"
 
+            app:boxBackgroundColor="?attr/colorOnSurfaceInverse"
+            android:textColorHint="?attr/colorSurfaceInverse"
+            app:startIconTint="?attr/colorSurfaceInverse"
             android:hint="Titulo"
-            app:hintTextColor="#767676"
 
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_menu_book_24">
@@ -124,8 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="40"
-                android:textColor="#767676" />
+                android:maxLength="40"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -133,10 +137,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            app:boxBackgroundColor="#FDFDFD"
 
+            app:boxBackgroundColor="?attr/colorOnSurfaceInverse"
+            android:textColorHint="?attr/colorSurfaceInverse"
+            app:startIconTint="?attr/colorSurfaceInverse"
             android:hint="Autor"
-            app:hintTextColor="#767676"
 
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_local_library_24">
@@ -146,8 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="50"
-                android:textColor="#767676" />
+                android:maxLength="50"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -186,7 +190,9 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="5"
                 android:hint="0.00"
-                app:boxBackgroundColor="#FCFCFC"
+                app:boxBackgroundColor="?attr/colorOnSurfaceInverse"
+                android:textColorHint="?attr/colorSurfaceInverse"
+                app:startIconTint="?attr/colorSurfaceInverse"
                 app:startIconDrawable="@drawable/baseline_attach_money_24"
                 app:endIconMode="clear_text">
 
@@ -200,18 +206,23 @@
 
             <ImageButton
                 android:id="@+id/btnrestar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
                 android:contentDescription="Restar cantidad"
-                android:src="@drawable/baseline_remove_24" />
+                android:backgroundTint="?attr/colorOnSurfaceVariant"
+                android:src="@drawable/baseline_remove_24"
+                app:tint="?attr/contrast"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
+                app:boxBackgroundColor="?attr/colorOnSurfaceInverse"
+                android:textColorHint="?attr/colorSurfaceInverse"
+                app:startIconTint="?attr/colorSurfaceInverse"
                 android:hint="."
-                app:placeholderText="0"
-                app:boxBackgroundColor="#FDFDFD">
+                app:placeholderText="0" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/campoCantidad"
@@ -225,11 +236,13 @@
 
             <ImageButton
                 android:id="@+id/btnsumar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="Restar cantidad"
+                android:layout_gravity="center_vertical"
+                android:backgroundTint="?attr/colorOnSurfaceVariant"
                 android:src="@drawable/baseline_add_24"
-                app:tint="@color/black" />
+                app:tint="?attr/contrast" />
         </LinearLayout>
 
         <LinearLayout
@@ -244,7 +257,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Vaciar\ndatos"
-                android:textColor="#929292"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 app:icon="@drawable/baseline_delete_24"
                 app:iconTint="#C30E0E" />
 
@@ -260,7 +273,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:text="Costo final: $ "
-                    android:textColor="#1D5620"
+                    android:textColor="?attr/colorOnTertiaryContainer"
                     android:textSize="18sp" />
 
                 <TextView
@@ -269,7 +282,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:text="0.00"
-                    android:textColor="#227B25"
+                    android:textColor="?attr/colorOnTertiaryContainer"
                     android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
@@ -323,7 +336,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
-            android:backgroundTint="#CBB3F4"
             android:text="Buscar Venta por RFC o Nombre del Cliente"
             style="@style/Widget.Material3.Button.TonalButton" />
     </LinearLayout>
